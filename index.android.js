@@ -12,7 +12,7 @@ import {
   View
 } from 'react-native';
 
-export default class CNodeOne extends Component {
+export default class CNodeThree extends Component {
   render() {
     return (
       <View style={styles.container}>
@@ -50,4 +50,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('CNodeOne', () => CNodeOne);
+AppRegistry.registerComponent('CNodeThree', () => CNodeThree);

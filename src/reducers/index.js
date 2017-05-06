@@ -5,8 +5,24 @@
  */
 
 import { combineReducers } from 'redux';
-import NavState from './NavState';
+import HomePageState from './HomePageState';
+import UnreadMessageState from './UnreadMessageState';
+import HavereadMessageState from './HavereadMessageState';
+import GlobalState from './GlobalState';
+import TopicDetailState from './TopicDetailState';
+import UserDetailState from './UserDetailState';
+import CollectionState from './CollectionState';
+import QRCodeScanState from './QRCodeScanState';
+import UserRecentState from './UserRecentState';
 
 export default combineReducers({
-  NavState
+  HomePageState,
+  UnreadMessageState,
+  HavereadMessageState,
+  GlobalState,
+  TopicDetailState,
+  UserDetailState,
+  CollectionState,
+  QRCodeScanState,
+  UserRecentState
 });

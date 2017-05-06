@@ -4,28 +4,28 @@
  * email: mysticzt@gmail.com
  */
 
-import { createStore, applyMiddleware } from 'redux';
-import createSagaMiddleware, { END } from 'redux-saga';
+import { createStore, applyMiddleware, compose } from 'redux';
+import createSagaMiddleware from 'redux-saga';
+import { createLogger } from 'redux-logger';
 import rootReducer from '../reducers';
+import rootSaga from '../sagas';
 
 const middlewares = [];
-const createLogger = require('redux-logger');
+const enhancers = [];
 
 const sagaMiddleware = createSagaMiddleware();
-
 middlewares.push(sagaMiddleware);
 
-if (process.env.NODE_ENV === 'development') {
+if(process.env.NODE_ENV === 'development') {
   const logger = createLogger();
   middlewares.push(logger);
 }
 
-const createStoreWithMiddleware = applyMiddleware(...middlewares)(createStore);
+enhancers.push(applyMiddleware(...middlewares));
 
-export default function configureStore(initialState) {
-  const store = createStoreWithMiddleware(rootReducer, initialState);
-  store.runSaga = sagaMiddleware.run;
-  store.close = () => store.dispatch(END);
+export default function configStore() {
+  const store = createStore(rootReducer,  compose(...enhancers));
+  sagaMiddleware.run(rootSaga);
 
   return store;
 }
