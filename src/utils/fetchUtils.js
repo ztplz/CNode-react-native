@@ -71,6 +71,7 @@ export function getFetch(ms, url) {
 }
 
 export function postFetch(ms, url, params) {
+  console.log(params);
   return new Promise((resolve, reject) => {
     timeoutPromise(ms, fetch(url, postMethod(params)))
       .then(response => {
@@ -87,6 +88,7 @@ export function postFetch(ms, url, params) {
       .then(json => {
         console.log('json');
         if(json.success == true) {
+          console.log(json);
           resolve(json);
         } else {
           return Promise.reject(new Error('POST_RETURN_FALSE'));

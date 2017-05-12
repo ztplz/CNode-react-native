@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 // import { connect } from 'react-redux';
 import { StackNavigator, TabNavigator, addNavigationHelpers } from 'react-navigation';
+import GlobalConfigStorage from './localStorage/GlobalConfigStorage';
 import HomePage from './container/HomePage';
 import NewTopic from './container/NewTopic';
 import Message from './container/Message';
@@ -22,15 +23,28 @@ import Collection from './container/Collection';
 import QRCodeScan from './container/QRCodeScan';
 import RecentTopics from './container/RecentTopics';
 import RecentReply from './container/RecentReply';
+import ReplyPage from './container/ReplyPage';
 
+// let appThemeColor = new GlobalConfigStorage().getThemeColor();
+// console.log(appThemeColor);
 
+//
+// let appThemeColor;
+// export const changeThemeColor = (themecolor) => {
+//   console.log('themecolor');
+//   appThemeColor = themecolor;
+// };
+// console.log(appThemeColor);
+// const themecolor = new GlobalConfigStorage().getThemeColor();
 const MainPage = TabNavigator({
   HomePage: {
     screen: HomePage,
   },
   NewTopic: {
     screen: NewTopic,
-
+    // navigationOptions: {
+    //   title: '123'
+    // }
   },
   Message: {
     screen: Message,
@@ -41,12 +55,17 @@ const MainPage = TabNavigator({
 }, {
   initialRouteName: 'HomePage',
   swipeEnabled: true,
+  lazy: true,
   // animationEnabled: true,    //  新版本bug
   tabBarOptions: {
     style: {
       paddingBottom: 2,
     },
   },
+  navigationOptions: {
+    title: '123',
+    backgroundColor: '#1b181b'
+  }
 });
 
 export const AppNavigator = StackNavigator({
@@ -89,9 +108,26 @@ export const AppNavigator = StackNavigator({
   RecentReply: {
     screen: RecentReply
   },
+  ReplyPage: {
+    screen: ReplyPage
+  }
 }, {
   headerMode: 'screen',
   initialRouteName: 'MainPage',
+  // initialRouteParams: {
+  //   // themecolor: new GlobalConfigStorage().getThemeColor(),
+  //   title: '123'
+  // },
+  navigationOptions: {
+    // title: navigation.state.params.authorname + ' 的收藏',
+    // title: '123',
+    headerTintColor: '#ffffff',
+    headerStyle: {
+      backgroundColor:  '#39d23c',
+      // backgroundColor: new GlobalConfigStorage().getThemeColor() || '#a96dd1',
+      // backgroundColor: '#372a34',
+    },
+  }
 });
 
 export default AppNavigator;

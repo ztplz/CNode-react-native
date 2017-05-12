@@ -33,7 +33,7 @@ const isWhichTab = tab => {
 const CollectionRow = props => (
   <TouchableHighlight
     underlayColor='#e7e7e7'
-    onPress={() => console.log('11111')}
+    onPress={() => props.navigate('TopicDetail', {topicId: props.data.id})}
   >
     <View style={styles.container}>
       <Text style={styles.titleText}>{props.data.title}</Text>

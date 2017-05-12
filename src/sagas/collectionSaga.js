@@ -15,6 +15,7 @@ import {
 } from '../constants/actionTypes';
 import { getFetch } from '../utils/fetchUtils';
 import { getUserCollectUrl } from '../constants/api';
+import Toast from 'react-native-root-toast';
 
 function* fetchCollectionData(action) {
   try {
@@ -51,6 +52,7 @@ function* refreshCollectionData(action) {
       }
     });
   } catch(error) {
+    Toast.show('刷新失败，请重试...', {position: 80});
     yield put({
       type: REFRESH_COLLECTION_DATA_FAILURE,
       payload: {
@@ -65,6 +67,7 @@ function* refreshCollectionData(action) {
 export function* watchFetchCollectionData() {
   while(true) {
     const action = yield take(FETCH_COLLECTION_DATA);
+    console.log(action);
     yield call(fetchCollectionData, action);
   }
 }

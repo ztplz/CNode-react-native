@@ -7,7 +7,10 @@
 import {
   FETCH_TOPICDETAIL_DATA,
   REFRESH_TOPICDETAIL_DATA,
-  REPLY_TO_TOPIC
+  COLLECT_TOPIC,
+  NOT_COLLECT_TOPIC,
+  REPLY_TO_TOPIC,
+  SENT_REPLY_MESSAGE
 } from '../constants/actionTypes';
 
 export function getTopicDetailData(payload) {

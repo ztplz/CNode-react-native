@@ -30,7 +30,7 @@ class Login extends Component {
         <Image source={require('../../asset/img/log.png')} style={styles.log}/>
         <TouchableHighlight
           style={styles.btnContainer}
-          onPress={() => navigation.navigate('QRCodeScan')}
+          onPress={() => navigation.navigate('QRCodeScan',  { currentPageKey: this.props.navigation.state.key, onGoBack: this.props.navigation.state.params.onGoBack})}
         >
           <View style={styles.btn}>
             <Icon name='ios-camera' size={25} color='#ebf2ea' />

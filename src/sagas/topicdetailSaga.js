@@ -13,15 +13,20 @@ import {
   REFRESH_TOPICDETAIL_DATA_SUCCESS,
   REFRESH_TOPICDETAIL_DATA_FAILURE,
   COLLECT_TOPIC,
-  NOT_COLLECT_TOPIC
+  COLLECT_TOPIC_SUCCESS,
+  COLLECT_TOPIC_FAILURE,
+  NOT_COLLECT_TOPIC,
+  NOT_COLLECT_TOPIC_SUCCESS,
+  NOT_COLLECT_TOPIC_FAILURE
 } from '../constants/actionTypes';
 import { getTopicDetailUrl, collectTopicUrl, notCollectTopicUrl } from '../constants/api';
 import { getFetch, postFetch } from '../utils/fetchUtils';
 import Toast from 'react-native-root-toast';
 
+
 function* fetchTopicDetailData(action) {
   try {
-    const accesstoken = action.payload.accesstoken ? '?accesstoken=' + action.payload.accesstoken : null ;
+    const accesstoken = action.payload.accesstoken ? '?accesstoken=' + action.payload.accesstoken : '' ;
     const url = getTopicDetailUrl + action.payload.topicId + accesstoken;
     const data = yield call(getFetch, action.payload.timeout, url);
     yield put({
@@ -29,6 +34,7 @@ function* fetchTopicDetailData(action) {
       payload: {
         isLoading: false,
         isLoaded: true,
+        isCollected: data.is_collect ? data.is_collect : false,
         data,
       }
     });
@@ -69,22 +75,50 @@ function* refreshTopicDetailData(action) {
 function* toCollectTopic(action) {
   try {
     const res = yield call(postFetch, action.payload.timeout, collectTopicUrl, action.payload.params);
-    if(res.success === false) {
-      Toast.show('收藏失败，请重试...', {position: 80});
+    console.log(res);
+    if(res.success === true) {
+      console.log('COLLECT_TOPIC_SUCCESS');
+      yield put({
+        type: COLLECT_TOPIC_SUCCESS,
+        payload: {
+          isCollected: true
+        }
+      })
     }
   } catch(error) {
     //  (ÒωÓױ)呃！！！！
+    Toast.show('收藏失败，请重试...', {position: 80});
+    yield put({
+      type: COLLECT_TOPIC_FAILURE,
+      payload: {
+        error: error
+      }
+    })
   }
 }
 
 function* toNotCollectTopic(action) {
   try {
+    console.log('111111111111');
     const res = yield call(postFetch, action.payload.timeout, notCollectTopicUrl, action.payload.params);
-    if(res.success === false) {
-      Toast.show('取消收藏失败，请重试...', {position: 80});
+    console.log(res);
+    if(res.success === true) {
+      yield put({
+        type: NOT_COLLECT_TOPIC_SUCCESS,
+        payload: {
+          isCollected: false,
+        }
+      })
     }
   } catch(error) {
-    //  (ÒωÓױ)呃！！！！
+    //  (ÒωÓױ)呃！！！！]
+    Toast.show('取消收藏失败，请重试...', {position: 80});
+    yield put({
+      type: NOT_COLLECT_TOPIC_FAILURE,
+      payload: {
+        error: error
+      }
+    })
   }
 }
 

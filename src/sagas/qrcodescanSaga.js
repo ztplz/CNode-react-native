@@ -12,20 +12,31 @@ import {
 } from '../constants/actionTypes';
 import { checkUserAccesstokenUrl } from '../constants/api';
 import { postFetch } from '../utils/fetchUtils';
+import GlobalConfigStorage from '../localStorage/GlobalConfigStorage';
 
 function* userLoginToCNode(action) {
   try {
     const res = yield call(postFetch, action.payload.timeout, checkUserAccesstokenUrl, action.payload.params);
+    console.log(res);
     if(res.success == true) {
       yield put({
         type: LOGIN_TO_CNODE_SUCCESS,
         payload: {
           isLogging: false,
           isLoginSuccess: true,
-          accesstoken: action.payload.params.accesstoken
+          isLogged: true,
+          accesstoken: action.payload.params.accesstoken,
+          avatar_url: res.avatar_url,
+          loginname: res.loginname,
         }
       });
     }
+    new GlobalConfigStorage().saveUserInfo({
+      isLogged: true,
+      accesstoken: action.payload.params.accesstoken,
+      loginname: res.loginname,
+      avatar_url: res.avatar_url
+    });
   } catch(error) {
     yield put({
       type: LOGIN_TO_CNODE_FAILURE,

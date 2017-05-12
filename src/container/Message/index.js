@@ -9,6 +9,7 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
+  TouchableHighlight,
   StyleSheet
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -28,24 +29,41 @@ class Message extends Component {
   };
 
   render() {
+    const { navigation } = this.props;
     return (
       <View>
-        <CustomRow
-          title='未读消息'
-          badge={50}
-          leftIcon={<View style={styles.unreadMessageLeftIcon}><Icon name='ios-mail' size={30} color='#ffffff' /></View>}
-          rightIcon={<Icon name='ios-arrow-forward' size={35} color='#9d9eab' />}
-          rowStyle={styles.messageContainer}
-          titleStyle={styles.messageTitle}
-        />
-        <CustomRow
-          title='已读消息'
-          badge={50}
-          leftIcon={<View style={styles.havereadMessageLeftIcon}><Icon name='ios-mail-open' size={30} color='#ffffff' /></View>}
-          rightIcon={<Icon name='ios-arrow-forward' size={35} color='#9d9eab' />}
-          rowStyle={styles.messageContainer}
-          titleStyle={styles.messageTitle}
-        />
+        <TouchableHighlight
+          underlayColor='#c0c2c3'
+          onPress={() => navigation.navigate('UnreadMessage')}
+        >
+          <View>
+            <CustomRow
+              title='未读消息'
+              badge={50}
+              leftIcon={<View style={styles.unreadMessageLeftIcon}><Icon name='ios-mail' size={30} color='#ffffff' /></View>}
+              rightIcon={<Icon name='ios-arrow-forward' size={35} color='#9d9eab' />}
+              rowStyle={styles.messageContainer}
+              titleStyle={styles.messageTitle}
+            />
+          </View>
+
+        </TouchableHighlight>
+        <TouchableHighlight
+          underlayColor='#c0c2c3'
+          onPress={() => console.log('222')}
+        >
+          <View>
+            <CustomRow
+              title='已读消息'
+              badge={50}
+              leftIcon={<View style={styles.havereadMessageLeftIcon}><Icon name='ios-mail-open' size={30} color='#ffffff' /></View>}
+              rightIcon={<Icon name='ios-arrow-forward' size={35} color='#9d9eab' />}
+              rowStyle={styles.messageContainer}
+              titleStyle={styles.messageTitle}
+            />
+          </View>
+
+        </TouchableHighlight>
       </View>
 
     )

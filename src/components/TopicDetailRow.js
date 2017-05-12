@@ -9,6 +9,7 @@ import {
   View,
   Text,
   Image,
+  TouchableWithoutFeedback,
   TouchableHighlight,
   StyleSheet
 } from 'react-native';
@@ -24,7 +25,11 @@ const TopicDetailRow = props => {
       <View style={styles.container}>
         <View style={styles.topContainer}>
           <View style={styles.ReplyInfoContainer}>
-            <Image source={{uri: props.data.author.avatar_url}} style={{width: 35, height: 35}} />
+            <TouchableWithoutFeedback
+              onPress={() => props.navigate('UserDetail', {authorname: props.data.author.loginname})}
+            >
+              <Image source={{uri: props.data.author.avatar_url}} style={{width: 35, height: 35}} />
+            </TouchableWithoutFeedback>
             <View style={styles.authornameContainer}>
               <Text style={styles.authorname}>{props.data.author.loginname}</Text>
               <Text style={styles.createTime}>{props.floor + 1} 楼 • {timeDiff(props.data.create_at)}</Text>

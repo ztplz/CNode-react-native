@@ -30,7 +30,7 @@ class Setting extends Component {
   };
 
   render() {
-    const { isNightMode, } = this.props;
+    const { isNightMode, navigation } = this.props;
     console.log(isNightMode);
     return (
       <View style={styles.container}>
@@ -49,6 +49,7 @@ class Setting extends Component {
         <View style={styles.themeColorContainer}>
           <TouchableOpacity
             activeOpacity={0.6}
+            onPress={() => navigation.navigate('ThemeColor')}
           >
             <CustomRow
               leftIcon={<Icon name='ios-color-palette' size={30} color='#32d7d7' />}

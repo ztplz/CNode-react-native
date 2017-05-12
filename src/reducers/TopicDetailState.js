@@ -14,14 +14,19 @@ import {
   REFRESH_TOPICDETAIL_DATA_FAILURE,
   REPLY_TO_TOPIC,
   SENT_REPLY_MESSAGE,
-  // COLLECT_TOPIC,
-  // NOT_COLLECT_TOPIC
+  COLLECT_TOPIC,
+  COLLECT_TOPIC_SUCCESS,
+  COLLECT_TOPIC_FAILURE,
+  NOT_COLLECT_TOPIC,
+  NOT_COLLECT_TOPIC_SUCCESS,
+  NOT_COLLECT_TOPIC_FAILURE
 } from '../constants/actionTypes';
 
 const initialState = fromJS({
   isLoading: true,
   isRefreshing: false,
   isloaded: false,
+  isCollected: false,
   isReplyTextInputShow: false,
   error: '',
   data: {}
@@ -36,6 +41,7 @@ export default function TopicDetailState(state=initialState, action) {
     case FETCH_TOPICDETAIL_DATA_SUCCESS:
       return state.set('isLoading', action.payload.isLoading)
                   .set('isLoaded', action.payload.isLoaded)
+                  .set('isCollected', action.payload.isCollected)
                   .set('data', action.payload.data);
     case FETCH_TOPICDETAIL_DATA_FAILURE:
       return state.set('isLoading', action.payload.isLoading)
@@ -49,6 +55,22 @@ export default function TopicDetailState(state=initialState, action) {
     case REFRESH_TOPICDETAIL_DATA_FAILURE:
       return state.set('isRefreshing', action.payload.isRefreshing)
                   .set('error', action.payload.error);
+    case COLLECT_TOPIC:
+      return state.set('isCollected', action.payload.isCollected);
+    case COLLECT_TOPIC_SUCCESS:
+      return state.set('isCollected', action.payload.isCollected);
+    case COLLECT_TOPIC_FAILURE:
+      return state.set('error', action.payload.error);
+    case NOT_COLLECT_TOPIC:
+      return state.set('isCollected', action.payload.isCollected);
+    case NOT_COLLECT_TOPIC_SUCCESS:
+      return state.set('isCollected', action.payload.isCollected);
+    case NOT_COLLECT_TOPIC_FAILURE:
+      return state.set('error', action.payload.error);
+    case REPLY_TO_TOPIC:
+      return state.set('isReplyTextInputShow', action.payload.isReplyTextInputShow);
+    case SENT_REPLY_MESSAGE:
+      return state.set('isReplyTextInputShow', action.payload.isReplyTextInputShow);
     default:
       return state;
   }

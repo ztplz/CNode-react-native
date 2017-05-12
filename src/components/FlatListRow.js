@@ -10,6 +10,7 @@ import {
   View,
   Text,
   Image,
+  TouchableWithoutFeedback,
   TouchableHighlight,
   StyleSheet,
 } from 'react-native';
@@ -39,6 +40,7 @@ const whichTab = (tabName) => {
 };
 
 const HomePageListRow = (props) => {
+  // console.log(props.key);
   // console.log(item);
   // console.log(item.create_at);
   // console.log(item.author);

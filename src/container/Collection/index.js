@@ -21,7 +21,8 @@ import NetErrorPage from '../../components/NetErrorPage';
 
 class Collection extends Component {
   static navigationOptions = ({ navigation }) => ({
-    title: navigation.state.params.authorname + ' 的收藏',
+    title: (navigation.state.params.isCurrentUser ? '我' : navigation.state.params.authorname) + ' 的收藏',
+    // title: this.props.loginname,
     headerTintColor: '#ffffff',
     headerStyle: {
       backgroundColor: '#878fe0',
@@ -45,7 +46,7 @@ class Collection extends Component {
         <View style={styles.container}>
           <FlatList
             data={data}
-            renderItem={({item, index}) => <CollectionRow data={item}    />}
+            renderItem={({item, index}) => <CollectionRow data={item} navigate={navigation.navigate}  />}
             ItemSeparatorComponent={() => <View style={{paddingLeft: 8, paddingRight: 8, height: pixel, backgroundColor: '#85757a'}}></View>}
             keyExtractor={(item, index) => 'Collection' + item.id + index }
             onRefresh={() => actions.refreshCollectionData({isRefreshing: true, username: navigation.state.params.authorname, timeout: 15000, error: ''}) }
@@ -89,6 +90,7 @@ const mapStateToProps = state => {
     isRefreshing: stateOfCollection.isRefreshing,
     error: stateOfCollection.error,
     data: stateOfCollection.data,
+    // loginname: GlobalState.get('loginname')
   }
 }
 

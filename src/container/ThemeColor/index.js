@@ -18,15 +18,25 @@ import { changeThemecolor } from '../../actions/globalconfigActions';
 import CustomRow from '../../components/CustomRow';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Pixel } from '../../utils/deviceSize';
+import { changeThemeColor } from '../../AppNavigator';
 
 class ThemeColor extends Component {
+  // static navigationOptions =（{navigation} =>（{
+  //   // title:  navigation.state.params.title || '更改主题颜色',
+  //   title: '更改主题颜色',
+  //   headerTintColor: '#ffffff',
+  //   headerStyle: {
+  //     backgroundColor: '#878fe0',
+  //   },
+  // }）
+
   static navigationOptions = {
-    title: '更改主题颜色',
+    title:  '更改主题颜色',
     headerTintColor: '#ffffff',
     headerStyle: {
       backgroundColor: '#878fe0',
     },
-  };
+  }
 
   constructor(props) {
     super(props);
@@ -44,6 +54,9 @@ class ThemeColor extends Component {
     ]
   }
 
+  componentDidMount() {
+    this.props.navigation.setParams({title: 123});
+  }
   render() {
     const { selectedColor, themeColor } = this.props;
     console.log(this.props);
@@ -57,7 +70,8 @@ class ThemeColor extends Component {
               <View key={ 'ThemeColor' + index  }>
                 <TouchableOpacity
                   activeOpacity={0.6}
-                  onPress={() => this.props.changeThemecolor({ selectedColor: item[1], themeColor: item[2] })}
+                  // onPress={() => this.props.changeThemecolor({ selectedColor: item[1], themeColor: item[2] })}
+                  onPress={() => changeThemeColor(item[2])}
                 >
                   <CustomRow
                     leftIcon={ selectedColor === item[1] ? <Icon name='ios-checkmark-circle' size={20} color={item[2]} /> : <View style={styles.circle}></View>}

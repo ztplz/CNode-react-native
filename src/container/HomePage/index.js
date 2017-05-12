@@ -15,20 +15,21 @@ import LoadingPage from '../../components/LoadingPage';
 
 class HomePage extends Component {
 
-  // static navigationOptions = ({ navigation }) => ({
-  //   tabBarLabel: '首页',
-  //   // lazyLoad: true,
-  //   tabBarIcon: () => <Icon name="ios-home-outline" size={30} color="#c8bebe" />,
-  //   headerVisible: false,
-  // })
-
-  static navigationOptions = {
+  static navigationOptions = ({ navigation }) => ({
     tabBarLabel: '首页',
     // lazyLoad: true,
     tabBarIcon: () => <Icon name="ios-home-outline" size={30} color="#c8bebe" />,
     // headerVisible: false,
     header: null
-  }
+  })
+
+  // static navigationOptions = {
+  //   tabBarLabel: '首页',
+  //   // lazyLoad: true,
+  //   tabBarIcon: () => <Icon name="ios-home-outline" size={30} color="#c8bebe" />,
+  //   // headerVisible: false,
+  //   header: null
+  // }
 
   constructor(props) {
     super(props);

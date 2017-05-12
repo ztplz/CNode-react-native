@@ -13,6 +13,9 @@ import { watchFetchUserDetailData } from './userdetailSaga';
 import { watchFetchCollectionData, watchRefreshCollectionData } from './collectionSaga';
 import { watchUserLoginToCNode } from './qrcodescanSaga';
 import { watchRefreshRecent } from './recentSaga';
+import { watchAppStartUp } from './startupSaga';
+import { watchFetchMeData } from './meSaga';
+console.log(watchFetchMeData);
 
 export default function* rootSaga() {
   yield [
@@ -32,5 +35,7 @@ export default function* rootSaga() {
     fork(watchRefreshCollectionData),
     fork(watchUserLoginToCNode),
     fork(watchRefreshRecent),
+    fork(watchAppStartUp),
+    fork(watchFetchMeData),
   ];
 }

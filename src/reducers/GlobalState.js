@@ -10,7 +10,10 @@ import {
   CHANGE_THEMECOLOR,
   USER_LOGIN,
   CHANEGE_COLOR_SELECT,
-  LOGIN_TO_CNODE_SUCCESS
+  LOGIN_TO_CNODE_SUCCESS,
+  START_UP,
+  GET_USERINFO_SUCCESS,
+  FETCH_ME_DATA_SUCCESS
 } from '../constants/actionTypes';
 
 const initialState = fromJS({
@@ -19,6 +22,9 @@ const initialState = fromJS({
   selectedColor: null,
   isLogged: false,
   accesstoken: '',
+  loginname: null,
+  avatar_url: null,
+  user_create_at: null
 });
 
 export default function GlobalState(state=initialState, action) {
@@ -30,11 +36,20 @@ export default function GlobalState(state=initialState, action) {
       return state.set('themeColor', action.payload.themeColor);
     case LOGIN_TO_CNODE_SUCCESS:
       return state.set('isLogged', action.payload.isLogged)
-                  .set('accesstoken', action.payload.accesstoken);
+                  .set('accesstoken', action.payload.accesstoken)
+                  .set('loginname', action.payload.loginname)
+                  .set('avatar_url', action.payload.avatar_url);
     case CHANEGE_COLOR_SELECT:
       return state.set('selectedColor', action.payload.selectedColor);
-    case LOGIN_TO_CNODE_SUCCESS:
-      return state.set('accesstoken', action.payload.accesstoken);
+    case GET_USERINFO_SUCCESS:
+      return state.set('isLogged', action.payload.data.isLogged)
+                  .set('accesstoken', action.payload.data.accesstoken)
+                  .set('loginname', action.payload.data.loginname)
+                  .set('avatar_url', action.payload.data.avatar_url);
+    case FETCH_ME_DATA_SUCCESS:
+      return state.set('user_create_at', action.payload.user_create_at);
+    // case LOGIN_TO_CNODE_SUCCESS:
+    //   return state.set('accesstoken', action.payload.accesstoken);
     default:
       return state;
   }

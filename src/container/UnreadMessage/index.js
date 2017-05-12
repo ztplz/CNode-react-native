@@ -19,6 +19,7 @@ import { Map, List } from 'immutable';
 import MessageRow from '../../components/MessageRow';
 import * as actions from '../../actions/unreadMessageActions';
 import LoadingPage from '../../components/LoadingPage';
+import { DeviceWidth, pixel } from '../../utils/deviceSize';
 
 class UnreadMessage extends Component {
   static navigationOptions = {

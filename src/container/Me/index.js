@@ -17,15 +17,17 @@ import {
 } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as actions from '../../actions/globalconfigActions';
+import * as actions from '../../actions/meActions';
 import Icon from 'react-native-vector-icons/Ionicons';
 import CustomRow from '../../components/CustomRow';
 import { Pixel } from '../../utils/deviceSize';
+import LoadingPage from '../../components/LoadingPage';
+import timeDiff from '../../utils/timeDiffUtil';
 
 class Me extends Component {
   static navigationOptions = {
     tabBarLabel: '我的',
-    lazyLoad: true,
+    // lazy: true,
     tabBarIcon: () => <Icon name='ios-contact-outline' size={30} color='#c8bebe' />,
     title: '我的',
     headerTintColor: '#ffffff',
@@ -34,17 +36,32 @@ class Me extends Component {
     },
   };
 
-  render() {
-    const { accesstoken } = this.props;
+  // componentDidMount() {
+  //   if(this.props.isLogged) {
+  //     this.
+  //   }
+  // }
 
-    if(accesstoken) {
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps.loginname);
+    console.log(nextProps.isLogged && nextProps.loginname);
+    if(nextProps.isLogged && (nextProps.loginname !== '') ) {
+      console.log(nextProps.isLogged);
+      nextProps.actions.getMeData({loginname: nextProps.loginname, timeout: 10000})
+    }
+  }
+
+  render() {
+    const { isLogged, accesstoken, loginname, avatar_url, user_create_at, navigation } = this.props;
+    console.log(user_create_at);
+    if(isLogged) {
       return (
         <ScrollView style={styles.container}>
           <View style={styles.userInfoContainer}>
-            <Image source={require('../../components/test.jpg')} style={styles.avatar}/>
+            <Image source={{uri: avatar_url}} style={styles.avatar}/>
             <View style={styles.userInfo}>
-              <Text style={styles.username}>mysticzt</Text>
-              <Text style={styles.createTime}>注册时间： 五年前</Text>
+              <Text style={styles.username}>{ loginname }</Text>
+              <Text style={styles.createTime}>注册时间： {timeDiff(user_create_at)}</Text>
             </View>
           </View>
           <View style={styles.replyAndPostContainer}>
@@ -72,13 +89,16 @@ class Me extends Component {
           <View style={styles.collectionContainer}>
             <TouchableOpacity
               activeOpacity={0.6}
+              onPress={() => navigation.navigate('Collection', {isCurrentUser: true, authorname: loginname})}
             >
-              <CustomRow
-                leftIcon={<Icon name='ios-star' size={30} color='#e2525b' />}
-                rightIcon={<Icon name='ios-arrow-forward' size={20} color='#9d9eab' />}
-                title='我的收藏'
-                rowStyle={styles.collectionRow}
-              />
+              <View>
+                <CustomRow
+                  leftIcon={<Icon name='ios-star' size={30} color='#e2525b' />}
+                  rightIcon={<Icon name='ios-arrow-forward' size={20} color='#9d9eab' />}
+                  title='我的收藏'
+                  rowStyle={styles.collectionRow}
+                />
+              </View>
             </TouchableOpacity>
           </View>
           <View style={styles.draftboxContainer}>
@@ -96,6 +116,7 @@ class Me extends Component {
           <View style={styles.settingContainer}>
             <TouchableOpacity
               activeOpacity={0.6}
+              onPress={() => navigation.navigate('Setting')}
             >
               <CustomRow
                 leftIcon={<Icon name='ios-settings' size={30} color='#5b656c' />}
@@ -105,45 +126,15 @@ class Me extends Component {
               />
             </TouchableOpacity>
           </View>
-          {/* <View style={styles.cleanContainer}>
-            <TouchableOpacity
-              activeOpacity={0.6}
-            >
-              <CustomRow
-                leftIcon={<Icon name='ios-trash' size={30} color='#8533d7' />}
-                rightIcon={<Icon name='ios-arrow-forward' size={20} color='#9d9eab' />}
-                title='清理缓存'
-                rowStyle={styles.cleanRow}
-              />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.aboutContainer}>
-            <TouchableOpacity
-              activeOpacity={0.6}
-            >
-              <CustomRow
-                leftIcon={<Icon name='ios-information-circle' size={30} color='#32d7d7' />}
-                rightIcon={<Icon name='ios-arrow-forward' size={20} color='#9d9eab' />}
-                title='关于'
-                rowStyle={styles.aboutRow}
-              />
-            </TouchableOpacity>
-          </View> */}
+
         </ScrollView>
       );
     } else {
       return (
         <ScrollView style={styles.container}>
-          {/* <View style={styles.userInfoContainer}>
-            <Image source={require('../../components/test.jpg')} style={styles.avatar}/>
-            <View style={styles.userInfo}>
-              <Text style={styles.username}>mysticzt</Text>
-              <Text style={styles.createTime}>注册时间： 五年前</Text>
-            </View>
-          </View> */}
           <TouchableOpacity
             activeOpacity={0.6}
-            onPress={() => this.props.navigation.navigate('Login')}
+            onPress={() => navigation.navigate('Login', {onGoBack: null})}
             style={{marginTop: 50}}
           >
             <View style={styles.loginBtn}>
@@ -153,6 +144,7 @@ class Me extends Component {
           <View style={styles.settingContainer}>
             <TouchableOpacity
               activeOpacity={0.6}
+              onPress={() => navigation.navigate('Setting')}
             >
               <CustomRow
                 leftIcon={<Icon name='ios-settings' size={30} color='#5b656c' />}
@@ -162,31 +154,13 @@ class Me extends Component {
               />
             </TouchableOpacity>
           </View>
-          {/* <View style={styles.cleanContainer}>
-            <TouchableOpacity
-              activeOpacity={0.6}
-            >
-              <CustomRow
-                leftIcon={<Icon name='ios-trash' size={30} color='#8533d7' />}
-                rightIcon={<Icon name='ios-arrow-forward' size={20} color='#9d9eab' />}
-                title='清理缓存'
-                rowStyle={styles.cleanRow}
-              />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.aboutContainer}>
-            <TouchableOpacity
-              activeOpacity={0.6}
-            >
-              <CustomRow
-                leftIcon={<Icon name='ios-information-circle' size={30} color='#32d7d7' />}
-                rightIcon={<Icon name='ios-arrow-forward' size={20} color='#9d9eab' />}
-                title='关于'
-                rowStyle={styles.aboutRow}
-              />
-            </TouchableOpacity>
-          </View> */}
         </ScrollView>
+      )
+    }
+
+    if(isLoading) {
+      return (
+        <LoadingPage title='正在加载，请稍候...' />
       )
     }
   }
@@ -313,7 +287,12 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   const GlobalState = state.GlobalState.toJS();
   return {
-    accesstoken: GlobalState.accesstoken
+    // isLoading: state.MeState.get('isLoading'),
+    isLogged: GlobalState.isLogged,
+    accesstoken: GlobalState.accesstoken,
+    loginname: GlobalState.loginname,
+    avatar_url: GlobalState.avatar_url,
+    user_create_at: GlobalState.user_create_at
   }
 }
 
