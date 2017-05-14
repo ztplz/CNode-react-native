@@ -29,6 +29,7 @@ import TopicDetailRow from '../../components/TopicDetailRow';
 import HeaderButton from '../../components/HeaderButton';
 import NetErrorPage from '../../components/NetErrorPage';
 // import MessageReplyTextInput from '../../components/MessageReplyTextInput';
+console.log(actions);
 
 class TopicDetail extends Component {
   static navigationOptions = {
@@ -140,10 +141,10 @@ class TopicDetail extends Component {
       ],
       // { cancelable: false }
     )
-  }s
+  }
 
   render() {
-    const { isLoading, isLoaded, isRefreshing, isCollected, isReplyTextInputShow, error, data, actions, navigation } = this.props;
+    const { isLoading, isLoaded, isRefreshing, isLogged, isCollected, accesstoken, isReplyTextInputShow, error, data, actions, navigation } = this.props;
     console.log(this.props.data);
     console.log(this.props.isCollected);
     if(isLoading) {
@@ -223,7 +224,7 @@ class TopicDetail extends Component {
           <View style={{marginTop: 30, paddingLeft: 8, paddingRight: 8}}>
             <FlatList
               data={data.replies}
-              renderItem={({item, index}) => <TopicDetailRow data={item} floor={index} navigate={navigation.navigate} />}
+              renderItem={({item, index}) => <TopicDetailRow data={item} floor={index} accesstoken={accesstoken} navigation={navigation} isLogged={isLogged}  actions={actions} />}
               ItemSeparatorComponent={() => <View style={styles.commentSeparator} />}
               keyExtractor={(item, index) => 'TopicDetail' + item.id + index }
             />

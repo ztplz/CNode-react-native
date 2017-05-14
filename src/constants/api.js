@@ -12,4 +12,5 @@ export const notCollectTopicUrl = 'https://cnodejs.org/api/v1/topic_collect/de_c
 export const getUserCollectUrl = 'https://cnodejs.org/api/v1/topic_collect/';
 export const getUserDetailUrl = 'https://cnodejs.org/api/v1/user/';
 export const checkUserAccesstokenUrl = 'https://cnodejs.org/api/v1/accesstoken';
-export const getUserRecentTopicsUrl = 'https://cnodejs.org/api/v1/user/'
+export const getUserRecentTopicsUrl = 'https://cnodejs.org/api/v1/user/';
+export const replyUpsUrl = 'https://cnodejs.org/api/v1/user/reply/';

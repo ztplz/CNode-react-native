@@ -17,9 +17,15 @@ import {
   COLLECT_TOPIC_FAILURE,
   NOT_COLLECT_TOPIC,
   NOT_COLLECT_TOPIC_SUCCESS,
-  NOT_COLLECT_TOPIC_FAILURE
+  NOT_COLLECT_TOPIC_FAILURE,
+  UPED_ITEM,
 } from '../constants/actionTypes';
-import { getTopicDetailUrl, collectTopicUrl, notCollectTopicUrl } from '../constants/api';
+import {
+  getTopicDetailUrl,
+  collectTopicUrl,
+  notCollectTopicUrl,
+  replyUpsUrl,
+} from '../constants/api';
 import { getFetch, postFetch } from '../utils/fetchUtils';
 import Toast from 'react-native-root-toast';
 
@@ -122,6 +128,32 @@ function* toNotCollectTopic(action) {
   }
 }
 
+export function* userUpedItem(action) {
+  try {
+    const url = replyUpsUrl + action.payload.replyId + '/ups';
+    const res = yield call(postFetch, action.payload.timeout, url, action.payload.params);
+    // console.log(res);
+    // if(res.success === true) {
+    //   console.log('UPED_ITEM_SUCCESS');
+    //   yield put({
+    //     type: UPED_ITEM_SUCCESS,
+    //     payload: {
+    //       isUped: true
+    //     }
+    //   })
+    // }
+  } catch(error) {
+    //  (ÒωÓױ)呃！！！！
+    // Toast.show('收藏失败，请重试...', {position: 80});
+    // yield put({
+    //   type: COLLECT_TOPIC_FAILURE,
+    //   payload: {
+    //     error: error
+    //   }
+    // })
+  }
+}
+
 export function* watchFetchTopicDetailData() {
   while(true) {
     const action = yield take(FETCH_TOPICDETAIL_DATA);
@@ -141,7 +173,6 @@ export function* watchRefreshTopicDetailData() {
 export function* watchTopicCollect() {
   while(true) {
     const action = yield take(COLLECT_TOPIC);
-    console.log(action);
     yield call(toCollectTopic, action);
   }
 }
@@ -149,7 +180,14 @@ export function* watchTopicCollect() {
 export function* watchNotTopicCollect() {
   while(true) {
     const action = yield take(NOT_COLLECT_TOPIC);
-    console.log(action);
     yield call(toNotCollectTopic, action);
   }
+}
+
+export function* watchUerUpedItem() {
+  // while(true) {
+  yield takeEvery(UPED_ITEM, userUpedItem);
+    // console.log(action);
+    // yield call(userUpedItem, action);
+  // }
 }

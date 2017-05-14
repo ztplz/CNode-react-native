@@ -17,7 +17,8 @@ import HTMLView from 'react-native-htmlview';
 import Icon from 'react-native-vector-icons/Ionicons';
 import timeDiff from '../utils/timeDiffUtil';
 
-const UnreadMessageRow = (props) => {
+const MessageRow = (props) => {
+  console.log(props);
   return (
       <View style={styles.container}>
         <View style={styles.topContainer}>
@@ -90,7 +91,7 @@ const styles = StyleSheet.create({
   },
   replyText: {
     marginTop: 5,
-    backgroundColor: 'red',
+    // backgroundColor: 'red',
     paddingTop: 3,
     paddingBottom: 5,
   },
@@ -109,4 +110,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default UnreadMessageRow;
+export default MessageRow;

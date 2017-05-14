@@ -45,7 +45,7 @@ class ScrollTab extends Component {
     this.props.actions.loadMoreHomePageData({tabName: this.props.tabName, isLoadingMore: true, isLoadedAll: false, timeout: 10000, error: '', pageIndex: this.props.state.pageIndex + 1})
   }
 
-  
+
 
   render() {
     const { state, tabName, actions, navigation } = this.props;

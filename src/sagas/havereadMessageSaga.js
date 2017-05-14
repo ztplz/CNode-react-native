@@ -22,42 +22,46 @@ function* fetchHavereadMessage(action) {
     const url = getMessageUrl +'?accesstoken=' + action.payload.accesstoken;
     const data = yield call(getFetch, action.payload.timeout, url);
     console.log(data);
-    if(action.payload.hasOwnProperty('isLoading')) {
-      yield put({
-        type: FETCH_HAVEREADMESSAGE_DATA_SUCCESS,
-        payload: {
-          isLoading: false,
-          data: data.has_read_messages,
-        }
-      });
-    } else {
-      console.log('REFRESH_HAVEREADMESSAGE_DATA_SUCCESS');
-      yield put({
-        type: REFRESH_HAVEREADMESSAGE_DATA_SUCCESS,
-        payload: {
-          isRefreshing: false,
-          data: data.has_read_messages,
-        }
-      });
-    }
+    yield put({
+      type: FETCH_HAVEREADMESSAGE_DATA_SUCCESS,
+      payload: {
+        isLoading: false,
+        isLoaded: true,
+        data: data.has_read_messages,
+      }
+    });
   } catch(error) {
-    if(action.payload.hasOwnProperty('isLoading')) {
-      yield put({
-        type: FETCH_HAVEREADMESSAGE_DATA_FAILURE,
-        payload: {
-          isLoading: false,
-          error: error,
-        }
-      })
-    } else {
-      yield put({
-        type: REFRESH_HAVEREADMESSAGE_DATA_FAILURE,
-        payload: {
-          isRefreshing: false,
-          error: error,
-        }
-      })
-    }
+    yield put({
+      type: FETCH_HAVEREADMESSAGE_DATA_FAILURE,
+      payload: {
+        isLoading: false,
+        error: error,
+      }
+    });
+  }
+}
+
+function* refreshHavereadMessage(action) {
+  try {
+    const url = getMessageUrl +'?accesstoken=' + action.payload.accesstoken;
+    const data = yield call(getFetch, action.payload.timeout, url);
+    console.log(data);
+    yield put({
+      type: REFRESH_HAVEREADMESSAGE_DATA_SUCCESS,
+      payload: {
+        isRefreshing: false,
+        data: data.has_read_messages,
+      }
+    });
+  } catch(error) {
+    Toast.show('刷新失败，请重试...', {position: 80});
+    yield put({
+      type: REFRESH_HAVEREADMESSAGE_DATA_FAILURE,
+      payload: {
+        isRefreshing: false,
+        error
+      }
+    });
   }
 }
 
@@ -72,6 +76,6 @@ export function* watchFetchHavereadMessage() {
 export function* watchRefreshHavereadMessage() {
   while(true) {
     const action = yield take(REFRESH_HAVEREADMESSAGE_DATA);
-    yield call(fetchHavereadMessage, action);
+    yield call(refreshHavereadMessage, action);
   }
 }

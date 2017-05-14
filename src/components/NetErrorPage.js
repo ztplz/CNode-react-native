@@ -13,21 +13,24 @@ import {
   StyleSheet,
 } from 'react-native';
 
-const NetErrorPage = props => (
-  <View style={styles.container}>
-    <Text style={styles.textStyle}>
-      {props.error === 'FETCH_TIME_OUT'? '网络请求超时，请重试或者检查网络...' : null}
-      {props.error === 'FETCH_ERROR'? '服务器响应错误， 请重试...' : null}
-    </Text>
-    <TouchableWithoutFeedback
-      onPress={props.handler}
-    >
-      <View style={styles.btn}>
-        <Text style={styles.btnText}>重 试</Text>
-      </View>
-    </TouchableWithoutFeedback>
-  </View>
-);
+const NetErrorPage = props => {
+  console.log(props.handler);
+  return (
+    <View style={styles.container}>
+      <Text style={styles.textStyle}>
+        {props.error === 'FETCH_TIME_OUT'? '网络请求超时，请重试或者检查网络...' : null}
+        {props.error === 'FETCH_ERROR'? '服务器响应错误， 请重试...' : null}
+      </Text>
+      <TouchableWithoutFeedback
+        onPress={props.handler}
+      >
+        <View style={styles.btn}>
+          <Text style={styles.btnText}>重 试</Text>
+        </View>
+      </TouchableWithoutFeedback>
+    </View>
+  );
+}
 
 const styles = StyleSheet.create({
   container: {

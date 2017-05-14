@@ -8,6 +8,7 @@ import React from 'react';
 import {
   View,
   Text,
+  Alert,
   Image,
   TouchableWithoutFeedback,
   TouchableHighlight,
@@ -18,6 +19,28 @@ import HTMLView from 'react-native-htmlview';
 import timeDiff from '../utils/timeDiffUtil';
 
 const content = "<div class=\"markdown-text\"><p>🥚 的插件机制简直强大！用上 🥚 瞬间感觉自己无所不能了！</p>\n</div>"
+
+const likeIt = (index, isLogged, isUped, accesstoken, reply_id, navigation,  upedItem, getTopicDetailData) => {
+  if(isLogged) {
+    // if(isUped) {
+    //   notUpedItem({params: { accesstoken, topic_id,},  timeout: 10000});
+    // } else {
+    //   upedItem({params: { accesstoken, topic_id },  timeout: 10000})
+    // }
+    //
+    // return ;
+    upedItem({accesstoken, reply_id, isUped: !isUped, index})
+  }
+
+  Alert.alert(
+    '请先登录',
+    null,
+    [
+      {text: '登录', onPress: () => navigation.navigate('Login', { onGoBack: () => getTopicDetailData({topicId: navigation.state.params.topicId, accesstoken, isLoading: true, isLoaded: false, error: '', timeout: 10000})})},
+      {text: '取消', null },
+    ],
+  )
+}
 
 const TopicDetailRow = props => {
   // console.log(props.data);
@@ -36,9 +59,17 @@ const TopicDetailRow = props => {
             </View>
           </View>
           <View style={styles.iconContainer}>
-            <Icon name='ios-thumbs-up' size={20} color='#5b5259' />
-            <Text style={styles.thumbsUpNumber}>{props.data.ups.length}</Text>
-            <Icon name='ios-undo' size={20} color='#736270' style={styles.undo} />
+            <TouchableWithoutFeedback
+              onPress={() => likeIt(props.floor, props.isLogged, props.data.is_uped, props.accesstoken, props.data.id, props.navigation, props.actions.upedItem, props.actions.getTopicDetailData)}
+            >
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Icon name='ios-thumbs-up' size={20} color={props.data.is_uped? '#605e57' : '#b7bfb7'} />
+                <Text style={styles.thumbsUpNumber}>{props.data.ups.length}</Text>
+              </View>
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback>
+              <Icon name='ios-undo' size={20} color='#736270' style={styles.undo} />
+            </TouchableWithoutFeedback>
           </View>
         </View>
         <View style={styles.bottomContainer}>

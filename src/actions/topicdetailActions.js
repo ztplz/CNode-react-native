@@ -10,7 +10,8 @@ import {
   COLLECT_TOPIC,
   NOT_COLLECT_TOPIC,
   REPLY_TO_TOPIC,
-  SENT_REPLY_MESSAGE
+  SENT_REPLY_MESSAGE,
+  UPED_ITEM
 } from '../constants/actionTypes';
 
 export function getTopicDetailData(payload) {
@@ -51,6 +52,13 @@ export function topicCollect(payload) {
 export function topicNotCollect(payload) {
   return {
     type: NOT_COLLECT_TOPIC,
+    payload
+  }
+}
+
+export function upedItem(payload) {
+  return {
+    type: UPED_ITEM,
     payload
   }
 }

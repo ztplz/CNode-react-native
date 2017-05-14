@@ -19,7 +19,8 @@ import {
   COLLECT_TOPIC_FAILURE,
   NOT_COLLECT_TOPIC,
   NOT_COLLECT_TOPIC_SUCCESS,
-  NOT_COLLECT_TOPIC_FAILURE
+  NOT_COLLECT_TOPIC_FAILURE,
+  UPED_ITEM,
 } from '../constants/actionTypes';
 
 const initialState = fromJS({
@@ -71,6 +72,23 @@ export default function TopicDetailState(state=initialState, action) {
       return state.set('isReplyTextInputShow', action.payload.isReplyTextInputShow);
     case SENT_REPLY_MESSAGE:
       return state.set('isReplyTextInputShow', action.payload.isReplyTextInputShow);
+    case UPED_ITEM:
+      console.log(action);
+      // console.log(state.get(['data', 'replies']));
+      // console.log(state.get('data').replies[action.payload.index].is_uped);
+      // return state.updateIn(['data', 'replies'], replies => replies.setIn([action.payload.index, 'is_uped'], action.payload.isUped) );
+      // return state.updateIn(['data', 'replies'], list => list.updateIn([action.payload.index + 1, 'is_uped'], is_uped => action.payload.isUped))
+      // return state.set('data', {...state.get('data'), {...state.get('data').replies,  }.replies[action.payload.index].is_uped)
+      // return state.update('data', {
+      //   ...state.get('data'), [
+      //     ...state.get('data').replies, {
+      //       ...state.get('data').replies[action.payload.index],  is_uped: action.payload.isUped
+      //     }
+      //   ]
+      // })
+      // return state.merge(state.get('data').replies[action.payload.index].is_uped);
+      state.set('data', {a: 1});
+      console.log(state.get('data'))
     default:
       return state;
   }

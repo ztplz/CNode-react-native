@@ -14,6 +14,7 @@ import configStore from './store/configStore';
 // console.log(configStore);
 
 const store = configStore();
+// store.dispatch()
 // console.log(store.getState());
 
 class CNode extends Component {

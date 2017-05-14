@@ -38,197 +38,6 @@ class HavereadMessage extends Component {
   constructor(props) {
     super(props);
     this.listeners = null;
-    this.data=[
-      {
-        "id": "58c8022668828084780013e5",
-        "type": "reply",
-        "has_read": true,
-        "author": {
-          "loginname": "gzhangzy",
-          "avatar_url": "https://avatars1.githubusercontent.com/u/7035683?v=3&s=120"
-        },
-        "topic": {
-          "id": "58c801f5e0cfa8974a261314",
-          "title": "测试下回复api",
-          "last_reply_at": "2017-03-14T14:45:58.819Z"
-        },
-        "reply": {
-          "id": "58c8022668828084780013e4",
-          "content": "<div class=\"markdown-text\"><p>yi tiao</p>\n</div>",
-          "ups": [],
-          "create_at": "2017-03-14T14:45:58.803Z"
-        },
-        "create_at": "2017-03-14T14:45:58.821Z"
-      },
-      {
-        "id": "58c8022668828084780013e5",
-        "type": "reply",
-        "has_read": true,
-        "author": {
-          "loginname": "gzhangzy",
-          "avatar_url": "https://avatars1.githubusercontent.com/u/7035683?v=3&s=120"
-        },
-        "topic": {
-          "id": "58c801f5e0cfa8974a261314",
-          "title": "测试下回复api",
-          "last_reply_at": "2017-03-14T14:45:58.819Z"
-        },
-        "reply": {
-          "id": "58c8022668828084780013e4",
-          "content": "<div class=\"markdown-text\"><p>yi tiao</p>\n</div>",
-          "ups": [],
-          "create_at": "2017-03-14T14:45:58.803Z"
-        },
-        "create_at": "2017-03-14T14:45:58.821Z"
-      },
-      {
-        "id": "58c8022668828084780013e5",
-        "type": "reply",
-        "has_read": true,
-        "author": {
-          "loginname": "gzhangzy",
-          "avatar_url": "https://avatars1.githubusercontent.com/u/7035683?v=3&s=120"
-        },
-        "topic": {
-          "id": "58c801f5e0cfa8974a261314",
-          "title": "测试下回复api",
-          "last_reply_at": "2017-03-14T14:45:58.819Z"
-        },
-        "reply": {
-          "id": "58c8022668828084780013e4",
-          "content": "<div class=\"markdown-text\"><p>yi tiao</p>\n</div>",
-          "ups": [],
-          "create_at": "2017-03-14T14:45:58.803Z"
-        },
-        "create_at": "2017-03-14T14:45:58.821Z"
-      },
-      {
-        "id": "58c8022668828084780013e5",
-        "type": "reply",
-        "has_read": true,
-        "author": {
-          "loginname": "gzhangzy",
-          "avatar_url": "https://avatars1.githubusercontent.com/u/7035683?v=3&s=120"
-        },
-        "topic": {
-          "id": "58c801f5e0cfa8974a261314",
-          "title": "测试下回复api",
-          "last_reply_at": "2017-03-14T14:45:58.819Z"
-        },
-        "reply": {
-          "id": "58c8022668828084780013e4",
-          "content": "<div class=\"markdown-text\"><p>yi tiao</p>\n</div>",
-          "ups": [],
-          "create_at": "2017-03-14T14:45:58.803Z"
-        },
-        "create_at": "2017-03-14T14:45:58.821Z"
-      },
-      {
-        "id": "58c8022668828084780013e5",
-        "type": "reply",
-        "has_read": true,
-        "author": {
-          "loginname": "gzhangzy",
-          "avatar_url": "https://avatars1.githubusercontent.com/u/7035683?v=3&s=120"
-        },
-        "topic": {
-          "id": "58c801f5e0cfa8974a261314",
-          "title": "测试下回复api",
-          "last_reply_at": "2017-03-14T14:45:58.819Z"
-        },
-        "reply": {
-          "id": "58c8022668828084780013e4",
-          "content": "<div class=\"markdown-text\"><p>yi tiao</p>\n</div>",
-          "ups": [],
-          "create_at": "2017-03-14T14:45:58.803Z"
-        },
-        "create_at": "2017-03-14T14:45:58.821Z"
-      },
-      {
-        "id": "58c8022668828084780013e5",
-        "type": "reply",
-        "has_read": true,
-        "author": {
-          "loginname": "gzhangzy",
-          "avatar_url": "https://avatars1.githubusercontent.com/u/7035683?v=3&s=120"
-        },
-        "topic": {
-          "id": "58c801f5e0cfa8974a261314",
-          "title": "测试下回复api",
-          "last_reply_at": "2017-03-14T14:45:58.819Z"
-        },
-        "reply": {
-          "id": "58c8022668828084780013e4",
-          "content": "<div class=\"markdown-text\"><p>yi tiao</p>\n</div>",
-          "ups": [],
-          "create_at": "2017-03-14T14:45:58.803Z"
-        },
-        "create_at": "2017-03-14T14:45:58.821Z"
-      },
-      {
-        "id": "58c8022668828084780013e5",
-        "type": "reply",
-        "has_read": true,
-        "author": {
-          "loginname": "gzhangzy",
-          "avatar_url": "https://avatars1.githubusercontent.com/u/7035683?v=3&s=120"
-        },
-        "topic": {
-          "id": "58c801f5e0cfa8974a261314",
-          "title": "测试下回复api",
-          "last_reply_at": "2017-03-14T14:45:58.819Z"
-        },
-        "reply": {
-          "id": "58c8022668828084780013e4",
-          "content": "<div class=\"markdown-text\"><p>yi tiao</p>\n</div>",
-          "ups": [],
-          "create_at": "2017-03-14T14:45:58.803Z"
-        },
-        "create_at": "2017-03-14T14:45:58.821Z"
-      },
-      {
-        "id": "58c8022668828084780013e5",
-        "type": "reply",
-        "has_read": true,
-        "author": {
-          "loginname": "gzhangzy",
-          "avatar_url": "https://avatars1.githubusercontent.com/u/7035683?v=3&s=120"
-        },
-        "topic": {
-          "id": "58c801f5e0cfa8974a261314",
-          "title": "测试下回复api",
-          "last_reply_at": "2017-03-14T14:45:58.819Z"
-        },
-        "reply": {
-          "id": "58c8022668828084780013e4",
-          "content": "<div class=\"markdown-text\"><p>yi tiao</p>\n</div>",
-          "ups": [],
-          "create_at": "2017-03-14T14:45:58.803Z"
-        },
-        "create_at": "2017-03-14T14:45:58.821Z"
-      },
-      {
-        "id": "58c8022668828084780013e5",
-        "type": "reply",
-        "has_read": true,
-        "author": {
-          "loginname": "gzhangzy",
-          "avatar_url": "https://avatars1.githubusercontent.com/u/7035683?v=3&s=120"
-        },
-        "topic": {
-          "id": "58c801f5e0cfa8974a261314",
-          "title": "测试下回复api",
-          "last_reply_at": "2017-03-14T14:45:58.819Z"
-        },
-        "reply": {
-          "id": "58c8022668828084780013e4",
-          "content": "<div class=\"markdown-text\"><p>yi tiao</p>\n</div>",
-          "ups": [],
-          "create_at": "2017-03-14T14:45:58.803Z"
-        },
-        "create_at": "2017-03-14T14:45:58.821Z"
-      }
-    ]
     this.state = {
       keyboardHeight: 0,
       isKeyboardOpened: false,
@@ -239,7 +48,7 @@ class HavereadMessage extends Component {
   }
 
   componentDidMount() {
-    this.props.actions.getHavereadMessageData({isLoading: true, accesstoken: '01605c45-3648-470a-8c2c-04551b61672b', timeout: 10000});
+    this.props.actions.getHavereadMessageData({isLoading: true, isloaded: false, accesstoken: this.props.accesstoken, error: '', timeout: 10000});
     const updateListener = Platform.OS === 'android' ? 'keyboardDidShow' : 'keyboardWillShow';
     const resetListener = Platform.OS === 'android' ? 'keyboardDidHide' : 'keyboardWillHide';
     this.listeners = [
@@ -275,12 +84,13 @@ class HavereadMessage extends Component {
 
 
   refreshHavereadMessage() {
-    this.props.actions.refreshHavereadMessageData({isRefreshing: true, accesstoken: '01605c45-3648-470a-8c2c-04551b61672b', timeout: 10000})
+    this.props.actions.refreshHavereadMessageData({isRefreshing: true, accesstoken: this.props.accesstoken, error: '', timeout: 10000})
   }
 
   render() {
-    const { isLoading, isRefreshing, isReply, error, data } = this.props.state.toJS();
+    const { isLoading, isLoaded, isRefreshing, isReply, error, data, actions, navigation } = this.props;
     console.log(isReply);
+    console.log(actions);
     // console.log(this.state.text);
 
     if(isLoading) {
@@ -289,38 +99,48 @@ class HavereadMessage extends Component {
           title='正在加载未读消息...'
         />
       )
-    } else {
-      if(data) {
-        return (
-          <View style={styles.container}>
-            <FlatList
-              data={this.data}
-              renderItem={({item}) => <MessageRow replyTextInputShow={this.props.actions.replyTextInputShow} item={item} />}
-              ItemSeparatorComponent={() => <View style={{paddingLeft: 8, paddingRight: 8, height: pixel, backgroundColor: '#85757a'}}></View>}
-              onRefresh={() => this.refreshHavereadMessage() }
-              refreshing={isRefreshing}
-              keyExtractor={(item, index) => 'has_read_messages' + item.id + index }
-            />
-            {
-              this.state.isKeyboardOpened?
-                <View style={{marginBottom: this.state.keyboardHeight, flexDirection: 'row', alignItems: 'center', borderWidth: pixel, paddingTop: 5, paddingBottom: 5}}>
-                  <MessageReplyTextInput   style={{width: DeviceWidth - 61, borderWidth: 1, borderColor: '#79757e', borderRadius: 5, marginLeft: 8, marginRight: 8}} placeholder='回复 mysticzt： '   fontSize={17} autoCapitalize='none' />
-                    <TouchableOpacity>
-                      <View style={{backgroundColor: '#72aad9', height: 30, width: 37, alignItems: 'center', justifyContent: 'center', borderRadius: 5, marginRight: 8}}>
-                        <Text>发送</Text>
-                      </View>
-                    </TouchableOpacity>
-                </View>
-                :
-                null
-            }
-            { isReply? <TextInput  onBlur={() => this.props.actions.replyTextInputShow({isReply: false})} autoFocus={isReply} caretHidden={true} style={styles.textinputStyle} /> : null}
-          </View>
-        )
-      } else {
-        return null;
-      }
     }
+
+    if(!isLoading && isLoaded) {
+      return (
+        <View style={styles.container}>
+          <FlatList
+            data={this.data}
+            renderItem={({item}) => <MessageRow replyTextInputShow={actions.replyTextInputShow} item={item} />}
+            ItemSeparatorComponent={() => <View style={{paddingLeft: 8, paddingRight: 8, height: pixel, backgroundColor: '#85757a'}}></View>}
+            onRefresh={() => this.refreshHavereadMessage() }
+            refreshing={isRefreshing}
+            keyExtractor={(item, index) => 'has_read_messages' + item.id + index }
+          />
+          {
+            this.state.isKeyboardOpened?
+              <View style={{marginBottom: this.state.keyboardHeight, flexDirection: 'row', alignItems: 'center', borderWidth: pixel, paddingTop: 5, paddingBottom: 5}}>
+                <MessageReplyTextInput   style={{width: DeviceWidth - 61, borderWidth: 1, borderColor: '#79757e', borderRadius: 5, marginLeft: 8, marginRight: 8}} placeholder='回复 mysticzt： '   fontSize={17} autoCapitalize='none' />
+                  <TouchableOpacity>
+                    <View style={{backgroundColor: '#72aad9', height: 30, width: 37, alignItems: 'center', justifyContent: 'center', borderRadius: 5, marginRight: 8}}>
+                      <Text>发送</Text>
+                    </View>
+                  </TouchableOpacity>
+              </View>
+              :
+              null
+          }
+          { isReply? <TextInput  onBlur={() => this.props.actions.replyTextInputShow({isReply: false})} autoFocus={isReply} caretHidden={true} style={styles.textinputStyle} /> : null}
+        </View>
+      )
+    }
+
+    if(error) {
+      return (
+        <NetErrorPage
+          error={error}
+          handler={() => actions.getHavereadMessageData({isLoading: true, isLoaded: false, accesstoken: accesstoken, error: '', timeout: 10000})}
+        />
+      )
+    }
+
+    return null;
+
   }
 }
 
@@ -334,8 +154,13 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
+  // const stateOfMessage = state.MessageState.toJS();
+  const stateOfHavereadMessage  = state.HavereadMessageState.toJS();
   return {
-    state: state.HavereadMessageState,
+    isRefreshing: stateOfHavereadMessage.isRefreshing,
+    isReply: stateOfHavereadMessage.isReply,
+    error: stateOfHavereadMessage.error,
+    data: stateOfHavereadMessage.data,
   }
 }
 
