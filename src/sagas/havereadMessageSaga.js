@@ -6,6 +6,7 @@
 
 import {put, take, call, fork, race, takeEvery, takeLatest } from 'redux-saga/effects';
 import {
+  HAVEREADMESSAGE_REPLY,
   FETCH_HAVEREADMESSAGE_DATA,
   FETCH_HAVEREADMESSAGE_DATA_SUCCESS,
   FETCH_HAVEREADMESSAGE_DATA_FAILURE,
@@ -13,8 +14,9 @@ import {
   REFRESH_HAVEREADMESSAGE_DATA_SUCCESS,
   REFRESH_HAVEREADMESSAGE_DATA_FAILURE,
 } from '../constants/actionTypes';
-import { getFetch } from '../utils/fetchUtils';
-import { getMessageUrl } from '../constants/api';
+import { getFetch, postFetch } from '../utils/fetchUtils';
+import { getMessageUrl, replyToUserUrl } from '../constants/api';
+import Toast from 'react-native-root-toast';
 
 function* fetchHavereadMessage(action) {
   console.log(action.payload);
@@ -65,6 +67,25 @@ function* refreshHavereadMessage(action) {
   }
 }
 
+function* havereadMessageReply(action) {
+  try {
+    const url = replyToUserUrl + action.payload.topic_id + '/replies';
+    const res = yield call(postFetch, action.payload.timeout, url, action.payload.params);
+    if(res.success === true) {
+      Toast.show('回复成功', {position: 80});
+    }
+  } catch(error) {
+    Toast.show('回复失败', {position: 80});
+    // yield put({
+    //   type: REFRESH_UNREADMESSAGE_DATA_FAILURE,
+    //   payload: {
+    //     isRefreshing: false,
+    //     error
+    //   }
+    // });
+  }
+}
+
 
 export function* watchFetchHavereadMessage() {
   while(true) {
@@ -77,5 +98,12 @@ export function* watchRefreshHavereadMessage() {
   while(true) {
     const action = yield take(REFRESH_HAVEREADMESSAGE_DATA);
     yield call(refreshHavereadMessage, action);
+  }
+}
+
+export function* watchHavereadMessageReply() {
+  while(true) {
+    const action = yield take(HAVEREADMESSAGE_REPLY);
+    yield call(havereadMessageReply, action);
   }
 }

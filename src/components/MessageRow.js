@@ -34,7 +34,7 @@ const MessageRow = (props) => {
             </View>
           </View>
           <TouchableWithoutFeedback
-            onPress={() => props.replyTextInputShow({isReply: true, replyName: props.item.author.loginname})}
+            onPress={() => props.replyTextInputShow({isReply: true, replyName: props.item.author.loginname, text:  props.item.author.loginname === props.currentReplyName? props.currentText : null, replyId: props.item.reply.id, replyTopicId: props.item.topic.id })}
           >
             <Icon name='md-text' size={25} color='#708bd1' style={{marginRight: 8}} />
           </TouchableWithoutFeedback>

@@ -87,8 +87,15 @@ class HavereadMessage extends Component {
     this.props.actions.refreshHavereadMessageData({isRefreshing: true, accesstoken: this.props.accesstoken, error: '', timeout: 10000})
   }
 
+  sendReply() {
+    console.log(this.props.replyText);
+    this.props.actions.havereadMessageReply({timeout: 10000, topic_id: this.props.replyTopicId, params: { reply_id: this.props.replyId, accesstoken: this.props.accesstoken, content: '@' + this.props.replyName + '  ' + this.props.replyText}});
+    this.props.actions.replyTextInputShow({isReply: false, replyName: '', text: '', replyId: '', replyTopicId: ''});
+    Keyboard.dismiss();
+  }
+
   render() {
-    const { isLoading, isLoaded, isRefreshing, isReply, replyName, error, data, actions, navigation } = this.props;
+    const { isLoading, isLoaded, isRefreshing, isReply, replyName, replyId, replyTopicId, replyText, accesstoken, error, data, actions, navigation } = this.props;
     console.log(isReply);
     console.log(actions);
     console.log(this.props);
@@ -107,7 +114,7 @@ class HavereadMessage extends Component {
         <View style={styles.container}>
           <FlatList
             data={data}
-            renderItem={({item}) => <MessageRow replyTextInputShow={actions.replyTextInputShow} item={item} navigation={navigation} />}
+            renderItem={({item}) => <MessageRow replyTextInputShow={actions.replyTextInputShow} item={item} navigation={navigation} currentReplyName={replyName} currentText={replyText} />}
             ItemSeparatorComponent={() => <View style={{paddingLeft: 8, paddingRight: 8, height: pixel, backgroundColor: '#85757a'}}></View>}
             onRefresh={() => this.refreshHavereadMessage() }
             refreshing={isRefreshing}
@@ -116,8 +123,10 @@ class HavereadMessage extends Component {
           {
             this.state.isKeyboardOpened?
               <View style={{marginBottom: this.state.keyboardHeight, flexDirection: 'row', alignItems: 'center', borderWidth: pixel, paddingTop: 5, paddingBottom: 5}}>
-                <MessageReplyTextInput   style={{width: DeviceWidth - 61, borderWidth: 1, borderColor: '#79757e', borderRadius: 5, marginLeft: 8, marginRight: 8}} placeholder={' 回复 ' + replyName + '：'}    fontSize={17} autoCapitalize='none' />
-                  <TouchableOpacity>
+                <MessageReplyTextInput   style={{width: DeviceWidth - 61, borderWidth: 1, borderColor: '#79757e', borderRadius: 5, marginLeft: 8, marginRight: 8, paddingLeft: 10}} placeholder={' 回复 ' + replyName + '：'}    fontSize={17} autoCapitalize='none' value={replyText} onChangeText={(text) => actions.havereadMessageTextChange({text})} />
+                  <TouchableOpacity
+                    onPress={() => this.sendReply()}
+                  >
                     <View style={{backgroundColor: '#72aad9', height: 30, width: 37, alignItems: 'center', justifyContent: 'center', borderRadius: 5, marginRight: 8}}>
                       <Text>发送</Text>
                     </View>
@@ -126,7 +135,7 @@ class HavereadMessage extends Component {
               :
               null
           }
-          { isReply? <TextInput  onBlur={() => this.props.actions.replyTextInputShow({isReply: false})} autoFocus={isReply} caretHidden={true} style={styles.textinputStyle} /> : null}
+          { isReply? <TextInput  onBlur={() => this.props.actions.replyTextInputShow({isReply: false, replyName: this.props.replyName, text: replyText, replyId: replyId, replyTopicId: replyTopicId})} autoFocus={isReply} caretHidden={true} style={styles.textinputStyle} /> : null}
         </View>
       )
     }
@@ -163,6 +172,9 @@ const mapStateToProps = state => {
     isRefreshing: stateOfHavereadMessage.isRefreshing,
     isReply: stateOfHavereadMessage.isReply,
     replyName: stateOfHavereadMessage.replyName,
+    replyId: stateOfHavereadMessage.replyId,
+    replyTopicId: stateOfHavereadMessage.replyTopicId,
+    replyText: stateOfHavereadMessage.replyText,
     error: stateOfHavereadMessage.error,
     data: stateOfHavereadMessage.data,
     accesstoken: state.GlobalState.get('accesstoken')

@@ -12,9 +12,11 @@ import {
   REFRESH_UNREADMESSAGE_DATA,
   REFRESH_UNREADMESSAGE_DATA_SUCCESS,
   REFRESH_UNREADMESSAGE_DATA_FAILURE,
+  UNREADMESSAGE_REPLY
 } from '../constants/actionTypes';
-import { getFetch } from '../utils/fetchUtils';
-import { getMessageUrl } from '../constants/api';
+import { getFetch, postFetch } from '../utils/fetchUtils';
+import { getMessageUrl, replyToUserUrl } from '../constants/api';
+import Toast from 'react-native-root-toast';
 
 function* fetchUnreadMessage(action) {
   try {
@@ -64,6 +66,25 @@ function* refreshUnreadMessage(action) {
   }
 }
 
+function* unreadMessageReply(action) {
+  try {
+    const url = replyToUserUrl + action.payload.topic_id + '/replies';
+    const res = yield call(postFetch, action.payload.timeout, url, action.payload.params);
+    if(res.success === true) {
+      Toast.show('回复成功', {position: 80});
+    }
+  } catch(error) {
+    Toast.show('回复失败', {position: 80});
+    // yield put({
+    //   type: REFRESH_UNREADMESSAGE_DATA_FAILURE,
+    //   payload: {
+    //     isRefreshing: false,
+    //     error
+    //   }
+    // });
+  }
+}
+
 export function* watchFetchUnreadMessage() {
   while(true) {
     const action = yield take(FETCH_UNREADMESSAGE_DATA);
@@ -75,5 +96,12 @@ export function* watchRefreshUnreadMessage() {
   while(true) {
     const action = yield take(REFRESH_UNREADMESSAGE_DATA);
     yield call(refreshUnreadMessage, action);
+  }
+}
+
+export function* watchUnreadMessageReply() {
+  while(true) {
+    const action = yield take(UNREADMESSAGE_REPLY);
+    yield call(unreadMessageReply, action);
   }
 }

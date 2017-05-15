@@ -8,6 +8,7 @@ import { fromJS } from 'immutable';
 import {
   UNREAD_MESSAGE_REPLY_TEXTINPUT_SHOW,
   UNREADREADMESSAGE_REPLY,
+  UNREAD_MESSAGE_REPLY_TEXT_CHANGE,
   FETCH_UNREADMESSAGE_DATA,
   FETCH_UNREADMESSAGE_DATA_SUCCESS,
   FETCH_UNREADMESSAGE_DATA_FAILURE,
@@ -22,6 +23,9 @@ const initialState = fromJS({
   isRefreshing: false,
   isReply: false,
   replyName: '',
+  replyId: '',
+  replyTopicId: '',
+  replyText: '',
   error: '',
   data: [],
 });
@@ -30,7 +34,12 @@ export default function UnreadMessageState(state=initialState, action) {
   switch (action.type) {
     case UNREAD_MESSAGE_REPLY_TEXTINPUT_SHOW:
       return state.set('isReply', action.payload.isReply)
-                  .set('replyName', action.payload.replyName);
+                  .set('replyName', action.payload.replyName)
+                  .set('replyId', action.payload.replyId)
+                  .set('replyTopicId', action.payload.replyTopicId)
+                  .set('replyText', action.payload.text);
+    case UNREAD_MESSAGE_REPLY_TEXT_CHANGE:
+      return state.set('replyText', action.payload.text);
     case FETCH_UNREADMESSAGE_DATA:
       return state.set('isLoading', action.payload.isLoading)
                   .set('isLoaded', action.payload.isLoaded)

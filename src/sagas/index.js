@@ -6,8 +6,8 @@
 
 import { fork } from 'redux-saga/effects';
 import { watchFetchHomePageData, watchRefreshHomePageData, watchFetchMoreHomePageData } from './homepageSaga';
-import { watchFetchUnreadMessage, watchRefreshUnreadMessage } from './unreadMessageSaga';
-import { watchFetchHavereadMessage, watchRefreshHavereadMessage } from './havereadMessageSaga';
+import { watchFetchUnreadMessage, watchRefreshUnreadMessage, watchUnreadMessageReply } from './unreadMessageSaga';
+import { watchFetchHavereadMessage, watchRefreshHavereadMessage, watchHavereadMessageReply } from './havereadMessageSaga';
 import { watchFetchTopicDetailData, watchRefreshTopicDetailData, watchTopicCollect, watchNotTopicCollect } from './topicdetailSaga';
 import { watchFetchUserDetailData } from './userdetailSaga';
 import { watchFetchCollectionData, watchRefreshCollectionData } from './collectionSaga';
@@ -25,8 +25,10 @@ export default function* rootSaga() {
     fork(watchFetchMoreHomePageData),
     fork(watchFetchUnreadMessage),
     fork(watchRefreshUnreadMessage),
+    fork(watchUnreadMessageReply),
     fork(watchFetchHavereadMessage),
     fork(watchRefreshHavereadMessage),
+    fork(watchHavereadMessageReply),
     fork(watchFetchTopicDetailData),
     fork(watchRefreshTopicDetailData),
     fork(watchTopicCollect),

@@ -8,7 +8,8 @@ import {
   FETCH_HAVEREADMESSAGE_DATA,
   REFRESH_HAVEREADMESSAGE_DATA,
   HAVEREADMESSAGE_REPLY,
-  HAVEREAD_MESSAGE_REPLY_TEXTINPUT_SHOW
+  HAVEREAD_MESSAGE_REPLY_TEXTINPUT_SHOW,
+  HAVEREAD_MESSAGE_REPLY_TEXT_CHANGE
 } from '../constants/actionTypes';
 
 export function getHavereadMessageData(payload) {
@@ -26,10 +27,23 @@ export function refreshHavereadMessageData(payload) {
 }
 
 export function replyTextInputShow(payload) {
-  console.log(payload);
-  console.log(HAVEREAD_MESSAGE_REPLY_TEXTINPUT_SHOW);
   return {
     type: HAVEREAD_MESSAGE_REPLY_TEXTINPUT_SHOW,
+    payload
+  }
+}
+
+
+export function havereadMessageTextChange(payload) {
+  return {
+    type: HAVEREAD_MESSAGE_REPLY_TEXT_CHANGE,
+    payload
+  }
+}
+
+export function havereadMessageReply(payload) {
+  return {
+    type: HAVEREADMESSAGE_REPLY,
     payload
   }
 }
