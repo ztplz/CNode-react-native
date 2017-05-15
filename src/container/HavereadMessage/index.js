@@ -19,12 +19,12 @@ import {
 } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Map, List } from 'immutable';
 import MessageRow from '../../components/MessageRow';
 import MessageReplyTextInput from '../../components/MessageReplyTextInput';
 import * as actions from '../../actions/havereadMessageActions';
 import LoadingPage from '../../components/LoadingPage';
 import { DeviceHeight, DeviceWidth, pixel } from '../../utils/deviceSize';
+import NetErrorPage from '../../components/NetErrorPage';
 
 class HavereadMessage extends Component {
   static navigationOptions = {
@@ -88,15 +88,16 @@ class HavereadMessage extends Component {
   }
 
   render() {
-    const { isLoading, isLoaded, isRefreshing, isReply, error, data, actions, navigation } = this.props;
+    const { isLoading, isLoaded, isRefreshing, isReply, replyName, error, data, actions, navigation } = this.props;
     console.log(isReply);
     console.log(actions);
+    console.log(this.props);
     // console.log(this.state.text);
 
     if(isLoading) {
       return (
         <LoadingPage
-          title='正在加载未读消息...'
+          title='正在加载已读消息...'
         />
       )
     }
@@ -105,8 +106,8 @@ class HavereadMessage extends Component {
       return (
         <View style={styles.container}>
           <FlatList
-            data={this.data}
-            renderItem={({item}) => <MessageRow replyTextInputShow={actions.replyTextInputShow} item={item} />}
+            data={data}
+            renderItem={({item}) => <MessageRow replyTextInputShow={actions.replyTextInputShow} item={item} navigation={navigation} />}
             ItemSeparatorComponent={() => <View style={{paddingLeft: 8, paddingRight: 8, height: pixel, backgroundColor: '#85757a'}}></View>}
             onRefresh={() => this.refreshHavereadMessage() }
             refreshing={isRefreshing}
@@ -115,7 +116,7 @@ class HavereadMessage extends Component {
           {
             this.state.isKeyboardOpened?
               <View style={{marginBottom: this.state.keyboardHeight, flexDirection: 'row', alignItems: 'center', borderWidth: pixel, paddingTop: 5, paddingBottom: 5}}>
-                <MessageReplyTextInput   style={{width: DeviceWidth - 61, borderWidth: 1, borderColor: '#79757e', borderRadius: 5, marginLeft: 8, marginRight: 8}} placeholder='回复 mysticzt： '   fontSize={17} autoCapitalize='none' />
+                <MessageReplyTextInput   style={{width: DeviceWidth - 61, borderWidth: 1, borderColor: '#79757e', borderRadius: 5, marginLeft: 8, marginRight: 8}} placeholder={' 回复 ' + replyName + '：'}    fontSize={17} autoCapitalize='none' />
                   <TouchableOpacity>
                     <View style={{backgroundColor: '#72aad9', height: 30, width: 37, alignItems: 'center', justifyContent: 'center', borderRadius: 5, marginRight: 8}}>
                       <Text>发送</Text>
@@ -157,10 +158,14 @@ const mapStateToProps = state => {
   // const stateOfMessage = state.MessageState.toJS();
   const stateOfHavereadMessage  = state.HavereadMessageState.toJS();
   return {
+    isLoading: stateOfHavereadMessage.isLoading,
+    isLoaded: stateOfHavereadMessage.isLoaded,
     isRefreshing: stateOfHavereadMessage.isRefreshing,
     isReply: stateOfHavereadMessage.isReply,
+    replyName: stateOfHavereadMessage.replyName,
     error: stateOfHavereadMessage.error,
     data: stateOfHavereadMessage.data,
+    accesstoken: state.GlobalState.get('accesstoken')
   }
 }
 

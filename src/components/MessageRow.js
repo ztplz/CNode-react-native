@@ -24,7 +24,7 @@ const MessageRow = (props) => {
         <View style={styles.topContainer}>
           <View style={styles.topLeftContainer}>
             <TouchableWithoutFeedback
-              onPress={() => console.log('img press')}
+              onPress={() => props.navigation.navigate('UserDetail', {authorname: props.item.author.loginname})}
             >
               <Image source={{uri: props.item.author.avatar_url}} style={{width: 36, height: 36}} />
             </TouchableWithoutFeedback>
@@ -34,7 +34,7 @@ const MessageRow = (props) => {
             </View>
           </View>
           <TouchableWithoutFeedback
-            onPress={() => props.replyTextInputShow({isReply: true})}
+            onPress={() => props.replyTextInputShow({isReply: true, replyName: props.item.author.loginname})}
           >
             <Icon name='md-text' size={25} color='#708bd1' style={{marginRight: 8}} />
           </TouchableWithoutFeedback>

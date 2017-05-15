@@ -15,17 +15,20 @@ import {
 const initialState = fromJS({
   isLoading: false,
   isLoaded: false,
-  error: null,
-  data: {}
+  isRefreshing: false,
+  isReply: false,
+  error: '',
+  data: [],
 });
 
 export default function UserDetailState(state=initialState, action) {
   switch (action.type) {
     case FETCH_USERDETAIL_DATA:
-      return state.merge({
-        isLoading: action.payload.isLoading,
-        isLoaded: action.payload.isLoaded
-      });
+      // return state.merge({
+      //   isLoading: action.payload.isLoading,
+      //   isLoaded: action.payload.isLoaded
+      // });
+      
     case FETCH_USERDETAIL_DATA_SUCCESS:
       return state.merge({
         isLoading: action.payload.isLoading,

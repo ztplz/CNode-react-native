@@ -43,6 +43,12 @@ class HomePage extends Component {
     ];
   }
 
+  // componentDidMount() {
+  //   if(isLogged) {
+  //     const getUnreadMessageCount = setInterval(({acc})this.props.actions.)
+  //   }
+  // }
+
   render() {
     const { state, actions, navigation } = this.props;
     // console.log(this.props);

@@ -4,8 +4,8 @@
  * email: mysticzt@gmail.com
  */
 
-// import React, {Component, PropTypes} from 'react';
-import React, { Component } from 'react';
+import React, {Component, PropTypes} from 'react';
+// import React, { Component } from 'react';
 import {
   View,
   TextInput,
@@ -33,7 +33,8 @@ class MessageReplyTextInput extends Component {
     return (
       <TextInput
         multiline={true}
-        {...this.props} {...this.style}
+        {...this.props}
+        {...this.style}
         style={[this.props.style, {height: this.getValidHeight(this.state.height)}]}
         onContentSizeChange={(event) => this.onContentSizeChange(event)}
         onChange={(event) => this.onChange(event)}
@@ -43,6 +44,7 @@ class MessageReplyTextInput extends Component {
   }
 
   render() {
+    console.log(this.props);
     if(ANDROID_PLATFORM) {
       return (
         <View style={{flex: 1, flexDirection: 'row'}}>
@@ -140,22 +142,22 @@ const styles = StyleSheet.create({
   }
 });
 
-// MessageReplyTextInput.propTypes = {
-//   autoGrowing: PropTypes.bool,
-//   initialHeight: PropTypes.number,
-//   minHeight: PropTypes.number,
-//   maxHeight: PropTypes.number,
-//   onHeightChanged: PropTypes.func,
-//   onChange: PropTypes.func,
-//   animation: PropTypes.object
-// };
-//
-// MessageReplyTextInput.defaultProps = {
-//   autoGrowing: true,
-//   minHeight: 35,
-//   initialHeight: 35,
-//   maxHeight: null,
-//   animation: {animated: false, duration: DEFAULT_ANIM_DURATION}
-// };
+MessageReplyTextInput.propTypes = {
+  autoGrowing: PropTypes.bool,
+  initialHeight: PropTypes.number,
+  minHeight: PropTypes.number,
+  maxHeight: PropTypes.number,
+  onHeightChanged: PropTypes.func,
+  onChange: PropTypes.func,
+  animation: PropTypes.object
+};
+
+MessageReplyTextInput.defaultProps = {
+  autoGrowing: true,
+  minHeight: 35,
+  initialHeight: 35,
+  maxHeight: null,
+  animation: {animated: false, duration: DEFAULT_ANIM_DURATION}
+};
 
 export default MessageReplyTextInput;

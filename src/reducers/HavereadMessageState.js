@@ -21,6 +21,7 @@ const initialState = fromJS({
   isLoaded: false,
   isRefreshing: false,
   isReply: false,
+  replyName: '',
   error: '',
   data: [],
 });
@@ -28,7 +29,8 @@ const initialState = fromJS({
 export default function UnreadMessageState(state=initialState, action) {
   switch (action.type) {
     case HAVEREAD_MESSAGE_REPLY_TEXTINPUT_SHOW:
-      return state.set('isReply', action.payload.isReply);
+      return state.set('isReply', action.payload.isReply)
+                  .set('replyName', action.payload.replyName);
     case FETCH_HAVEREADMESSAGE_DATA:
       return state.set('isLoading', action.payload.isLoading)
                   .set('isLoaded', action.payload.isLoaded)

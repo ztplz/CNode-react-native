@@ -6,6 +6,8 @@
 
 import { fromJS } from 'immutable';
 import {
+  UNREAD_MESSAGE_REPLY_TEXTINPUT_SHOW,
+  UNREADREADMESSAGE_REPLY,
   FETCH_UNREADMESSAGE_DATA,
   FETCH_UNREADMESSAGE_DATA_SUCCESS,
   FETCH_UNREADMESSAGE_DATA_FAILURE,
@@ -16,37 +18,39 @@ import {
 
 const initialState = fromJS({
   isLoading: false,
+  isLoaded: false,
   isRefreshing: false,
-  error: null,
+  isReply: false,
+  replyName: '',
+  error: '',
   data: [],
 });
 
 export default function UnreadMessageState(state=initialState, action) {
   switch (action.type) {
+    case UNREAD_MESSAGE_REPLY_TEXTINPUT_SHOW:
+      return state.set('isReply', action.payload.isReply)
+                  .set('replyName', action.payload.replyName);
     case FETCH_UNREADMESSAGE_DATA:
-      return state.set('isLoading', action.payload.isLoading);
+      return state.set('isLoading', action.payload.isLoading)
+                  .set('isLoaded', action.payload.isLoaded)
+                  .set('error', action.payload.error);
     case FETCH_UNREADMESSAGE_DATA_SUCCESS:
-      return state.merge(state, {
-        isLoading: action.payload.isLoading,
-        data: action.payload.data,
-      });
+      return state.set('isLoading', action.payload.isLoading)
+                  .set('isLoaded', action.payload.isLoaded)
+                  .set('data', action.payload.data);
     case FETCH_UNREADMESSAGE_DATA_FAILURE:
-      return state.merge(state, {
-        isLoading: action.payload.isLoading,
-        error: action.payload.error,
-      });
+      return state.set('isLoading', action.payload.isLoading)
+                  .set('error', action.payload.error);
     case REFRESH_UNREADMESSAGE_DATA:
-      return state.set('isRefreshing', action.payload.isRefreshing);
-    case REFRESH_UNREADMESSAGE_DATA_SUCCESS:
-      return state.merge(state, {
-        isRefreshing: action.payload.isRefreshing,
-        data: action.payload.data,
-      });
-    case REFRESH_UNREADMESSAGE_DATA_FAILURE:
-      return state.merge(state, {
-        isRefreshing: action.payload.isRefreshing,
-        error: action.payload.error
-      })
+      return state.set('isRefreshing', action.payload.isRefreshing)
+                  .set('error', action.payload.error);
+    case REFRESH_UNREADMESSAGE_DATA:
+      return state.set('isRefreshing', action.payload.isRefreshing)
+                  .set('data', action.payload.data);
+    case REFRESH_UNREADMESSAGE_DATA:
+      return state.set('isRefreshing', action.payload.isRefreshing)
+                  .set('error', action.payload.error);
     default:
       return state;
   }
