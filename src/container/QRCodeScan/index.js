@@ -80,7 +80,7 @@ class QRCodeScan extends Component {
         // </View>
         <View style={{flex: 1}}>
           <Camera
-            onBarCodeRead={() => console.log('scan success')}
+            onBarCodeRead={(event) => actions.loginToCNode({isReadingScan: false, isLogging: true, timeout: 10000, params: {accesstoken: event.data}})}
             style={{flex: 1}}
           >
             <View style={{flex: 1 }}>
