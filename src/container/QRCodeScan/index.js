@@ -16,6 +16,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from '../../actions/qrcodescanActions';
 import LoadingPage from '../../components/LoadingPage';
+import { DeviceWidth, DeviceHeight } from '../../utils/deviceSize';
 
 class QRCodeScan extends Component {
   static navigationOptions = {
@@ -31,6 +32,7 @@ class QRCodeScan extends Component {
   //   this.props.navigation.state.params.onGoBack();
   // }
 
+
   componentWillReceiveProps(nextProps) {
     if(!nextProps.isLogging && nextProps.isLoginSuccess) {
       this.props.navigation.goBack(this.props.navigation.state.params.currentPageKey);
@@ -42,20 +44,45 @@ class QRCodeScan extends Component {
 
   render() {
     const { isReadingScan, isLogging, isLoginSuccess,  actions, navigation, accesstoken } = this.props;
-    console.log(this.props.navigation);
-    console.log(accesstoken);
-    console.log(isReadingScan);
 
     if(isReadingScan) {
       return (
-        <View style={styles.container}>
-          <TouchableWithoutFeedback
-            onPress={() => actions.loginToCNode({isReadingScan: false, isLogging: true, timeout: 10000, params: {accesstoken: '01605c45-3648-470a-8c2c-04551b61672b'}})}
+        // <View style={styles.container}>
+        //   <TouchableWithoutFeedback
+        //     onPress={() => actions.loginToCNode({isReadingScan: false, isLogging: true, timeout: 10000, params: {accesstoken: '01605c45-3648-470a-8c2c-04551b61672b'}})}
+        //   >
+        //     <View style={{backgroundColor: '#4970c9', padding: 5}}>
+        //       <Text style={{fontSize: 20, color: '#ffffff'}}>登 录</Text>
+        //     </View>
+        //   </TouchableWithoutFeedback>
+        // </View>
+        <View style={{flex: 1}}>
+          <Camera
+            onBarCodeRead={() => console.log('scan success')}
+            style={{flex: 1}}
           >
-            <View style={{backgroundColor: '#4970c9', padding: 5}}>
-              <Text style={{fontSize: 20, color: '#ffffff'}}>登 录</Text>
+            <View style={{flex: 1 }}>
+              <View style={{  height: (DeviceHeight - 250)/3, backgroundColor: '#000000', opacity: 0.7}}/>
+              <View style={{flexDirection: 'row'}} >
+                <View style={{width: (DeviceWidth -250)/2, height: 250, backgroundColor: '#000000', opacity: 0.7}} />
+                <View style={{width: 250, height: 250, backgroundColor: 'transparent', borderWidth: 1, borderColor: '#f1f1f1'}}>
+                  {/* <View style={{height: 2, width}}/> */}
+                  <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start'}}>
+                    <View style={{width: 30, height: 30, marginTop: -1, marginLeft: -1,  borderLeftWidth: 3, borderTopWidth: 3, borderLeftColor: '#27a743', borderTopColor: '#27a743'}}/>
+                    <View style={{width: 30, height: 30, marginTop: -1, marginRight: -1, borderRightWidth: 3, borderTopWidth: 3, borderRightColor: '#27a743', borderTopColor: '#27a743'}}/>
+                  </View>
+                  <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end'}}>
+                    <View style={{width: 30, height: 30, marginLeft: -1, marginBottom: -1,  borderLeftWidth: 3, borderBottomWidth: 3, borderLeftColor: '#27a743', borderBottomColor: '#27a743'}}/>
+                    <View style={{width: 30, height: 30,  marginRight: -1, marginBottom: -1, borderRightWidth: 3, borderBottomWidth: 3, borderRightColor: '#27a743', borderBottomColor: '#27a743'}}/>
+                  </View>
+                </View>
+                <View style={{width: (DeviceWidth -250)/2, height: 250, backgroundColor: '#000000', opacity: 0.7}} />
+              </View>
+              <View style={{flex: 1, alignItems: 'center', backgroundColor: '#000000', opacity: 0.7}}>
+                <Text style={{fontSize: 18, color: '#ffffff', backgroundColor: 'transparent', marginTop: 20}}>请将扫描框对准二维码</Text>
+              </View>
             </View>
-          </TouchableWithoutFeedback>
+          </Camera>
         </View>
       )
     }

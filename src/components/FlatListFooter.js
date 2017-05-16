@@ -14,7 +14,6 @@ import {
 
 const FlatListFooter = props => {
   const { isLoadingMore, isLoadedAll, error } = props;
-  // console.log(error);
   if(isLoadingMore) {
     return (
       <View style={styles.container}>

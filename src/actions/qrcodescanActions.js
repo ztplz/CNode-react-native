@@ -17,7 +17,6 @@ export function loginToCNode(payload) {
 }
 
 export function retryToLogin(payload) {
-  console.log('retryToLogin');
   return {
     type: RETRY_TO_LOGIN,
     payload

@@ -49,9 +49,7 @@ class Message extends Component {
 
   render() {
     const { isLogged, navigation } = this.props;
-    // console.log(actions);
-    // console.log(accesstoken);
-    // console.log(this.props);
+
     if(!isLogged) {
       return (
         <View style={styles.notLoggedPageContaienr}>

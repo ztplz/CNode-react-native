@@ -31,17 +31,14 @@ class ScrollTab extends Component {
   // }
 
   componentDidMount() {
-    console.log(this.props.tabName + ' componentDidMount');
     this.props.actions.getHomePageData({tabName: this.props.tabName, isLoading: true, isLoaded: false, isLoadedAll: false, timeout: 10000, pageIndex: 1, date: this.props.state.date});
   }
 
   refreshFlatList() {
-    console.log('refreshFlatList');
     this.props.actions.refreshHomePageData({tabName: this.props.tabName, isRefreshing: true, isLoadedAll: false, timeout: 10000, pageIndex: 1, error: ''});
   }
 
   loadMoreData() {
-    console.log('loadMoreData');
     this.props.actions.loadMoreHomePageData({tabName: this.props.tabName, isLoadingMore: true, isLoadedAll: false, timeout: 10000, error: '', pageIndex: this.props.state.pageIndex + 1})
   }
 
@@ -49,8 +46,6 @@ class ScrollTab extends Component {
 
   render() {
     const { state, tabName, actions, navigation } = this.props;
-    console.log(this.props);
-    console.log(state);
 
     if(state.isLoading) {
       return  <LoadingPage title='正在加载，请稍候...' />;

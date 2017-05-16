@@ -88,7 +88,6 @@ class HavereadMessage extends Component {
   }
 
   sendReply() {
-    console.log(this.props.replyText);
     this.props.actions.havereadMessageReply({timeout: 10000, topic_id: this.props.replyTopicId, params: { reply_id: this.props.replyId, accesstoken: this.props.accesstoken, content: '@' + this.props.replyName + '  ' + this.props.replyText}});
     this.props.actions.replyTextInputShow({isReply: false, replyName: '', text: '', replyId: '', replyTopicId: ''});
     Keyboard.dismiss();
@@ -96,10 +95,6 @@ class HavereadMessage extends Component {
 
   render() {
     const { isLoading, isLoaded, isRefreshing, isReply, replyName, replyId, replyTopicId, replyText, accesstoken, error, data, actions, navigation } = this.props;
-    console.log(isReply);
-    console.log(actions);
-    console.log(this.props);
-    // console.log(this.state.text);
 
     if(isLoading) {
       return (

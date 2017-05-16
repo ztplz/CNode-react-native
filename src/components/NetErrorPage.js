@@ -14,7 +14,6 @@ import {
 } from 'react-native';
 
 const NetErrorPage = props => {
-  console.log(props.handler);
   return (
     <View style={styles.container}>
       <Text style={styles.textStyle}>

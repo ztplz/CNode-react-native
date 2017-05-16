@@ -15,7 +15,6 @@ import {
 } from 'react-native';
 
 const CustomRow = props => {
-  // console.log(props);
   return (
       <View style={[styles.container, props.rowStyle]}>
         <View style={styles.leftContainer}>

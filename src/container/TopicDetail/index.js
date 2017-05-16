@@ -28,8 +28,7 @@ import timeDiff from '../../utils/timeDiffUtil';
 import TopicDetailRow from '../../components/TopicDetailRow';
 import HeaderButton from '../../components/HeaderButton';
 import NetErrorPage from '../../components/NetErrorPage';
-// import MessageReplyTextInput from '../../components/MessageReplyTextInput';
-console.log(actions);
+// import MessageReplyTextInput from '../../components/MessageReplyTextInput'
 
 class TopicDetail extends Component {
   static navigationOptions = {
@@ -142,6 +141,7 @@ class TopicDetail extends Component {
       // { cancelable: false }
     )
   }
+
 
   render() {
     const { isLoading, isLoaded, isRefreshing, isLogged, isCollected, accesstoken, isReplyTextInputShow, error, data, actions, navigation } = this.props;

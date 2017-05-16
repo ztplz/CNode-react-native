@@ -40,14 +40,6 @@ const whichTab = (tabName) => {
 };
 
 const HomePageListRow = (props) => {
-  // console.log(props.key);
-  // console.log(item);
-  // console.log(item.create_at);
-  // console.log(item.author);
-  // console.log(item.title);
-  // console.log(item.author.avatar_url);
-  // console.log('1111');
-  // console.log(props.handler);
   return (
     <TouchableHighlight
       activeOpacity={0.9}

@@ -35,7 +35,6 @@ class Collection extends Component {
 
   render() {
     const { isLoading, isLoaded, isRefreshing, error, data, navigation, actions } = this.props;
-    console.log(this.props);
 
     if(isLoading) {
       return <LoadingPage title='正在加载，请稍候...' />;
@@ -58,7 +57,6 @@ class Collection extends Component {
     }
 
     if(error !== '') {
-      console.log(error.message);
       return (
         <NetErrorPage
           error={error.message}
@@ -83,7 +81,6 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   const stateOfCollection = state.CollectionState.toJS();
-  console.log(stateOfCollection);
   return {
     isLoading: stateOfCollection.isLoading,
     isLoaded: stateOfCollection.isLoaded,

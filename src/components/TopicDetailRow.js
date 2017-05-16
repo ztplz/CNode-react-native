@@ -43,7 +43,6 @@ const likeIt = (index, isLogged, isUped, accesstoken, reply_id, navigation,  upe
 }
 
 const TopicDetailRow = props => {
-  console.log(props.data);
   return (
       <View style={styles.container}>
         <View style={styles.topContainer}>

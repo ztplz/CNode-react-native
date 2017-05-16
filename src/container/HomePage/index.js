@@ -33,7 +33,6 @@ class HomePage extends Component {
 
   constructor(props) {
     super(props);
-    console.log(this.props);
     this.tabNames = [
       ['全部', 'all', 'ScrollTab_1', ],
       ['精华', 'good', 'ScrollTab_2', ],
@@ -51,7 +50,6 @@ class HomePage extends Component {
 
   render() {
     const { state, actions, navigation } = this.props;
-    // console.log(this.props);
     return (
       <ScrollableTabView
         renderTabBar={() => <DefaultTabBar />}

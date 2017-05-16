@@ -36,6 +36,7 @@ class Me extends Component {
     },
   };
 
+
   // componentDidMount() {
   //   if(this.props.isLogged) {
   //     this.

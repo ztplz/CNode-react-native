@@ -18,7 +18,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import timeDiff from '../utils/timeDiffUtil';
 
 const MessageRow = (props) => {
-  console.log(props);
   return (
       <View style={styles.container}>
         <View style={styles.topContainer}>
