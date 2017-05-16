@@ -8,6 +8,8 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
+  Animated,
+  Easing,
   TouchableWithoutFeedback,
   StyleSheet
 } from 'react-native';
@@ -27,10 +29,21 @@ class QRCodeScan extends Component {
     },
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      animatedValue: new Animated.Value(0),
+    }
+  }
+
   // goBack() {
   //   () => navigation.goBack(this.props.navigation.state.params.currentPageKey);
   //   this.props.navigation.state.params.onGoBack();
   // }
+
+  componentDidMount() {
+    this.scannerLineMove();
+  }
 
 
   componentWillReceiveProps(nextProps) {
@@ -41,6 +54,15 @@ class QRCodeScan extends Component {
       }
     }
   }
+
+  scannerLineMove() {
+        this.state.animatedValue.setValue(0);
+        Animated.timing(this.state.animatedValue, {
+            toValue: 200,
+            duration: 2000,
+            easing: Easing.linear
+        }).start(() => this.scannerLineMove());
+    }
 
   render() {
     const { isReadingScan, isLogging, isLoginSuccess,  actions, navigation, accesstoken } = this.props;
@@ -65,15 +87,15 @@ class QRCodeScan extends Component {
               <View style={{  height: (DeviceHeight - 250)/3, backgroundColor: '#000000', opacity: 0.7}}/>
               <View style={{flexDirection: 'row'}} >
                 <View style={{width: (DeviceWidth -250)/2, height: 250, backgroundColor: '#000000', opacity: 0.7}} />
-                <View style={{width: 250, height: 250, backgroundColor: 'transparent', borderWidth: 1, borderColor: '#f1f1f1'}}>
-                  {/* <View style={{height: 2, width}}/> */}
-                  <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start'}}>
-                    <View style={{width: 30, height: 30, marginTop: -1, marginLeft: -1,  borderLeftWidth: 3, borderTopWidth: 3, borderLeftColor: '#27a743', borderTopColor: '#27a743'}}/>
-                    <View style={{width: 30, height: 30, marginTop: -1, marginRight: -1, borderRightWidth: 3, borderTopWidth: 3, borderRightColor: '#27a743', borderTopColor: '#27a743'}}/>
+                <View style={{width: 250, height: 250, backgroundColor: 'transparent', borderWidth: 1, borderColor: '#f1f1f1', alignItems: 'center'}}>
+                  <Animated.View style={[{height: 2, width: 200, marginTop: 20, backgroundColor: '#21cb74'}, {transform: [{translateY: this.state.animatedValue}] }]}/>
+                  <View style={{width: 250, height: 125, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start'}}>
+                    <View style={{width: 30, height: 30, marginTop: -23, marginLeft: -1,  borderLeftWidth: 3, borderTopWidth: 3, borderLeftColor: '#27a743', borderTopColor: '#27a743'}}/>
+                    <View style={{width: 30, height: 30, marginTop: -23, marginRight: -1, borderRightWidth: 3, borderTopWidth: 3, borderRightColor: '#27a743', borderTopColor: '#27a743'}}/>
                   </View>
-                  <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end'}}>
-                    <View style={{width: 30, height: 30, marginLeft: -1, marginBottom: -1,  borderLeftWidth: 3, borderBottomWidth: 3, borderLeftColor: '#27a743', borderBottomColor: '#27a743'}}/>
-                    <View style={{width: 30, height: 30,  marginRight: -1, marginBottom: -1, borderRightWidth: 3, borderBottomWidth: 3, borderRightColor: '#27a743', borderBottomColor: '#27a743'}}/>
+                  <View style={{width: 250, height: 125, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end'}}>
+                    <View style={{width: 30, height: 30, marginLeft: -1, marginBottom: 22,  borderLeftWidth: 3, borderBottomWidth: 3, borderLeftColor: '#27a743', borderBottomColor: '#27a743'}}/>
+                    <View style={{width: 30, height: 30,  marginRight: -1, marginBottom: 22, borderRightWidth: 3, borderBottomWidth: 3, borderRightColor: '#27a743', borderBottomColor: '#27a743'}}/>
                   </View>
                 </View>
                 <View style={{width: (DeviceWidth -250)/2, height: 250, backgroundColor: '#000000', opacity: 0.7}} />
