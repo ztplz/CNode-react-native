@@ -28,17 +28,21 @@ import timeDiff from '../../utils/timeDiffUtil';
 import TopicDetailRow from '../../components/TopicDetailRow';
 import HeaderButton from '../../components/HeaderButton';
 import NetErrorPage from '../../components/NetErrorPage';
+import {
+  NIGHT_HEADER_COLOR
+} from '../../constants/themecolor';
 // import MessageReplyTextInput from '../../components/MessageReplyTextInput'
 
 class TopicDetail extends Component {
-  static navigationOptions = {
+  static navigationOptions = ({ navigation, screenProps }) => ({
     title: '帖子详情',
     headerTintColor: '#ffffff',
     headerStyle: {
-      backgroundColor: '#878fe0',
+      // backgroundColor: '#878fe0',
+      backgroundColor: screenProps.isNightMode? NIGHT_HEADER_COLOR : screenProps.themeColor
     },
     headerRight: <HeaderButton icon={<Icon name='ios-more' size={30} color='#ffffff' style={{marginRight: 12}} />}  handler={() => console.log('rightButtonPress')} />,
-  };
+  });
 
   componentDidMount() {
     console.log(this.props);
@@ -141,6 +145,17 @@ class TopicDetail extends Component {
       // { cancelable: false }
     )
   }
+
+  // function renderNode(node, index, siblings, parent, defaultRenderer) {
+  //   if (node.name == 'img') {
+  //     const src = node.attribs.src;
+  //     return (
+  //       <View key={index} style={{width: Number(a.width), height: Number(a.height)}}>
+  //         <WebView source={{html: iframeHtml}} />
+  //       </View>
+  //     );
+  //   }
+  // }
 
 
   render() {

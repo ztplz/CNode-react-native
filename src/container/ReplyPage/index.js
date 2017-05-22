@@ -13,13 +13,17 @@ import {
   StyleSheet
 } from 'react-native';
 import { DeviceHeight, pixel } from '../../utils/deviceSize';
+import {
+  NIGHT_HEADER_COLOR
+} from '../../constants/themecolor';
 
 class ReplyPage extends Component {
-  static navigationOptions = ({ navigation}) => ({
+  static navigationOptions = ({ navigation, screenProps }) => ({
     title: '回复',
     headerTintColor: '#ffffff',
     headerStyle: {
-      backgroundColor: '#878fe0',
+      // backgroundColor: '#878fe0',
+      backgroundColor: screenProps.isNightMode? NIGHT_HEADER_COLOR : screenProps.themeColor
     },
   })
 

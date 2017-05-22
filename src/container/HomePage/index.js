@@ -5,6 +5,7 @@
  */
 
 import React, { Component } from 'react';
+import { Text } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from '../../actions/homepageActions';
@@ -12,15 +13,32 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-view';
 import ScrollTab from './ScrollTab';
 import LoadingPage from '../../components/LoadingPage';
+import { deviceWidth, DeviceHeight, pixel } from '../../utils/deviceSize';
+import {
+  NIGHT_HEADER_COLOR
+} from '../../constants/themecolor';
 
 class HomePage extends Component {
 
-  static navigationOptions = ({ navigation }) => ({
-    tabBarLabel: '首页',
+  static navigationOptions = ({ navigation, screenProps }) => ({
+    tabBarLabel: ({focused}) => (<Text style={{color: focused? screenProps.isNightMode? '#2f2f91' : screenProps.themeColor : '#c4c5c8', fontSize: 10, textAlign: 'center', marginBottom: 1.5, backgroundColor: 'transparent',}}>首页</Text>) ,
+    // tabBarLabel: '首页',
     // lazyLoad: true,
-    tabBarIcon: () => <Icon name="ios-home-outline" size={30} color="#c8bebe" />,
+    tabBarIcon: ({  focused }) => (<Icon name={focused? "ios-home" : "ios-home-outline"} size={30}  color={focused? screenProps.isNightMode? '#1f1f9f' : screenProps.themeColor : '#c4c5c8'}  />),
+    // tabBarIcon:
     // headerVisible: false,
-    header: null
+    header: null,
+    // activeTintColor: '#ff0000',
+    tabBarOptions: {
+      activeTintColor: '#ff0000',
+      // inactiveBackgroundColor: '#d73754'
+      // labelStyle: {
+      //   color: '#ff0000'
+      // }
+    },
+    // labelStyle: {
+    //   color: ({focused}) => '#ff000f'
+    // }
   })
 
   // static navigationOptions = {
@@ -49,12 +67,12 @@ class HomePage extends Component {
   // }
 
   render() {
-    const { state, actions, navigation } = this.props;
+    const { state, actions, navigation, screenProps } = this.props;
     return (
       <ScrollableTabView
-        renderTabBar={() => <DefaultTabBar />}
-        tabBarBackgroundColor="#6076e6"
-        tabBarUnderlineStyle={{ backgroundColor: '#f0f5f2' }}
+        renderTabBar={() => <DefaultTabBar style={{ borderWidth: 0}} />}
+        tabBarBackgroundColor={screenProps.isNightMode? NIGHT_HEADER_COLOR : screenProps.themeColor}
+        tabBarUnderlineStyle={{ backgroundColor: '#f0f5f2', }}
         tabBarTextStyle={{ color: '#f0f5f2', marginTop: 20 }}
       >
         {
@@ -71,6 +89,7 @@ class HomePage extends Component {
             // error={error}
             // date={date}
             // data={data}
+            screenProps={screenProps}
             navigation={navigation}
             state={state[item[1]]}
           /> )

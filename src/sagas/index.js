@@ -15,6 +15,7 @@ import { watchUserLoginToCNode } from './qrcodescanSaga';
 import { watchRefreshRecent } from './recentSaga';
 import { watchAppStartUp } from './startupSaga';
 import { watchFetchMeData } from './meSaga';
+import { watchPostToCNode } from './newtopicSaga';
 // import { watchFetchMessage } from './messageSaga';
 console.log(watchFetchMeData);
 
@@ -40,6 +41,7 @@ export default function* rootSaga() {
     fork(watchRefreshRecent),
     fork(watchAppStartUp),
     fork(watchFetchMeData),
+    fork(watchPostToCNode),
     // fork(watchFetchMessage),
   ];
 }

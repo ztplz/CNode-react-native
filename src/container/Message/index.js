@@ -21,18 +21,32 @@ import CustomRow from '../../components/CustomRow';
 import { pixel } from '../../utils/deviceSize';
 import LoadingPage from '../../components/LoadingPage';
 // import NetErrorPage from '../../components/NetErrorPage';
+import {
+  NIGHT_HEADER_COLOR,
+  NIGHT_BACKGROUND_COLOR,
+  NIGHT_MESSAGE_UNLOGGED_TEXT_COLOR
+} from '../../constants/themecolor';
 
 class Message extends Component {
-  static navigationOptions = {
-    tabBarLabel: '消息',
+  static navigationOptions = ({ navigation, screenProps}) => ({
+    // tabBarLabel: '消息',
+    tabBarLabel: ({focused}) => (<Text style={{color: focused? screenProps.isNightMode? '#2f2f91' : screenProps.themeColor : '#c4c5c8', fontSize: 10, textAlign: 'center', marginBottom: 1.5, backgroundColor: 'transparent',}}>消息</Text>) ,
     lazyLoad: true,
-    tabBarIcon: () => <Icon name='ios-chatbubbles-outline' size={30} color='#c8bebe' />,
+    tabBarIcon: ({  focused }) => (<Icon name={focused? 'ios-chatbubbles' : 'ios-chatbubbles-outline'} size={30} color={focused? screenProps.isNightMode? '#1f1f9f' : screenProps.themeColor : '#c4c5c8'} />),
     title: '消息',
     headerTintColor: '#ffffff',
     headerStyle: {
-      backgroundColor: '#878fe0',
+      // backgroundColor: '#878fe0',
+      backgroundColor: screenProps.isNightMode? NIGHT_HEADER_COLOR : screenProps.themeColor
     },
-  };
+    // tabBarOptions: {
+    //   activeTintColor: screenProps.themeColor,
+    //   // inactiveBackgroundColor: '#d73754'
+    // },
+    labelStyle: {
+      color: screenProps.themeColor
+    }
+  });
 
   // componentDidMount() {
   //   console.log('message componentDidMount')
@@ -48,12 +62,12 @@ class Message extends Component {
   // }
 
   render() {
-    const { isLogged, navigation } = this.props;
+    const { isLogged, navigation, screenProps } = this.props;
 
     if(!isLogged) {
       return (
-        <View style={styles.notLoggedPageContaienr}>
-          <Text style={styles.notLoggedPageText}>你还未登录，请登录后查看</Text>
+        <View style={[styles.notLoggedPageContaienr, { backgroundColor: screenProps.isNightMode? NIGHT_BACKGROUND_COLOR : null }]}>
+          <Text style={[styles.notLoggedPageText, { color: screenProps.isNightMode? NIGHT_MESSAGE_UNLOGGED_TEXT_COLOR : null }]}>你还未登录，请登录后查看</Text>
           <TouchableWithoutFeedback
             onPress={() => navigation.navigate('Login', { onGoBack: null})}
             // onPress={() => navigation.navigate('Login', { onGoBack: null})}

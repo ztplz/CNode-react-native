@@ -19,15 +19,19 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions/qrcodescanActions';
 import LoadingPage from '../../components/LoadingPage';
 import { DeviceWidth, DeviceHeight } from '../../utils/deviceSize';
+import {
+  NIGHT_HEADER_COLOR
+} from '../../constants/themecolor';
 
 class QRCodeScan extends Component {
-  static navigationOptions = {
+  static navigationOptions = ({ navigation, screenProps}) => ({
     title: '扫描二维码',
     headerTintColor: '#ffffff',
     headerStyle: {
-      backgroundColor: '#878fe0',
+      // backgroundColor: '#878fe0',
+      backgroundColor: screenProps.isNightMode? NIGHT_HEADER_COLOR : screenProps.themeColor
     },
-  };
+  });
 
   constructor(props) {
     super(props);

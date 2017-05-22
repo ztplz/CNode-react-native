@@ -16,10 +16,16 @@ import configStore from './store/configStore';
 const store = configStore();
 // store.dispatch()
 // console.log(store.getState());
+// let themeColor;
+// export function changeAppThemeColor(payload) {
+//   console.log(payload);
+//   themeColor = payload.themecolor;
+//   console.log(themeColor);
+// }
+// console.log(themeColor);
 
 class CNode extends Component {
   render() {
-    console.log('111');
     return (
       <Provider store={store}>
         <AppNavigator />

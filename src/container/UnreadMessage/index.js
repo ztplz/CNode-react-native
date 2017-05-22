@@ -25,15 +25,19 @@ import * as actions from '../../actions/unreadMessageActions';
 import LoadingPage from '../../components/LoadingPage';
 import { DeviceHeight, DeviceWidth, pixel } from '../../utils/deviceSize';
 import NetErrorPage from '../../components/NetErrorPage';
+import {
+  NIGHT_HEADER_COLOR
+} from '../../constants/themecolor';
 
 class UnreadMessage extends Component {
-  static navigationOptions = {
+  static navigationOptions = ({ navigation, screenProps }) => ({
     title: '未读消息',
     headerTintColor: '#ffffff',
     headerStyle: {
-      backgroundColor: '#878fe0',
+      // backgroundColor: '#878fe0',
+      backgroundColor: screenProps.isNightMode? NIGHT_HEADER_COLOR : screenProps.themeColor
     },
-  };
+  });
 
   constructor(props) {
     super(props);

@@ -19,6 +19,12 @@ import FlatListFooter from '../../components/FlatListFooter';
 import { pixel } from '../../utils/deviceSize';
 import HomePageStorage from '../../localStorage/HomePageStorage';
 import NetErrorPage from '../../components/NetErrorPage';
+import {
+  NIGHT_HEADER_COLOR,
+  NIGHT_BACKGROUND_COLOR
+} from '../../constants/themecolor';
+
+
 
 class ScrollTab extends Component {
   // constructor(props) {
@@ -45,7 +51,7 @@ class ScrollTab extends Component {
 
 
   render() {
-    const { state, tabName, actions, navigation } = this.props;
+    const { state, tabName, actions, navigation, screenProps } = this.props;
 
     if(state.isLoading) {
       return  <LoadingPage title='正在加载，请稍候...' />;
@@ -57,10 +63,10 @@ class ScrollTab extends Component {
 
     if(!state.isLoading && state.isLoaded) {
       return (
-        <View>
+        <View style={{backgroundColor: screenProps.isNightMode? NIGHT_BACKGROUND_COLOR : null}}>
           <FlatList
             data={state.data}
-            renderItem={({item}) => <FlatListRow item={item} handler={() => navigation.navigate('TopicDetail', { topicId: item.id })} /> }
+            renderItem={({item}) => <FlatListRow item={item} handler={() => navigation.navigate('TopicDetail', { topicId: item.id })} screenProps={screenProps} /> }
             ItemSeparatorComponent={() => <View style={{paddingLeft: 8, paddingRight: 8, height: pixel, backgroundColor: '#85757a'}}></View>}
             onRefresh={() => this.refreshFlatList() }
             refreshing={state.isRefreshing}

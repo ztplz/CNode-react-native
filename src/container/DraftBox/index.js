@@ -13,6 +13,9 @@ import {
 } from 'react-native';
 import Swipeout from 'react-native-swipeout';
 import DraftBoxRow from '../../components/DraftBoxRow';
+import {
+  NIGHT_HEADER_COLOR
+} from '../../constants/themecolor';
 
 class DraftBox extends Component {
   static navigationOptions = {

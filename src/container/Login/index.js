@@ -13,15 +13,18 @@ import {
   StyleSheet
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {
+  NIGHT_HEADER_COLOR
+} from '../../constants/themecolor';
 
 class Login extends Component {
-  static navigationOptions = {
+  static navigationOptions = ({ navigation, screenProps }) => ({
     title: '登录',
     headerTintColor: '#ffffff',
     headerStyle: {
-      backgroundColor: '#878fe0',
+      backgroundColor: screenProps.isNightMode? NIGHT_HEADER_COLOR : screenProps.themeColor,
     },
-  };
+  });
 
   render() {
     const { navigation } = this.props;

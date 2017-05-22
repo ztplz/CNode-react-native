@@ -14,29 +14,45 @@ import {
 } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { changeThemecolor } from '../../actions/globalconfigActions';
+import * as actions from '../../actions/globalconfigActions';
 import CustomRow from '../../components/CustomRow';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Pixel } from '../../utils/deviceSize';
-import { changeThemeColor } from '../../AppNavigator';
+// import { changeThemeColor } from '../../AppNavigator';
+// import { changeAppThemeColor } from '../../CNode';
+import {
+  NIGHT_HEADER_COLOR,
+  NIGHT_BACKGROUND_COLOR
+} from '../../constants/themecolor';
 
 class ThemeColor extends Component {
-  // static navigationOptions =（{navigation} =>（{
+  // static navigationOptions =（{navigation, screenProps}) =>（{
   //   // title:  navigation.state.params.title || '更改主题颜色',
   //   title: '更改主题颜色',
   //   headerTintColor: '#ffffff',
   //   headerStyle: {
-  //     backgroundColor: '#878fe0',
+  //     // backgroundColor: '#878fe0',
+  //     backgroundColor: screenProps.themeColor
   //   },
-  // }）
+  // };
 
-  static navigationOptions = {
-    title:  '更改主题颜色',
+  static navigationOptions = ({ navigation, screenProps }) => ({
+    title: '更改主题颜色',
     headerTintColor: '#ffffff',
     headerStyle: {
-      backgroundColor: '#878fe0',
+      // backgroundColor: '#878fe0',
+      backgroundColor: screenProps.isNightMode? NIGHT_HEADER_COLOR : screenProps.themeColor
     },
-  }
+  });
+
+  // static navigationOptions = {
+  //   title:  '更改主题颜色',
+  //   headerTintColor: '#ffffff',
+  //   headerStyle: {
+  //     // backgroundColor: '#878fe0',
+  //     backgroundColor: screenProps.
+  //   },
+  // }
 
   constructor(props) {
     super(props);
@@ -54,29 +70,33 @@ class ThemeColor extends Component {
     ]
   }
 
-  componentDidMount() {
-    this.props.navigation.setParams({title: 123});
-  }
+  // componentDidMount() {
+  //   this.props.navigation.setParams({title: 123});
+  // }
   render() {
-    const { selectedColor, themeColor } = this.props;
+    const { screenProps } = this.props;
     console.log(this.props);
-    console.log(selectedColor);
-    console.log(themeColor);
+    // console.log(selectedColor);
+    // console.log(themeColor);
     return (
-      <ScrollView>
-        <View style={styles.container}>
+      <ScrollView style={{ backgroundColor: screenProps.isNightMode? NIGHT_BACKGROUND_COLOR : null }}>
+        <View style={[styles.container, {}]}>
           {
             this.rows.map( (item, index) => (
-              <View key={ 'ThemeColor' + index  }>
+              <View
+                key={ 'ThemeColor' + index  }
+
+              >
                 <TouchableOpacity
                   activeOpacity={0.6}
                   // onPress={() => this.props.changeThemecolor({ selectedColor: item[1], themeColor: item[2] })}
-                  onPress={() => changeThemeColor(item[2])}
+                  // onPress={() => changeThemeColor(item[2])}
+                  onPress = {() => this.props.actions.changeThemecolor({themeColor: item[2]}) }
                 >
                   <CustomRow
-                    leftIcon={ selectedColor === item[1] ? <Icon name='ios-checkmark-circle' size={20} color={item[2]} /> : <View style={styles.circle}></View>}
+                    leftIcon={ screenProps.themeColor === item[2] ? <Icon name='ios-checkmark-circle' size={20} color={item[2]} /> : <View style={styles.circle}></View>}
                     title={item[0]}
-                    rowStyle={styles.colorRow}
+                    rowStyle={[styles.colorRow, { backgroundColor: '#a4a4a4' }]}
                     titleStyle={[styles.titleStyle, {color: item[2]}]}
                   />
                 </TouchableOpacity>
@@ -119,16 +139,16 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
-  console.log(state.GlobalState.toJS());
+  // console.log(state.GlobalState.toJS());
   return {
-    themeColor: state.GlobalState.get('themeColor'),
-    selectedColor: state.GlobalState.get('selectedColor'),
+    // themeColor: state.GlobalState.get('themeColor'),
+    // selectedColor: state.GlobalState.get('selectedColor'),
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    changeThemecolor: bindActionCreators(changeThemecolor, dispatch)
+    actions: bindActionCreators(actions, dispatch)
   }
 }
 

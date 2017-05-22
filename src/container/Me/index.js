@@ -23,41 +23,40 @@ import CustomRow from '../../components/CustomRow';
 import { Pixel } from '../../utils/deviceSize';
 import LoadingPage from '../../components/LoadingPage';
 import timeDiff from '../../utils/timeDiffUtil';
+import {
+  NIGHT_HEADER_COLOR,
+  NIGHT_BACKGROUND_COLOR,
+  NIGHT_CUSTOMROW_TEXT_COLOR,
+  NIGHT_ME_SETTING_BACKGROUND_COLOR
+} from '../../constants/themecolor';
 
 class Me extends Component {
-  static navigationOptions = {
-    tabBarLabel: '我的',
-    // lazy: true,
-    tabBarIcon: () => <Icon name='ios-contact-outline' size={30} color='#c8bebe' />,
+  static navigationOptions = ({ navigation, screenProps }) => ({
+    tabBarLabel: ({focused}) => (<Text style={{color: focused? screenProps.isNightMode? '#2f2f91' : screenProps.themeColor : '#c4c5c8', fontSize: 10, textAlign: 'center', marginBottom: 1.5, backgroundColor: 'transparent',}}>我的</Text>) ,
+    tabBarIcon: ({ focused }) => (<Icon name={focused? 'ios-contact' : 'ios-contact-outline'} size={30} color={focused? screenProps.isNightMode? '#1f1f9f' : screenProps.themeColor : '#c4c5c8'} />),
     title: '我的',
     headerTintColor: '#ffffff',
     headerStyle: {
-      backgroundColor: '#878fe0',
+      backgroundColor: screenProps.isNightMode? NIGHT_HEADER_COLOR : screenProps.themeColor
     },
-  };
-
-
-  // componentDidMount() {
-  //   if(this.props.isLogged) {
-  //     this.
-  //   }
-  // }
-
+    tabBarOptions: {
+      inactiveBackgroundColor: '#7c7c7c'
+    },
+  });
+  
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps.loginname);
-    console.log(nextProps.isLogged && nextProps.loginname);
-    if(nextProps.isLogged && (nextProps.loginname !== '') ) {
+    if(nextProps.isLogged && !nextProps.user_create_at ) {
       console.log(nextProps.isLogged);
       nextProps.actions.getMeData({loginname: nextProps.loginname, timeout: 10000})
     }
   }
 
   render() {
-    const { isLogged, accesstoken, loginname, avatar_url, user_create_at, navigation } = this.props;
+    const { isLogged, accesstoken, loginname, avatar_url, user_create_at, navigation, screenProps } = this.props;
     console.log(user_create_at);
     if(isLogged) {
       return (
-        <ScrollView style={styles.container}>
+        <ScrollView style={[styles.container, { backgroundColor: screenProps.isNightMode? NIGHT_BACKGROUND_COLOR : null}]}>
           <View style={styles.userInfoContainer}>
             <Image source={{uri: avatar_url}} style={styles.avatar}/>
             <View style={styles.userInfo}>
@@ -132,7 +131,7 @@ class Me extends Component {
       );
     } else {
       return (
-        <ScrollView style={styles.container}>
+        <ScrollView style={[styles.container, { backgroundColor: screenProps.isNightMode? NIGHT_BACKGROUND_COLOR : null}]}>
           <TouchableOpacity
             activeOpacity={0.6}
             onPress={() => navigation.navigate('Login', {onGoBack: null})}
@@ -151,7 +150,8 @@ class Me extends Component {
                 leftIcon={<Icon name='ios-settings' size={30} color='#5b656c' />}
                 rightIcon={<Icon name='ios-arrow-forward' size={20} color='#9d9eab' />}
                 title='设置'
-                rowStyle={styles.settingRow}
+                  titleStyle={{ color: screenProps.isNightMode? NIGHT_CUSTOMROW_TEXT_COLOR : null }}
+                rowStyle={[styles.settingRow, { backgroundColor: screenProps.isNightMode? NIGHT_ME_SETTING_BACKGROUND_COLOR : '#ffffff'}]}
               />
             </TouchableOpacity>
           </View>
@@ -281,7 +281,7 @@ const styles = StyleSheet.create({
   },
   loginBtnText: {
     fontSize: 20,
-    color: '#ebeceb'
+    color: '#e7e7e7'
   }
 });
 

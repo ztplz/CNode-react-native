@@ -15,6 +15,7 @@ import CollectionState from './CollectionState';
 import QRCodeScanState from './QRCodeScanState';
 import UserRecentState from './UserRecentState';
 import MeState from './MeState';
+import NewTopicState from './NewTopicState';
 // import MessageState from './MessageState';
 
 export default combineReducers({
@@ -28,5 +29,6 @@ export default combineReducers({
   QRCodeScanState,
   UserRecentState,
   MeState,
+  NewTopicState,
   // MessageState
 });

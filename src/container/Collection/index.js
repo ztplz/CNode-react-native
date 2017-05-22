@@ -18,14 +18,18 @@ import CollectionRow from '../../components/CollectionRow';
 import { pixel } from '../../utils/deviceSize';
 import LoadingPage from '../../components/LoadingPage';
 import NetErrorPage from '../../components/NetErrorPage';
+import {
+  NIGHT_HEADER_COLOR
+} from '../../constants/themecolor';
 
 class Collection extends Component {
-  static navigationOptions = ({ navigation }) => ({
+  static navigationOptions = ({ navigation, screenProps }) => ({
     title: (navigation.state.params.isCurrentUser ? '我' : navigation.state.params.authorname) + ' 的收藏',
     // title: this.props.loginname,
     headerTintColor: '#ffffff',
     headerStyle: {
-      backgroundColor: '#878fe0',
+      // backgroundColor: '#878fe0',
+      backgroundColor: screenProps.isNightMode? NIGHT_HEADER_COLOR : screenProps.themeColor
     },
   })
 

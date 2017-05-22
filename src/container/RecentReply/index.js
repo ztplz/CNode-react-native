@@ -16,13 +16,17 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions/recentdetailActions';
 import UserRecentRow from '../../components/UserRecentRow';
 import { pixel } from '../../utils/deviceSize';
+import {
+  NIGHT_HEADER_COLOR
+} from '../../constants/themecolor';
 
 class RecentReply extends Component {
-  static navigationOptions = ({ navigation}) => ({
+  static navigationOptions = ({ navigation, screenProps}) => ({
     title: navigation.state.params.authorname + ' 的最近参与话题',
     headerTintColor: '#ffffff',
     headerStyle: {
-      backgroundColor: '#878fe0',
+      // backgroundColor: '#878fe0',
+      backgroundColor: screenProps.isNightMode? NIGHT_HEADER_COLOR : screenProps.themeColor
     },
   })
 

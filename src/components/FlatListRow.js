@@ -16,6 +16,9 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import timeDiff from '../utils/timeDiffUtil';
+import {
+  NIGHT_HOMEPAGE_FLATLISTROW_TEXT_COLOR,
+} from '../constants/themecolor';
 
 
 // moment.updateLocale('zh-cn', momentLocale);
@@ -50,7 +53,7 @@ const HomePageListRow = (props) => {
         <View style={styles.topContainer}>
           <View style={styles.topLeftContainer}>
             <Image source={{uri: props.item.author.avatar_url}} style={styles.avatar}/>
-            <Text style={styles.authorName}>{props.item.author.loginname}</Text>
+            <Text style={[styles.authorName, { color: props.screenProps.isNightMode? NIGHT_HOMEPAGE_FLATLISTROW_TEXT_COLOR : null }]}>{props.item.author.loginname}</Text>
             {
               props.item.good ?
               <View style={styles.good}>
@@ -70,7 +73,7 @@ const HomePageListRow = (props) => {
           </View>
           <View style={styles.topRightContainer}>
             <Icon name='ios-clock-outline' size={15} color='#62615a' />
-            <Text style={styles.createTime}>{timeDiff(props.item.create_at)}</Text>
+            <Text style={[styles.createTime, { color: props.screenProps.isNightMode? NIGHT_HOMEPAGE_FLATLISTROW_TEXT_COLOR : null }]}>{timeDiff(props.item.create_at)}</Text>
             <View style={styles.tab}>
               <Text style={styles.tabText}>{whichTab(props.item.tab)}</Text>
             </View>
@@ -78,18 +81,18 @@ const HomePageListRow = (props) => {
         </View>
         <Text
           numberOfLines={2}
-          style={styles.contentText}
+          style={[styles.contentText, { color: props.screenProps.isNightMode? NIGHT_HOMEPAGE_FLATLISTROW_TEXT_COLOR : null }]}
         >
           {props.item.title}
         </Text>
         <View style={styles.bottomContainer}>
           <View style={styles.bottomLeftContainer}>
             <Icon name="ios-eye-outline" size={15} color="#62615a" />
-            <Text style={styles.visitCount}>{props.item.visit_count}</Text>
+            <Text style={[styles.visitCount, { color: props.screenProps.isNightMode? NIGHT_HOMEPAGE_FLATLISTROW_TEXT_COLOR : null }]}>{props.item.visit_count}</Text>
             <Icon name="ios-text-outline" size={15} color="#62615a" style={styles.replyIcon} />
-            <Text style={styles.replyCount}>{props.item.reply_count}</Text>
+            <Text style={[styles.replyCount, { color: props.screenProps.isNightMode? NIGHT_HOMEPAGE_FLATLISTROW_TEXT_COLOR : null }]}>{props.item.reply_count}</Text>
           </View>
-          <Text style={styles.replyTimeText}>{timeDiff(props.item.last_reply_at)}</Text>
+          <Text style={[styles.replyTimeText, { color: props.screenProps.isNightMode? NIGHT_HOMEPAGE_FLATLISTROW_TEXT_COLOR : null }]}>{timeDiff(props.item.last_reply_at)}</Text>
         </View>
       </View>
     </TouchableHighlight>

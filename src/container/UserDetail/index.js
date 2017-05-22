@@ -24,13 +24,17 @@ import { Pixel } from '../../utils/deviceSize';
 import * as actions from '../../actions/userdetailActions';
 import LoadingPage from '../../components/LoadingPage';
 import timeDiff from '../../utils/timeDiffUtil';
+import {
+  NIGHT_HEADER_COLOR
+} from '../../constants/themecolor';
 
 class UserDetail extends Component {
-  static navigationOptions = ({navigation}) => ({
+  static navigationOptions = ({ navigation, screenProps }) => ({
     title: navigation.state.params.authorname + ' 的详情',
     headerTintColor: '#ffffff',
     headerStyle: {
-      backgroundColor: '#878fe0',
+      // backgroundColor: '#878fe0',
+      backgroundColor: screenProps.isNightMode? NIGHT_HEADER_COLOR : screenProps.themeColor
     },
   });
 

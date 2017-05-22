@@ -18,7 +18,11 @@ import {
 
 const initialState = fromJS({
   isNightMode: false,
-  themeColor: null,
+  // themeColor: null,
+  screenProps: {
+    isNightMode: false,
+    themeColor: '#878fe0'
+  },
   selectedColor: null,
   isLogged: false,
   accesstoken: '',
@@ -31,9 +35,10 @@ export default function GlobalState(state=initialState, action) {
   // console.log(action);
   switch (action.type) {
     case CHANGE_MODE:
-      return state.set('isNightMode', action.payload.isNightMode);
+      return state.setIn(['screenProps', 'isNightMode'], action.payload.isNightMode);
     case CHANGE_THEMECOLOR:
-      return state.set('themeColor', action.payload.themeColor);
+      console.log('change color');
+      return state.setIn(['screenProps', 'themeColor'], action.payload.themeColor);
     case LOGIN_TO_CNODE_SUCCESS:
       return state.set('isLogged', action.payload.isLogged)
                   .set('accesstoken', action.payload.accesstoken)

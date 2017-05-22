@@ -1,10 +1,17 @@
+/**
+ * React Native App
+ * https://github.com/ztplz/CNode-react-native
+ * email: mysticzt@gmail.com
+ */
+
 // import React, { PropTypes } from 'react';
 import React from 'react';
 import {
   View,
   StatusBar,
 } from 'react-native';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { StackNavigator, TabNavigator, addNavigationHelpers } from 'react-navigation';
 import GlobalConfigStorage from './localStorage/GlobalConfigStorage';
 import HomePage from './container/HomePage';
@@ -24,6 +31,9 @@ import QRCodeScan from './container/QRCodeScan';
 import RecentTopics from './container/RecentTopics';
 import RecentReply from './container/RecentReply';
 import ReplyPage from './container/ReplyPage';
+import About from './container/About';
+import CustomTabBar from './components/CustomTabBar';
+// import AppTabNavigator from './AppTabNavigator';
 
 // let appThemeColor = new GlobalConfigStorage().getThemeColor();
 // console.log(appThemeColor);
@@ -42,9 +52,6 @@ const MainPage = TabNavigator({
   },
   NewTopic: {
     screen: NewTopic,
-    // navigationOptions: {
-    //   title: '123'
-    // }
   },
   Message: {
     screen: Message,
@@ -53,22 +60,19 @@ const MainPage = TabNavigator({
     screen: Me,
   },
 }, {
-  initialRouteName: 'HomePage',
-  swipeEnabled: true,
-  lazy: true,
-  // animationEnabled: true,    //  新版本bug
-  tabBarOptions: {
-    style: {
-      paddingBottom: 2,
-    },
-  },
-  navigationOptions: {
-    title: '123',
-    backgroundColor: '#1b181b'
-  }
+  // initialRouteName: 'HomePage',
+  // swipeEnabled: true,
+  // lazy: true,
+  // tabBarOptions: {
+  //   style: {
+  //     paddingBottom: 2,
+  //   },
+  //   // activeBackgroundColor: '#3bb84f'
+  // },
+  tabBarComponent: CustomTabBar
 });
 
-export const AppNavigator = StackNavigator({
+const AppNavigator = StackNavigator({
   MainPage: {
     screen: MainPage,
   },
@@ -110,6 +114,9 @@ export const AppNavigator = StackNavigator({
   },
   ReplyPage: {
     screen: ReplyPage
+  },
+  About: {
+    screen: About
   }
 }, {
   headerMode: 'screen',
@@ -122,15 +129,28 @@ export const AppNavigator = StackNavigator({
     // title: navigation.state.params.authorname + ' 的收藏',
     // title: '123',
     headerTintColor: '#ffffff',
-    headerStyle: {
-      backgroundColor:  '#39d23c',
-      // backgroundColor: new GlobalConfigStorage().getThemeColor() || '#a96dd1',
-      // backgroundColor: '#372a34',
-    },
+    // headerStyle: {
+    //   backgroundColor:  '#39d23c',
+    //   // backgroundColor: new GlobalConfigStorage().getThemeColor() || '#a96dd1',
+    //   // backgroundColor: '#372a34',
+    // },
   }
 });
 
-export default AppNavigator;
+const mapStateToProps = state => {
+  console.log(state.GlobalState.get('screenProps').toJS());
+  return {
+    screenProps: state.GlobalState.get('screenProps').toJS(),
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AppNavigator);
 
 // const AppNavigator = ({ dispatch, nav }) => (
 //     <Navigator
