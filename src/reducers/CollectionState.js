@@ -23,7 +23,6 @@ const initialState = fromJS({
 });
 
 export default function CollectionState(state=initialState, action) {
-  console.log(action);
   switch (action.type) {
     case FETCH_COLLECTION_DATA:
       return state.set('isLoading', action.payload.isLoading)

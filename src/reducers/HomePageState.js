@@ -71,7 +71,6 @@ const initialState = fromJS({
 });
 
 export default function HomePageState(state=initialState, action) {
-  console.log(action);
   switch (action.type) {
     case FETCH_HOMEPAGE_DATA:
       return state.setIn([action.payload.tabName, 'isLoading'], action.payload.isLoading)

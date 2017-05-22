@@ -45,8 +45,7 @@ class TopicDetail extends Component {
   });
 
   componentDidMount() {
-    console.log(this.props);
-    this.props.actions.getTopicDetailData({topicId: this.props.navigation.state.params.topicId, accesstoken: this.props.accesstoken, isLoading: true, isLoaded: false, error: '', timeout: 10000});
+    this.props.actions.getTopicDetailData({topicId: this.props.navigation.state.params.topicId, accesstoken: this.props.accesstoken, isLoading: true, isLoaded: false, isReplySuccess: false, error: '', timeout: 10000});
   }
 
   // function renderNode(node, index, siblings, parent, defaultRenderer) {
@@ -104,7 +103,6 @@ class TopicDetail extends Component {
   }
 
   collectOnPress() {
-    console.log(this.props.accesstoken);
     if(this.props.isLogged) {
       if(this.props.isCollected) {
         this.props.actions.topicNotCollect({params: { accesstoken: this.props.accesstoken, topic_id: this.props.data.id }, isCollected: false, timeout: 10000});
@@ -119,7 +117,7 @@ class TopicDetail extends Component {
       '请先登录',
       null,
       [
-        {text: '登录', onPress: () => this.props.navigation.navigate('Login', { onGoBack: () => this.props.actions.getTopicDetailData({topicId: this.props.navigation.state.params.topicId, accesstoken: this.props.accesstoken, isLoading: true, isLoaded: false, error: '', timeout: 10000})})},
+        {text: '登录', onPress: () => this.props.navigation.navigate('Login', { onGoBack: () => this.props.actions.getTopicDetailData({topicId: this.props.navigation.state.params.topicId, accesstoken: this.props.accesstoken, isLoading: true, isLoaded: false, isReplySuccess: false, error: '', timeout: 10000})})},
         // {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
         {text: '取消', null },
       ],
@@ -128,9 +126,8 @@ class TopicDetail extends Component {
   }
 
   replyOnPress() {
-    console.log(this.props.navigation);
     if(this.props.isLogged) {
-      this.props.navigation.navigate('ReplyPage');
+      this.props.navigation.navigate('ReplyPage', { topic_id: this.props.data.id, onGoBack: () => this.props.actions.getTopicDetailData({topicId: this.props.navigation.state.params.topicId, accesstoken: this.props.accesstoken, isLoading: true, isLoaded: false, error: '', timeout: 10000})});
       return ;
     }
 
@@ -138,7 +135,7 @@ class TopicDetail extends Component {
       '请先登录',
       null,
       [
-        {text: '登录', onPress: () => this.props.navigation.navigate('Login', { onGoBack: null} )},
+        {text: '登录', onPress: () => this.props.navigation.navigate('Login', { onGoBack: () => this.props.actions.getTopicDetailData({topicId: this.props.navigation.state.params.topicId, accesstoken: this.props.accesstoken, isLoading: true, isLoaded: false, error: '', timeout: 10000})} )},
         // {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
         {text: '取消', null },
       ],
@@ -160,8 +157,7 @@ class TopicDetail extends Component {
 
   render() {
     const { isLoading, isLoaded, isRefreshing, isLogged, isCollected, accesstoken, isReplyTextInputShow, error, data, actions, navigation } = this.props;
-    console.log(this.props.data);
-    console.log(this.props.isCollected);
+    console.log(data.replies);
     if(isLoading) {
       return (
         <LoadingPage title='正在加载，请稍候...' />
@@ -250,7 +246,6 @@ class TopicDetail extends Component {
     }
 
     if(error !== '') {
-      console.log(error.message);
       return (
         <NetErrorPage
           error={error.message}

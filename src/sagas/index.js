@@ -16,6 +16,7 @@ import { watchRefreshRecent } from './recentSaga';
 import { watchAppStartUp } from './startupSaga';
 import { watchFetchMeData } from './meSaga';
 import { watchPostToCNode } from './newtopicSaga';
+import { watchReplyToTopic } from './replypageSaga';
 // import { watchFetchMessage } from './messageSaga';
 console.log(watchFetchMeData);
 
@@ -42,6 +43,7 @@ export default function* rootSaga() {
     fork(watchAppStartUp),
     fork(watchFetchMeData),
     fork(watchPostToCNode),
+    fork(watchReplyToTopic)
     // fork(watchFetchMessage),
   ];
 }
