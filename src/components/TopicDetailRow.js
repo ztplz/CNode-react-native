@@ -48,7 +48,7 @@ const TopicDetailRow = props => {
         <View style={styles.topContainer}>
           <View style={styles.ReplyInfoContainer}>
             <TouchableWithoutFeedback
-              onPress={() => props.navigate('UserDetail', {authorname: props.data.author.loginname})}
+              onPress={() => props.navigation.navigate('UserDetail', {authorname: props.data.author.loginname})}
             >
               <Image source={{uri: props.data.author.avatar_url}} style={{width: 35, height: 35}} />
             </TouchableWithoutFeedback>

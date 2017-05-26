@@ -43,7 +43,7 @@ class Me extends Component {
       inactiveBackgroundColor: '#7c7c7c'
     },
   });
-  
+
   componentWillReceiveProps(nextProps) {
     if(nextProps.isLogged && !nextProps.user_create_at ) {
       console.log(nextProps.isLogged);
@@ -54,6 +54,36 @@ class Me extends Component {
   render() {
     const { isLogged, accesstoken, loginname, avatar_url, user_create_at, navigation, screenProps } = this.props;
     console.log(user_create_at);
+    if(!isLogged) {
+      return (
+        <ScrollView style={[styles.container, { backgroundColor: screenProps.isNightMode? NIGHT_BACKGROUND_COLOR : null}]}>
+          <TouchableOpacity
+            activeOpacity={0.6}
+            onPress={() => navigation.navigate('Login', {onGoBack: null})}
+            style={{marginTop: 50}}
+          >
+            <View style={styles.loginBtn}>
+              <Text style={styles.loginBtnText}>你还未登录，请登录</Text>
+            </View>
+          </TouchableOpacity>
+          <View style={styles.settingContainer}>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              onPress={() => navigation.navigate('Setting')}
+            >
+              <CustomRow
+                leftIcon={<Icon name='ios-settings' size={30} color='#5b656c' />}
+                rightIcon={<Icon name='ios-arrow-forward' size={20} color='#9d9eab' />}
+                title='设置'
+                  titleStyle={{ color: screenProps.isNightMode? NIGHT_CUSTOMROW_TEXT_COLOR : null }}
+                rowStyle={[styles.settingRow, { backgroundColor: screenProps.isNightMode? NIGHT_ME_SETTING_BACKGROUND_COLOR : '#ffffff'}]}
+              />
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      )
+    }
+
     if(isLogged) {
       return (
         <ScrollView style={[styles.container, { backgroundColor: screenProps.isNightMode? NIGHT_BACKGROUND_COLOR : null}]}>
@@ -67,6 +97,7 @@ class Me extends Component {
           <View style={styles.replyAndPostContainer}>
             <TouchableOpacity
               activeOpacity={0.6}
+              onPress={() => navigation.navigate('RecentReply', {authorname: '我'})}
             >
               <CustomRow
                 leftIcon={<Icon name='ios-chatboxes' size={30} color='#635bed' />}
@@ -77,6 +108,7 @@ class Me extends Component {
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.6}
+              onPress={() => navigation.navigate('RecentTopics', {authorname: '我'})}
             >
               <CustomRow
                 leftIcon={<Icon name='ios-brush' size={30} color='#e71fc7' />}
@@ -129,34 +161,6 @@ class Me extends Component {
 
         </ScrollView>
       );
-    } else {
-      return (
-        <ScrollView style={[styles.container, { backgroundColor: screenProps.isNightMode? NIGHT_BACKGROUND_COLOR : null}]}>
-          <TouchableOpacity
-            activeOpacity={0.6}
-            onPress={() => navigation.navigate('Login', {onGoBack: null})}
-            style={{marginTop: 50}}
-          >
-            <View style={styles.loginBtn}>
-              <Text style={styles.loginBtnText}>你还未登录，请登录</Text>
-            </View>
-          </TouchableOpacity>
-          <View style={styles.settingContainer}>
-            <TouchableOpacity
-              activeOpacity={0.6}
-              onPress={() => navigation.navigate('Setting')}
-            >
-              <CustomRow
-                leftIcon={<Icon name='ios-settings' size={30} color='#5b656c' />}
-                rightIcon={<Icon name='ios-arrow-forward' size={20} color='#9d9eab' />}
-                title='设置'
-                  titleStyle={{ color: screenProps.isNightMode? NIGHT_CUSTOMROW_TEXT_COLOR : null }}
-                rowStyle={[styles.settingRow, { backgroundColor: screenProps.isNightMode? NIGHT_ME_SETTING_BACKGROUND_COLOR : '#ffffff'}]}
-              />
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
-      )
     }
 
     if(isLoading) {
@@ -164,6 +168,17 @@ class Me extends Component {
         <LoadingPage title='正在加载，请稍候...' />
       )
     }
+
+    if(error !== '') {
+      return (
+        <NetErrorPage
+          error={error.message}
+          handler={() => actions.getMeData({isLoading: true, isLoaded: false, username: loginname, timeout: 10000, error: ''})}
+        />
+      )
+    }
+
+    return null;
   }
 }
 

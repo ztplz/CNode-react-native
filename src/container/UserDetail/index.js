@@ -27,6 +27,7 @@ import timeDiff from '../../utils/timeDiffUtil';
 import {
   NIGHT_HEADER_COLOR
 } from '../../constants/themecolor';
+import NetErrorPage from '../../components/NetErrorPage';
 
 class UserDetail extends Component {
   static navigationOptions = ({ navigation, screenProps }) => ({
@@ -40,7 +41,7 @@ class UserDetail extends Component {
 
   componentDidMount() {
     console.log('123');
-    this.props.actions.getUserDetailData({isLoading: true, isLoaded: false, username: this.props.navigation.state.params.authorname, timeout: 10000});
+    this.props.actions.getUserDetailData({isLoading: true, isLoaded: false, username: this.props.navigation.state.params.authorname, timeout: 10000, error: ''});
   }
 
   render() {
@@ -48,60 +49,69 @@ class UserDetail extends Component {
     console.log(data);
     if(isLoading) {
       return <LoadingPage title='正在加载中...' />
-    } else {
-      if(isLoaded) {
-        return (
-          <ScrollView style={styles.container}>
-            <View style={styles.userInfoContainer}>
-              <Image source={{uri: data.avatar_url}} style={styles.avatar}/>
-              <View style={styles.userInfo}>
-                <Text style={styles.username}>{data.loginname}</Text>
-                <Text style={styles.createTime}>注册时间：{timeDiff(data.create_at)}</Text>
-              </View>
-            </View>
-            <View style={styles.replyAndPostContainer}>
-              <TouchableOpacity
-                activeOpacity={0.6}
-                onPress={() => navigation.navigate('RecentReply', {authorname: navigation.state.params.authorname})}
-              >
-                <CustomRow
-                  leftIcon={<Icon name='ios-chatboxes' size={30} color='#635bed' />}
-                  rightIcon={<Icon name='ios-arrow-forward' size={20} color='#9d9eab' />}
-                  title='最近参与话题'
-                  rowStyle={styles.replyRow}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                activeOpacity={0.6}
-                onPress={() => navigation.navigate('RecentTopics', {authorname: navigation.state.params.authorname})}
-              >
-                <CustomRow
-                  leftIcon={<Icon name='ios-brush' size={30} color='#e71fc7' />}
-                  rightIcon={<Icon name='ios-arrow-forward' size={20} color='#9d9eab' />}
-                  title='最近发布话题'
-                  rowStyle={styles.postRow}
-                />
-              </TouchableOpacity>
-            </View>
-            <View style={styles.collectionContainer}>
-              <TouchableOpacity
-                activeOpacity={0.6}
-                onPress={() => navigation.navigate('Collection', {authorname: navigation.state.params.authorname})}
-              >
-                <CustomRow
-                  leftIcon={<Icon name='ios-star' size={30} color='#e2525b' />}
-                  rightIcon={<Icon name='ios-arrow-forward' size={20} color='#9d9eab' />}
-                  title='他/她的收藏'
-                  rowStyle={styles.collectionRow}
-                />
-              </TouchableOpacity>
-            </View>
-          </ScrollView>
-        )
-      } else {
-        return null;
-      }
     }
+
+    if(!isLoading && isLoaded) {
+      return (
+        <ScrollView style={styles.container}>
+          <View style={styles.userInfoContainer}>
+            <Image source={{uri: data.avatar_url}} style={styles.avatar}/>
+            <View style={styles.userInfo}>
+              <Text style={styles.username}>{data.loginname}</Text>
+              <Text style={styles.createTime}>注册时间：{timeDiff(data.create_at)}</Text>
+            </View>
+          </View>
+          <View style={styles.replyAndPostContainer}>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              onPress={() => navigation.navigate('RecentReply', {authorname: navigation.state.params.authorname})}
+            >
+              <CustomRow
+                leftIcon={<Icon name='ios-chatboxes' size={30} color='#635bed' />}
+                rightIcon={<Icon name='ios-arrow-forward' size={20} color='#9d9eab' />}
+                title='最近参与话题'
+                rowStyle={styles.replyRow}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              onPress={() => navigation.navigate('RecentTopics', {authorname: navigation.state.params.authorname})}
+            >
+              <CustomRow
+                leftIcon={<Icon name='ios-brush' size={30} color='#e71fc7' />}
+                rightIcon={<Icon name='ios-arrow-forward' size={20} color='#9d9eab' />}
+                title='最近发布话题'
+                rowStyle={styles.postRow}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.collectionContainer}>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              onPress={() => navigation.navigate('Collection', {authorname: navigation.state.params.authorname})}
+            >
+              <CustomRow
+                leftIcon={<Icon name='ios-star' size={30} color='#e2525b' />}
+                rightIcon={<Icon name='ios-arrow-forward' size={20} color='#9d9eab' />}
+                title='他/她的收藏'
+                rowStyle={styles.collectionRow}
+              />
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      )
+    }
+
+    if(error !== '') {
+      return (
+        <NetErrorPage
+          error={error.message}
+          handler={() => actions.getUserDetailData({isLoading: true, isLoaded: false, username: this.props.navigation.state.params.authorname, timeout: 10000, error: ''})}
+        />
+      )
+    }
+
+    return null;
   }
 }
 

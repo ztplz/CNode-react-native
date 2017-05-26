@@ -9,6 +9,7 @@ import {
   View,
   Text,
   Switch,
+  Alert,
   TouchableOpacity,
   StyleSheet
 } from 'react-native';
@@ -25,6 +26,7 @@ import {
   NIGHT_SETTING_MOONROW_BACKGROUNDCOLOR,
   NIGHT_CUSTOMROW_TEXT_COLOR,
 } from '../../constants/themecolor';
+import GlobalConfigStorage from '../../localStorage/GlobalConfigStorage';
 
 class Setting extends Component {
   static navigationOptions = ({ navigation, screenProps }) => ({
@@ -36,8 +38,31 @@ class Setting extends Component {
     },
   });
 
+  // switchChange() {
+  //   this.props.actions.changeMode({isNightMode: !screenProps.isNightMode});
+  //   new GlobalConfigStorage().saveMode(screenProps.isNightMode);
+  // }
+  componentWillReceiveProps(nextProps) {
+    if(!nextProps.isLogged) {
+
+    }
+  }
+
+  logout() {
+    Alert.alert(
+      '确认退出？',
+      null,
+      [
+        {text: '确认', onPress: () => this.props.actions.userLogout({ isLogged: false, accesstoken: '', loginname: null, avatar_url: null, user_create_at: null }) },
+        // {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        {text: '取消', null },
+      ],
+      // { cancelable: false }
+    )
+  }
+
   render() {
-    const { screenProps, navigation } = this.props;
+    const { screenProps, navigation, isLogged } = this.props;
     return (
       <View style={[styles.container, { backgroundColor: screenProps.isNightMode? NIGHT_BACKGROUND_COLOR : null }]}>
         <CustomRow
@@ -94,19 +119,25 @@ class Setting extends Component {
             />
           </TouchableOpacity>
         </View>
-        <View style={styles.logoutContainer}>
-          <TouchableOpacity
-            activeOpacity={0.6}
-          >
-            <CustomRow
-              leftIcon={<Icon name='ios-log-out' size={30} color='#de4a53' />}
-              rightIcon={<Icon name='ios-arrow-forward' size={20} color='#9d9eab' />}
-              title='退出登录'
-              titleStyle={{ color: screenProps.isNightMode? NIGHT_CUSTOMROW_TEXT_COLOR : null }}
-              rowStyle={[styles.logoutRow, { backgroundColor: screenProps.isNightMode? NIGHT_SETTING_MOONROW_BACKGROUNDCOLOR : '#ffffff'}]}
-            />
-          </TouchableOpacity>
-        </View>
+        {
+          isLogged?
+          <View style={styles.logoutContainer}>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              onPress={() => this.logout()}
+            >
+              <CustomRow
+                leftIcon={<Icon name='ios-log-out' size={30} color='#de4a53' />}
+                rightIcon={<Icon name='ios-arrow-forward' size={20} color='#9d9eab' />}
+                title='退出登录'
+                titleStyle={{ color: screenProps.isNightMode? NIGHT_CUSTOMROW_TEXT_COLOR : null }}
+                rowStyle={[styles.logoutRow, { backgroundColor: screenProps.isNightMode? NIGHT_SETTING_MOONROW_BACKGROUNDCOLOR : '#ffffff'}]}
+              />
+            </TouchableOpacity>
+          </View>
+          :
+          null
+        }
       </View>
     )
   }
@@ -176,6 +207,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   console.log(state);
   return {
+    isLogged: state.GlobalState.get('isLogged'),
     // isNightMode: state.GlobalState.getIn(['scisNightMode,
   }
 }

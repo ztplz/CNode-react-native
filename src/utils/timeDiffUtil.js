@@ -7,6 +7,10 @@
 import moment from 'moment';
 import momentLocale from 'moment/locale/zh-cn';
 
+// export default function timeDiff(time) {
+//   return moment(time).subtract(moment().utcOffset(), 'minutes').fromNow();
+// }
+
 export default function timeDiff(time) {
-  return moment(time).subtract(moment().utcOffset(), 'minutes').fromNow();
+  return moment(time).fromNow();
 }

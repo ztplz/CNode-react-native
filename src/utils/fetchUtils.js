@@ -18,8 +18,8 @@ function postMethod(params) {
   return {
     method: 'post',
     headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(params)
   }

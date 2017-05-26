@@ -31,3 +31,11 @@ export function loadMoreHomePageData(payload) {
     payload,
   }
 }
+
+export function homepageStartup(payload) {
+  console.log(payload);
+  return {
+    type: HOMEPAGE_STARTUP,
+    payload
+  }
+}

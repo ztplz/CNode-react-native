@@ -8,7 +8,10 @@ import { put, take, call, fork, race, takeEvery, takeLatest } from 'redux-saga/e
 import {
   FETCH_USERDETAIL_DATA,
   FETCH_USERDETAIL_DATA_SUCCESS,
-  FETCH_USERDETAIL_DATA_FAILURE
+  FETCH_USERDETAIL_DATA_FAILURE,
+  REFRESH_USERDETAIL_DATA,
+  REFRESH_USERDETAIL_DATA_SUCCESS,
+  REFRESH_USERDETAIL_DATA_FAILURE
 } from '../constants/actionTypes';
 import {
   getUserDetailUrl
@@ -17,6 +20,7 @@ import { getFetch } from '../utils/fetchUtils';
 
 function* fetchUserDetailData(action) {
   try {
+    console.log(action);
     const url = getUserDetailUrl + action.payload.username;
     const data = yield call(getFetch, action.payload.timeout, url);
     yield put({
@@ -38,9 +42,38 @@ function* fetchUserDetailData(action) {
   }
 }
 
+function* refreshUserDetailData(action) {
+  try {
+    const url = getUserDetailUrl + action.payload.authorname;
+    const data = yield call(getFetch, action.payload.timeout, url);
+    yield put({
+      type: REFRESH_USERDETAIL_DATA_SUCCESS,
+      payload: {
+        isRefreshing: false,
+        data: data
+      }
+    });
+  } catch(error) {
+    Toast.show('刷新失败，请重试...', {position: 80});
+    yield put({
+      type: REFRESH_USERDETAIL_DATA_FAILURE,
+      payload: {
+        isRefreshing: false
+      }
+    });
+  }
+}
+
 export function* watchFetchUserDetailData() {
   while(true) {
     const action = yield take(FETCH_USERDETAIL_DATA);
     yield call(fetchUserDetailData, action);
+  }
+}
+
+export function* watchRefreshUserDetailData() {
+  while(true) {
+    const action = yield take(REFRESH_USERDETAIL_DATA);
+    yield call(refreshUserDetailData, action);
   }
 }

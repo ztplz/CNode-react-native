@@ -15,6 +15,7 @@ import {
 } from '../constants/actionTypes';
 import { getUserDetailUrl } from '../constants/api';
 import { getFetch } from '../utils/fetchUtils';
+import Toast from 'react-native-root-toast';
 
 function* refreshRecentData(action) {
   try {
@@ -28,23 +29,15 @@ function* refreshRecentData(action) {
       }
     });
   } catch(error) {
+    Toast.show('刷新失败，请重试...', {position: 80});
     yield put({
       type: REFRESH_RECENT_DETAIL_FAILURE,
       payload: {
         isRefreshing: false,
-        error
       }
     });
   }
 }
-
-// export function* watchFetchRecentTopics() {
-//   while(true) {
-//     const action = yield take(FETCH_RECENT_TOPICS);
-//     console.log(action);
-//     yield call(fetchRecentTopicsData, action);
-//   }
-// }
 
 export function* watchRefreshRecent() {
   while(true) {

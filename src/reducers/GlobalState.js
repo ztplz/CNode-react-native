@@ -6,6 +6,7 @@
 
 import { fromJS } from 'immutable';
 import {
+  HOMEPAGE_STARTUP,
   CHANGE_MODE,
   CHANGE_THEMECOLOR,
   USER_LOGIN,
@@ -13,11 +14,12 @@ import {
   LOGIN_TO_CNODE_SUCCESS,
   START_UP,
   GET_USERINFO_SUCCESS,
-  FETCH_ME_DATA_SUCCESS
+  FETCH_ME_DATA_SUCCESS,
+  USER_LOGOUT
 } from '../constants/actionTypes';
 
 const initialState = fromJS({
-  isNightMode: false,
+  // isNightMode: false,
   // themeColor: null,
   screenProps: {
     isNightMode: false,
@@ -34,6 +36,18 @@ const initialState = fromJS({
 export default function GlobalState(state=initialState, action) {
   // console.log(action);
   switch (action.type) {
+    case HOMEPAGE_STARTUP:
+      return state.set('screenProps', action.payload.screenProps)
+                  .set('selectedColor', action.payload.selectedColor)
+                  .set('isLogged', action.payload.isLogged)
+                  .set('accesstoken', action.payload.accesstoken)
+                  .set('loginname', action.payload.loginname);
+    case START_UP:
+      return state.set('screenProps', action.payload.screenProps)
+                  .set('selectedColor', action.payload.selectedColor)
+                  .set('isLogged', action.payload.isLogged)
+                  .set('accesstoken', action.payload.accesstoken)
+                  .set('loginname', action.payload.loginname);
     case CHANGE_MODE:
       return state.setIn(['screenProps', 'isNightMode'], action.payload.isNightMode);
     case CHANGE_THEMECOLOR:
@@ -55,6 +69,12 @@ export default function GlobalState(state=initialState, action) {
       return state.set('user_create_at', action.payload.user_create_at);
     // case LOGIN_TO_CNODE_SUCCESS:
     //   return state.set('accesstoken', action.payload.accesstoken);
+    case USER_LOGOUT:
+      return state.set('isLogged', action.payload.isLogged)
+                  .set('accesstoken', action.payload.accesstoken)
+                  .set('loginname', action.payload.loginname)
+                  .set('avatar_url', action.payload.avatar_url)
+                  .set('user_create_at', action.payload.user_create_at);
     default:
       return state;
   }

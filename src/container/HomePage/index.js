@@ -17,6 +17,7 @@ import { deviceWidth, DeviceHeight, pixel } from '../../utils/deviceSize';
 import {
   NIGHT_HEADER_COLOR
 } from '../../constants/themecolor';
+import GlobalConfigStorage from '../../localStorage/GlobalConfigStorage';
 
 class HomePage extends Component {
 
@@ -61,9 +62,9 @@ class HomePage extends Component {
   }
 
   // componentDidMount() {
-  //   if(isLogged) {
-  //     const getUnreadMessageCount = setInterval(({acc})this.props.actions.)
-  //   }
+  //   this.props.actions.homepageStartup(
+  //     new GlobalConfigStorage().getUserInfo()
+  //   )
   // }
 
   render() {

@@ -7,7 +7,8 @@
 import {
   CHANGE_MODE,
   CHANGE_THEMECOLOR,
-  USER_LOGIN
+  USER_LOGIN,
+  USER_LOGOUT
 } from '../constants/actionTypes';
 
 export function changeMode(payload) {
@@ -30,6 +31,13 @@ export function userLogin(payload) {
   console.log('userLogin');
   return {
     type: USER_LOGIN,
+    payload
+  }
+}
+
+export function userLogout(payload) {
+  return {
+    type: USER_LOGOUT,
     payload
   }
 }

@@ -10,25 +10,31 @@ import { View, StatusBar } from 'react-native';
 import { Provider } from 'react-redux';
 import AppNavigator from './AppNavigator';
 import configStore from './store/configStore';
+import { startup } from './actions/startupActions';
+import GlobalConfigStorage from './localStorage/GlobalConfigStorage';
 
-// console.log(configStore);
 
 const store = configStore();
-// store.dispatch()
-// console.log(store.getState());
-// let themeColor;
-// export function changeAppThemeColor(payload) {
-//   console.log(payload);
-//   themeColor = payload.themecolor;
-//   console.log(themeColor);
+// const startupAction = {
+//   ...new GlobalConfigStorage().getUserInfo(),
+//   screenProps: {
+//     isNightMode: new GlobalConfigStorage().getMode(),
+//     themeColor: new GlobalConfigStorage().getThemeColor()
+//   }
 // }
-// console.log(themeColor);
+// console.log(startupAction);
+// store.dispatch(startup({
+//
+// }));
+
+StatusBar.setBarStyle('light-content', true);
 
 class CNode extends Component {
   render() {
     return (
       <Provider store={store}>
         <AppNavigator />
+        {/* <App /> */}
       </Provider>
     );
   }

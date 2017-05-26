@@ -10,6 +10,7 @@ import { DODGERBLUE } from '../constants/themecolor';
 const THEME_COLOR = 'THEME_COLOR';
 const USER_INFO = 'USER_INFO';
 const USER_CREATE_AT = 'USER_CREATE_AT';
+const USER_MODE = 'USER_MODE';
 
 export default class GlobalConfigStorage {
   // save(key, value) {
@@ -88,10 +89,12 @@ export default class GlobalConfigStorage {
   }
 
   getUserInfo() {
+    console.log('getuserinfot');
     return new Promise((resolve, reject) => {
       AsyncStorage.getItem(USER_INFO, (error, result) => {
         if(!error) {
           const data = JSON.parse(result);
+          console.log('reslove getuserinfo');
           resolve(data);
         } else {
           reject('GET_USER_ERROR');
@@ -120,4 +123,27 @@ export default class GlobalConfigStorage {
       })
     })
   }
+
+  saveMode(value) {
+    try {
+      AsyncStorage.setItem(USER_MODE, JSON.stringify(value));
+    } catch(error) {
+      //
+    }
+  }
+
+  getMode() {
+    return new Promise((resolve, reject) => {
+      AsyncStorage.getItem(USER_MODE, (error, result) => {
+        if(!error) {
+          const value = JSON.parse(result);
+          resolve(value);
+        } else {
+          reject('GET_USER_MODE_ERROR');
+        }
+      })
+    })
+  }
+
+  saveThemeColor
 }

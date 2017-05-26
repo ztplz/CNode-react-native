@@ -197,7 +197,7 @@ class TopicDetail extends Component {
               <Text style={styles.topicInfo}> • 发布于 {timeDiff(data.create_at)} • 作者 {data.author.loginname} • {data.visit_count} 次浏览 • 最后一次编辑是 {timeDiff(data.last_reply_at)} • 来自 {this.isWhichTab(data.tab)}</Text>
             </View>
             <View style={styles.topicInfoSeparator}></View>
-            <View style={{paddingBottom: 20, borderBottomWidth: pixel}}>
+            <View style={{paddingBottom: 20, }}>
               <HTMLView
                 value={this.props.data.content}
               />
@@ -323,9 +323,10 @@ const styles = StyleSheet.create({
   // }
   btnRow: {
     // flex: 1,
-    width: DeviceWidth -16,
+    width: DeviceWidth,
     height: 50,
     flexDirection: 'row',
+    borderTopWidth: pixel,
     borderBottomWidth: pixel,
     // backgroundColor: 'red'
   },

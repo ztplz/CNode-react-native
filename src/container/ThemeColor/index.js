@@ -24,6 +24,7 @@ import {
   NIGHT_HEADER_COLOR,
   NIGHT_BACKGROUND_COLOR
 } from '../../constants/themecolor';
+import GlobalConfigStorage from '../../localStorage/GlobalConfigStorage';
 
 class ThemeColor extends Component {
   // static navigationOptions =（{navigation, screenProps}) =>（{
@@ -70,9 +71,11 @@ class ThemeColor extends Component {
     ]
   }
 
-  // componentDidMount() {
-  //   this.props.navigation.setParams({title: 123});
-  // }
+  itemChange(color) {
+    new GlobalConfigStorage().saveThemeColor(color);
+    this.props.actions.changeThemecolor({themeColor: color})
+  }
+
   render() {
     const { screenProps } = this.props;
     console.log(this.props);
@@ -80,7 +83,7 @@ class ThemeColor extends Component {
     // console.log(themeColor);
     return (
       <ScrollView style={{ backgroundColor: screenProps.isNightMode? NIGHT_BACKGROUND_COLOR : null }}>
-        <View style={[styles.container, {}]}>
+        <View style={[styles.container, ]}>
           {
             this.rows.map( (item, index) => (
               <View
@@ -91,12 +94,12 @@ class ThemeColor extends Component {
                   activeOpacity={0.6}
                   // onPress={() => this.props.changeThemecolor({ selectedColor: item[1], themeColor: item[2] })}
                   // onPress={() => changeThemeColor(item[2])}
-                  onPress = {() => this.props.actions.changeThemecolor({themeColor: item[2]}) }
+                  onPress = {() => this.itemChange(item[2]) }
                 >
                   <CustomRow
                     leftIcon={ screenProps.themeColor === item[2] ? <Icon name='ios-checkmark-circle' size={20} color={item[2]} /> : <View style={styles.circle}></View>}
                     title={item[0]}
-                    rowStyle={[styles.colorRow, { backgroundColor: '#a4a4a4' }]}
+                    rowStyle={[styles.colorRow, { backgroundColor: screenProps.isNightMode? '#87838a' : '#ffffff' }]}
                     titleStyle={[styles.titleStyle, {color: item[2]}]}
                   />
                 </TouchableOpacity>
@@ -123,7 +126,7 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     paddingBottom: 15,
     paddingLeft: 10,
-    borderColor: '#b2b0b6',
+    borderColor: '#ffffff',
     backgroundColor: '#ffffff'
   },
   titleStyle: {
