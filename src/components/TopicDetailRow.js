@@ -18,9 +18,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import HTMLView from 'react-native-htmlview';
 import timeDiff from '../utils/timeDiffUtil';
 
-const content = "<div class=\"markdown-text\"><p>🥚 的插件机制简直强大！用上 🥚 瞬间感觉自己无所不能了！</p>\n</div>"
-
-const likeIt = (index, isLogged, isUped, accesstoken, reply_id, navigation,  upedItem, getTopicDetailData) => {
+const likeIt = (navigation, getTopicDetailData, upedItem, index, isLogged, isUped, reply_id, accesstoken) => {
   if(isLogged) {
     // if(isUped) {
     //   notUpedItem({params: { accesstoken, topic_id,},  timeout: 10000});
@@ -30,6 +28,23 @@ const likeIt = (index, isLogged, isUped, accesstoken, reply_id, navigation,  upe
     //
     // return ;
     upedItem({accesstoken, reply_id, isUped: !isUped, index})
+  }
+
+  Alert.alert(
+    '请先登录',
+    null,
+    [
+      {text: '登录', onPress: () => navigation.navigate('Login', { onGoBack: () => getTopicDetailData({topicId: navigation.state.params.topicId, accesstoken, isLoading: true, isLoaded: false, error: '', timeout: 10000})})},
+      {text: '取消', null },
+    ],
+  )
+}
+
+const replyToOther = (navigation, getTopicDetailData, isLogged, replyname, topic_id, reply_id, accesstoken) => {
+  console.log(reply_id);
+  if(isLogged) {
+    navigation.navigate('ReplyPage', { replyname, topic_id, reply_id, onGoBack: () => getTopicDetailData({topicId: navigation.state.params.topicId, accesstoken, isLoading: true, isLoaded: false, error: '', timeout: 10000})});
+    return ;
   }
 
   Alert.alert(
@@ -66,7 +81,9 @@ const TopicDetailRow = props => {
                 <Text style={styles.thumbsUpNumber}>{props.data.ups.length}</Text>
               </View>
             </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback>
+            <TouchableWithoutFeedback
+              onPress={() => replyToOther(props.navigation, props.actions.getTopicDetailData, props.isLogged, props.data.author.loginname, props.topic_id, props.data.id, props.accesstoken)}
+            >
               <Icon name='ios-undo' size={20} color='#736270' style={styles.undo} />
             </TouchableWithoutFeedback>
           </View>

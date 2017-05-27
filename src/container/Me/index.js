@@ -103,7 +103,7 @@ class Me extends Component {
                 leftIcon={<Icon name='ios-chatboxes' size={30} color='#635bed' />}
                 rightIcon={<Icon name='ios-arrow-forward' size={20} color='#9d9eab' />}
                 title='最近回复'
-                rowStyle={styles.replyRow}
+                rowStyle={[styles.replyRow, { borderBottomWidth: Pixel }]}
               />
             </TouchableOpacity>
             <TouchableOpacity

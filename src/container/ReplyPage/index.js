@@ -24,7 +24,7 @@ import HeaderButton from '../../components/HeaderButton';
 
 class ReplyPage extends Component {
   static navigationOptions = ({ navigation, screenProps }) => ({
-    title: '回复',
+    title: navigation.state.params.replyname? '回复 ' + navigation.state.params.replyname : '评论',
     headerTintColor: '#ffffff',
     headerStyle: {
       // backgroundColor: '#878fe0',
@@ -37,6 +37,7 @@ class ReplyPage extends Component {
     super(props);
     this.state = {
       replyText: '',
+      replyToUser: '@' + this.props.navigation.state.params.replyname + '  ',
     }
   }
 
@@ -56,11 +57,15 @@ class ReplyPage extends Component {
 
   rightClick() {
     console.log(this.state.replyText);
-    this.props.actions.replyToTopic({ isSending: true, timeout: 10000, topic_id: this.props.navigation.state.params.topic_id, params: { accesstoken: this.props.accesstoken, content: this.state.replyText }});
+    this.props.actions.replyToTopic({ isSending: true, timeout: 10000, topic_id: this.props.navigation.state.params.topic_id, params: { accesstoken: this.props.accesstoken, content: this.props.navigation.state.params.replyname? this.state.replyToUser : this.state.replyText }});
   }
 
+  // replyTopic() {
+  //   this.setState({ replyTe})
+  // }
+
   render() {
-    const { isSending, isReplySuccess, topic_id, screenProps } = this.props;
+    const { isSending, isReplySuccess, topic_id, screenProps, navigation } = this.props;
     return (
       <KeyboardAvoidingView>
         {
@@ -75,14 +80,34 @@ class ReplyPage extends Component {
           :
           null
         }
-        <TextInput
+        {
+          navigation.state.params.replyname?
+          <TextInput
+            autoCapitalize='none'
+            style={{ height: 200, borderColor: 'gray', borderWidth: pixel, paddingLeft: 10, fontSize: 20}}
+            // defaultVaule={'@' + navigation.state.params.replyname + ' ' }
+            multiline={true}
+            onChangeText={(text) => this.setState({ replyToUser:  text })}
+            value={ this.state.replyToUser}
+          />
+          :
+          <TextInput
+            autoCapitalize='none'
+            style={{ height: 200, borderColor: 'gray', borderWidth: pixel, paddingLeft: 10, fontSize: 20}}
+            placeholder='请输入评论内容'
+            multiline={true}
+            onChangeText={(text) => this.setState({ replyText: text })}
+            value={ this.state.replyText}
+          />
+        }
+        {/* <TextInput
           autoCapitalize='none'
           style={{ height: 200, borderColor: 'gray', borderWidth: pixel, paddingLeft: 10, fontSize: 20}}
-          placeholder='请输入评论内容'
+          { navigation.state.params.replyname? defaultVaule='@' + navigation.state.params.replyname : placeholder='请输入评论内容' }
           multiline={true}
-          onChangeText={(text) => this.setState({ replyText: text })}
-          valuea={this.state.replyText}
-        />
+          onChangeText={(text) => this.setState({ replyText: navigation.state.params.replyname? '@' + navigation.state.params.replyname + '  ' + text : text })}
+          value={ this.state.replyText}
+        /> */}
       </KeyboardAvoidingView>
     )
   }

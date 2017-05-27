@@ -235,7 +235,7 @@ class TopicDetail extends Component {
           <View style={{marginTop: 30, paddingLeft: 8, paddingRight: 8}}>
             <FlatList
               data={data.replies}
-              renderItem={({item, index}) => <TopicDetailRow data={item} floor={index} accesstoken={accesstoken} navigation={navigation} isLogged={isLogged}  actions={actions} />}
+              renderItem={({item, index}) => <TopicDetailRow data={item} floor={index} accesstoken={accesstoken} navigation={navigation} isLogged={isLogged}  actions={actions} topic_id={data.id} />}
               ItemSeparatorComponent={() => <View style={styles.commentSeparator} />}
               keyExtractor={(item, index) => 'TopicDetail' + item.id + index }
             />
