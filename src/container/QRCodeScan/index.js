@@ -73,15 +73,6 @@ class QRCodeScan extends Component {
 
     if(isReadingScan) {
       return (
-        // <View style={styles.container}>
-        //   <TouchableWithoutFeedback
-        //     onPress={() => actions.loginToCNode({isReadingScan: false, isLogging: true, timeout: 10000, params: {accesstoken: '01605c45-3648-470a-8c2c-04551b61672b'}})}
-        //   >
-        //     <View style={{backgroundColor: '#4970c9', padding: 5}}>
-        //       <Text style={{fontSize: 20, color: '#ffffff'}}>登 录</Text>
-        //     </View>
-        //   </TouchableWithoutFeedback>
-        // </View>
         <View style={{flex: 1}}>
           <Camera
             onBarCodeRead={(event) => actions.loginToCNode({isReadingScan: false, isLogging: true, timeout: 10000, params: {accesstoken: event.data}})}
