@@ -54,10 +54,10 @@ export default function UnreadMessageState(state=initialState, action) {
     case REFRESH_UNREADMESSAGE_DATA:
       return state.set('isRefreshing', action.payload.isRefreshing)
                   .set('error', action.payload.error);
-    case REFRESH_UNREADMESSAGE_DATA:
+    case REFRESH_UNREADMESSAGE_DATA_SUCCESS:
       return state.set('isRefreshing', action.payload.isRefreshing)
                   .set('data', action.payload.data);
-    case REFRESH_UNREADMESSAGE_DATA:
+    case REFRESH_UNREADMESSAGE_DATA_FAILURE:
       return state.set('isRefreshing', action.payload.isRefreshing)
                   .set('error', action.payload.error);
     default:

@@ -23,30 +23,18 @@ import HTMLView from 'react-native-htmlview';
 import {
   NIGHT_HEADER_COLOR,
   NIGHT_BACKGROUND_COLOR,
-  NIGHT_SETTING_MOONROW_BACKGROUNDCOLOR,
+  NIGHT_CUSTOMROW_BACKGROUND_COLOR,
   NIGHT_CUSTOMROW_TEXT_COLOR,
 } from '../../constants/themecolor';
-import GlobalConfigStorage from '../../localStorage/GlobalConfigStorage';
 
 class Setting extends Component {
   static navigationOptions = ({ navigation, screenProps }) => ({
     title: '设置',
     headerTintColor: '#ffffff',
     headerStyle: {
-      // backgroundColor: '#878fe0',
       backgroundColor: screenProps.isNightMode? NIGHT_HEADER_COLOR : screenProps.themeColor
     },
   });
-
-  // switchChange() {
-  //   this.props.actions.changeMode({isNightMode: !screenProps.isNightMode});
-  //   new GlobalConfigStorage().saveMode(screenProps.isNightMode);
-  // }
-  componentWillReceiveProps(nextProps) {
-    if(!nextProps.isLogged) {
-
-    }
-  }
 
   logout() {
     Alert.alert(
@@ -54,10 +42,8 @@ class Setting extends Component {
       null,
       [
         {text: '确认', onPress: () => this.props.actions.userLogout({ isLogged: false, accesstoken: '', loginname: null, avatar_url: null, user_create_at: null }) },
-        // {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-        {text: '取消', null },
+        {text: '取消', },
       ],
-      // { cancelable: false }
     )
   }
 
@@ -76,7 +62,7 @@ class Setting extends Component {
           }
           title='夜间模式'
           titleStyle={{color: screenProps.isNightMode? NIGHT_CUSTOMROW_TEXT_COLOR : null }}
-          rowStyle={[styles.moonRow,  { backgroundColor: screenProps.isNightMode? NIGHT_SETTING_MOONROW_BACKGROUNDCOLOR : '#ffffff'}]}
+          rowStyle={[styles.moonRow,  { backgroundColor: screenProps.isNightMode? NIGHT_CUSTOMROW_BACKGROUND_COLOR : '#ffffff'}]}
         />
         <View style={styles.themeColorContainer}>
           <TouchableOpacity
@@ -88,7 +74,7 @@ class Setting extends Component {
               rightIcon={<Icon name='ios-arrow-forward' size={20} color='#9d9eab' />}
               title='更改主题颜色'
               titleStyle={{ color: screenProps.isNightMode? NIGHT_CUSTOMROW_TEXT_COLOR : null }}
-              rowStyle={[styles.themeColorRow, { backgroundColor: screenProps.isNightMode? NIGHT_SETTING_MOONROW_BACKGROUNDCOLOR : '#ffffff' }]}
+              rowStyle={[styles.themeColorRow, { backgroundColor: screenProps.isNightMode? NIGHT_CUSTOMROW_BACKGROUND_COLOR : '#ffffff' }]}
             />
           </TouchableOpacity>
         </View>
@@ -101,7 +87,7 @@ class Setting extends Component {
               rightIcon={<Icon name='ios-arrow-forward' size={20} color='#9d9eab' />}
               title='清理缓存'
               titleStyle={{ color: screenProps.isNightMode? NIGHT_CUSTOMROW_TEXT_COLOR : null }}
-              rowStyle={[styles.cleanRow,  { backgroundColor: screenProps.isNightMode? NIGHT_SETTING_MOONROW_BACKGROUNDCOLOR : '#ffffff'}]}
+              rowStyle={[styles.cleanRow,  { backgroundColor: screenProps.isNightMode? NIGHT_CUSTOMROW_BACKGROUND_COLOR : '#ffffff'}]}
             />
           </TouchableOpacity>
         </View>
@@ -115,7 +101,7 @@ class Setting extends Component {
               rightIcon={<Icon name='ios-arrow-forward' size={20} color='#9d9eab' />}
               title='关于'
               titleStyle={{ color: screenProps.isNightMode? NIGHT_CUSTOMROW_TEXT_COLOR : null }}
-              rowStyle={[styles.aboutRow, { backgroundColor: screenProps.isNightMode? NIGHT_SETTING_MOONROW_BACKGROUNDCOLOR : '#ffffff'}]}
+              rowStyle={[styles.aboutRow, { backgroundColor: screenProps.isNightMode? NIGHT_CUSTOMROW_BACKGROUND_COLOR : '#ffffff'}]}
             />
           </TouchableOpacity>
         </View>
@@ -131,7 +117,7 @@ class Setting extends Component {
                 rightIcon={<Icon name='ios-arrow-forward' size={20} color='#9d9eab' />}
                 title='退出登录'
                 titleStyle={{ color: screenProps.isNightMode? NIGHT_CUSTOMROW_TEXT_COLOR : null }}
-                rowStyle={[styles.logoutRow, { backgroundColor: screenProps.isNightMode? NIGHT_SETTING_MOONROW_BACKGROUNDCOLOR : '#ffffff'}]}
+                rowStyle={[styles.logoutRow, { backgroundColor: screenProps.isNightMode? NIGHT_CUSTOMROW_BACKGROUND_COLOR : '#ffffff'}]}
               />
             </TouchableOpacity>
           </View>
@@ -146,7 +132,6 @@ class Setting extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: this.props.screenProps.isNightMode? NIGHT_BACKGROUND_COLOR : null
   },
   moonRow: {
     marginTop: 20,
@@ -205,10 +190,8 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
-  console.log(state);
   return {
     isLogged: state.GlobalState.get('isLogged'),
-    // isNightMode: state.GlobalState.getIn(['scisNightMode,
   }
 }
 

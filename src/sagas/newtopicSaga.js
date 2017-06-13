@@ -4,7 +4,7 @@
  * email: mysticzt@gmail.com
  */
 
-import { put, take, call, fork, race, takeEvery, takeLatest } from 'redux-saga/effects';
+import { put, take, call } from 'redux-saga/effects';
 import {
   POST_TO_CNODE,
   POST_TO_CNODE_SUCCESS,
@@ -17,7 +17,6 @@ import Toast from 'react-native-root-toast';
 function* postToCNode(action) {
   try {
     const res = yield call(postFetch, action.payload.timeout, postToCNodeUrl, action.payload.params);
-    console.log(res);
     if(res.success == true) {
       Toast.show('你的帖子已经发布成功', {position: 80});
       yield put({

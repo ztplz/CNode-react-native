@@ -18,42 +18,19 @@ import * as actions from '../../actions/globalconfigActions';
 import CustomRow from '../../components/CustomRow';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Pixel } from '../../utils/deviceSize';
-// import { changeThemeColor } from '../../AppNavigator';
-// import { changeAppThemeColor } from '../../CNode';
 import {
   NIGHT_HEADER_COLOR,
   NIGHT_BACKGROUND_COLOR
 } from '../../constants/themecolor';
-import GlobalConfigStorage from '../../localStorage/GlobalConfigStorage';
 
 class ThemeColor extends Component {
-  // static navigationOptions =（{navigation, screenProps}) =>（{
-  //   // title:  navigation.state.params.title || '更改主题颜色',
-  //   title: '更改主题颜色',
-  //   headerTintColor: '#ffffff',
-  //   headerStyle: {
-  //     // backgroundColor: '#878fe0',
-  //     backgroundColor: screenProps.themeColor
-  //   },
-  // };
-
   static navigationOptions = ({ navigation, screenProps }) => ({
     title: '更改主题颜色',
     headerTintColor: '#ffffff',
     headerStyle: {
-      // backgroundColor: '#878fe0',
       backgroundColor: screenProps.isNightMode? NIGHT_HEADER_COLOR : screenProps.themeColor
     },
   });
-
-  // static navigationOptions = {
-  //   title:  '更改主题颜色',
-  //   headerTintColor: '#ffffff',
-  //   headerStyle: {
-  //     // backgroundColor: '#878fe0',
-  //     backgroundColor: screenProps.
-  //   },
-  // }
 
   constructor(props) {
     super(props);
@@ -78,9 +55,6 @@ class ThemeColor extends Component {
 
   render() {
     const { screenProps } = this.props;
-    console.log(this.props);
-    // console.log(selectedColor);
-    // console.log(themeColor);
     return (
       <ScrollView style={{ backgroundColor: screenProps.isNightMode? NIGHT_BACKGROUND_COLOR : null }}>
         <View style={[styles.container, ]}>
@@ -92,8 +66,6 @@ class ThemeColor extends Component {
               >
                 <TouchableOpacity
                   activeOpacity={0.6}
-                  // onPress={() => this.props.changeThemecolor({ selectedColor: item[1], themeColor: item[2] })}
-                  // onPress={() => changeThemeColor(item[2])}
                   onPress = {() => this.itemChange(item[2]) }
                 >
                   <CustomRow
@@ -117,9 +89,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 60
   },
-  // colorContainer: {
-  //   // marginTop: 30,
-  // },
   colorRow: {
     borderBottomWidth: Pixel,
     borderTopWidth: Pixel,
@@ -142,11 +111,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
-  // console.log(state.GlobalState.toJS());
-  return {
-    // themeColor: state.GlobalState.get('themeColor'),
-    // selectedColor: state.GlobalState.get('selectedColor'),
-  }
+  return {}
 }
 
 const mapDispatchToProps = dispatch => {

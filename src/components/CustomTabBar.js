@@ -13,15 +13,6 @@ import {
 import { connect } from 'react-redux';
 import { TabBarBottom } from 'react-navigation';
 
-// const CustomTabBar = (props) => (
-//   <TabBarBottom
-//     {...props}
-//     style={{
-//       backgroundColor: props.screenProps
-//     }}
-//   />
-// )
-
 class CustomTabBar extends Component {
   render() {
     const { screenProps } = this.props;

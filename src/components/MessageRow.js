@@ -4,7 +4,6 @@
  * email: mysticzt@gmail.com
  */
 
-// import React, { PropTypes } from 'react';
 import React from 'react';
 import {
   View,

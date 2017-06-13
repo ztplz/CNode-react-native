@@ -5,6 +5,7 @@
  */
 
 import { fromJS } from 'immutable';
+import _ from 'lodash';
 import {
   FETCH_TOPICDETAIL_DATA,
   FETCH_TOPICDETAIL_DATA_SUCCESS,
@@ -73,22 +74,14 @@ export default function TopicDetailState(state=initialState, action) {
     case SENT_REPLY_MESSAGE:
       return state.set('isReplyTextInputShow', action.payload.isReplyTextInputShow);
     case UPED_ITEM:
-      console.log(action);
-      // console.log(state.get(['data', 'replies']));
-      // console.log(state.get('data').replies[action.payload.index].is_uped);
-      // return state.updateIn(['data', 'replies'], replies => replies.setIn([action.payload.index, 'is_uped'], action.payload.isUped) );
-      // return state.updateIn(['data', 'replies'], list => list.updateIn([action.payload.index + 1, 'is_uped'], is_uped => action.payload.isUped))
-      // return state.set('data', {...state.get('data'), {...state.get('data').replies,  }.replies[action.payload.index].is_uped)
-      // return state.update('data', {
-      //   ...state.get('data'), [
-      //     ...state.get('data').replies, {
-      //       ...state.get('data').replies[action.payload.index],  is_uped: action.payload.isUped
-      //     }
-      //   ]
-      // })
-      // return state.merge(state.get('data').replies[action.payload.index].is_uped);
-      state.set('data', {a: 1});
-      console.log(state.get('data'))
+      const cloneData = _.cloneDeep(state.get('data'));
+      const newData = _.set(cloneData, `replies[${action.payload.index}].is_uped`, action.payload.isUped);
+      if(action.payload.isUped) {
+        newData.replies[action.payload.index].ups.push('');
+      } else {
+        newData.replies[action.payload.index].ups.pop();
+      }
+      return state.update('data', data => newData);
     default:
       return state;
   }

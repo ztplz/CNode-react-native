@@ -7,19 +7,33 @@
 export const NIGHT_HEADER_COLOR = '#5e5e5e';
 export const NIGHT_BACKGROUND_COLOR = '#656565';
 export const NIGHT_CUSTOMROW_TEXT_COLOR = '#dadada';
+export const NIGHT_CUSTOMROW_BACKGROUND_COLOR = '#4a4a4a';
+export const NIGHT_REFRESH_COLOR = '#dae0e6';
 
 export const NIGHT_HOMEPAGE_FLATLISTROW_TEXT_COLOR = '#c7c7c7';
 
+export const NIGHT_LOADINGPAGE_TEXT = '#d6d6d6';
+
 export const NIGHT_PLACEHOLDERTEXT_COLOR = '#9e9e9e';
-export const NIGHT_INPUT_COLOR = '#dad9d9'; 
+export const NIGHT_INPUT_COLOR = '#dad9d9';
 
-export const NIGHT_ME_SETTING_BACKGROUND_COLOR = '#4a4a4a';
+// export const NIGHT_ME_SETTING_BACKGROUND_COLOR = '#4a4a4a';
 
-export const NIGHT_SETTING_MOONROW_BACKGROUNDCOLOR = '#4a4a4a';
+// export const NIGHT_MESSAGE_BACKGROUND_COLOR = '#4a4a4a';
+export const NIGHT_MESSAGE_FLATLIST_HEADER = '#dfd6df';
+
+// export const NIGHT_SETTING_MOONROW_BACKGROUNDCOLOR = '#4a4a4a';
 
 export const NIGHT_ABOUT_TEXT_COLOR = '#d7d7d7';
 
 export const NIGHT_MESSAGE_UNLOGGED_TEXT_COLOR = '#dfdfdf';
+
+export const NIGHT_COLLECTIONROW_TEXT = '#c7d0b6';
+export const NIGHT_COLLECTIONROW_BORDERBOTTOMCOLOR = '#bebbbd';
+
+export const NIGHT_USER_RECENTROW_TEXT = '#c7d0b6';
+export const NIGHT_USER_RECENTROW_BORDERBOTTOMCOLOR = '#bebbbd';
+export const NIGHT_RECENT_FLATLIST_HEADER = '#dfd6df';
 
 export const DODGERBLUE = '#878fe0';  // 道奇蓝
 export const BLACK = '#000000';       //  纯黑色

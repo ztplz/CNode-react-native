@@ -19,7 +19,6 @@ const initialState = fromJS({
 });
 
 export default function MessageState(state=initialState, action) {
-  console.log(action.payload);
   switch (action.type) {
     case FETCH_MESSAGE:
       return state.set('isLoading', action.payload.isLoading)

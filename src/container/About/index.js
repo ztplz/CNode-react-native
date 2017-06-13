@@ -13,7 +13,6 @@ import {
   TouchableWithoutFeedback,
   StyleSheet
 } from 'react-native';
-// import { connect } from 'react-redux';
 import { deviceWidth } from '../../utils/deviceSize';
 import {
   NIGHT_HEADER_COLOR,
@@ -26,7 +25,6 @@ class About extends Component {
     title: '关于',
     headerTintColor: '#ffffff',
     headerStyle: {
-      // backgroundColor: '#878fe0',
       backgroundColor: screenProps.isNightMode? NIGHT_HEADER_COLOR : screenProps.themeColor
     },
   })
@@ -81,7 +79,6 @@ const styles = StyleSheet.create({
   itemContainer: {
     paddingLeft: 8,
     marginTop: 20
-    // width: deviceWidth - 50
   },
   itemText: {
     fontSize: 18,

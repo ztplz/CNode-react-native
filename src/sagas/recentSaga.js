@@ -4,11 +4,8 @@
  * email: mysticzt@gmail.com
  */
 
-import {put, take, call, fork, race, takeEvery, takeLatest } from 'redux-saga/effects';
+import { put, take, call } from 'redux-saga/effects';
 import {
-  // FETCH_RECENT_TOPICS,
-  // FETCH_RECENT_TOPICS_SUCCESS,
-  // FETCH_RECENT_TOPICS_FAILURE,
   REFRESH_RECENT_DETAIL,
   REFRESH_RECENT_DETAIL_SUCCESS,
   REFRESH_RECENT_DETAIL_FAILURE
@@ -42,7 +39,6 @@ function* refreshRecentData(action) {
 export function* watchRefreshRecent() {
   while(true) {
     const action = yield take(REFRESH_RECENT_DETAIL);
-    console.log(action);
     yield call(refreshRecentData, action);
   }
 }

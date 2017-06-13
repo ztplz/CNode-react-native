@@ -17,38 +17,16 @@ import { deviceWidth, DeviceHeight, pixel } from '../../utils/deviceSize';
 import {
   NIGHT_HEADER_COLOR
 } from '../../constants/themecolor';
-import GlobalConfigStorage from '../../localStorage/GlobalConfigStorage';
 
 class HomePage extends Component {
-
   static navigationOptions = ({ navigation, screenProps }) => ({
-    tabBarLabel: ({focused}) => (<Text style={{color: focused? screenProps.isNightMode? '#2f2f91' : screenProps.themeColor : '#c4c5c8', fontSize: 10, textAlign: 'center', marginBottom: 1.5, backgroundColor: 'transparent',}}>首页</Text>) ,
-    // tabBarLabel: '首页',
-    // lazyLoad: true,
+    tabBarLabel: ({focused}) => (<Text style={{color: focused? screenProps.isNightMode? '#2f2f91' : screenProps.themeColor : '#c4c5c8', fontSize: 10, textAlign: 'center', marginBottom: 1.5, backgroundColor: 'transparent',}}>首页</Text>),
     tabBarIcon: ({  focused }) => (<Icon name={focused? "ios-home" : "ios-home-outline"} size={30}  color={focused? screenProps.isNightMode? '#1f1f9f' : screenProps.themeColor : '#c4c5c8'}  />),
-    // tabBarIcon:
-    // headerVisible: false,
     header: null,
-    // activeTintColor: '#ff0000',
     tabBarOptions: {
       activeTintColor: '#ff0000',
-      // inactiveBackgroundColor: '#d73754'
-      // labelStyle: {
-      //   color: '#ff0000'
-      // }
     },
-    // labelStyle: {
-    //   color: ({focused}) => '#ff000f'
-    // }
   })
-
-  // static navigationOptions = {
-  //   tabBarLabel: '首页',
-  //   // lazyLoad: true,
-  //   tabBarIcon: () => <Icon name="ios-home-outline" size={30} color="#c8bebe" />,
-  //   // headerVisible: false,
-  //   header: null
-  // }
 
   constructor(props) {
     super(props);
@@ -60,12 +38,6 @@ class HomePage extends Component {
       ['招聘', 'job', 'ScrollTab_5', ],
     ];
   }
-
-  // componentDidMount() {
-  //   this.props.actions.homepageStartup(
-  //     new GlobalConfigStorage().getUserInfo()
-  //   )
-  // }
 
   render() {
     const { state, actions, navigation, screenProps } = this.props;
@@ -82,14 +54,6 @@ class HomePage extends Component {
             tabName={item[1]}
             key={item[2]}
             actions={actions}
-            // isLoading={isLoading}
-            // isRefreshing={isRefreshing}
-            // isLoadingMore={isLoadingMore}
-            // isLoaded={isLoaded}
-            // isLoadedAll={isLoadedAll}
-            // error={error}
-            // date={date}
-            // data={data}
             screenProps={screenProps}
             navigation={navigation}
             state={state[item[1]]}
@@ -101,15 +65,7 @@ class HomePage extends Component {
 }
 
 const mapStateToProps = state => {
-  // const stateOfHomePageState = state.HomePageState.toJS();
   return {
-    // isLoading: stateOfHomePageState.isLoading,
-    // isLoaded: stateOfHomePageState.isLoaded,
-    // isRefreshing: stateOfHomePageState.isRefreshing,
-    // isLoadingMore: stateOfHomePageState.isLoadingMore,
-    // isLoadedAll: stateOfHomePageState.isLoadedAll,
-    // error: stateOfHomePageState.error,
-    // data: stateOfHomePageState.data
     state: state.HomePageState.toJS()
   }
 };

@@ -14,7 +14,8 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {
-  NIGHT_HEADER_COLOR
+  NIGHT_HEADER_COLOR,
+  NIGHT_BACKGROUND_COLOR
 } from '../../constants/themecolor';
 
 class Login extends Component {
@@ -27,9 +28,9 @@ class Login extends Component {
   });
 
   render() {
-    const { navigation } = this.props;
+    const { navigation, screenProps } = this.props;
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, { backgroundColor: screenProps.isNightMode? NIGHT_BACKGROUND_COLOR : null }]}>
         <Image source={require('../../asset/img/log.png')} style={styles.log}/>
         <TouchableHighlight
           style={styles.btnContainer}

@@ -93,7 +93,7 @@ export default function HomePageState(state=initialState, action) {
     case REFRESH_HOMEPAGE_DATA_SUCCESS:
       return state.setIn([action.payload.tabName, 'isRefreshing'], action.payload.isRefreshing)
                   .setIn([action.payload.tabName, 'pageIndex'], action.payload.pageIndex)
-                  .setIn(['data', action.payload.tabName, 'data'], action.payload.data);
+                  .setIn([action.payload.tabName, 'data'], action.payload.data);
     case REFRESH_HOMEPAGE_DATA_FAILURE:
       return state.setIn([action.payload.tabName, 'isRefreshing'], action.payload.isRefreshing)
                   .setIn([action.payload.tabName, 'error'], action.payload.error);

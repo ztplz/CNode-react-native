@@ -27,7 +27,6 @@ class ReplyPage extends Component {
     title: navigation.state.params.replyname? '回复 ' + navigation.state.params.replyname : '评论',
     headerTintColor: '#ffffff',
     headerStyle: {
-      // backgroundColor: '#878fe0',
       backgroundColor: screenProps.isNightMode? NIGHT_HEADER_COLOR : screenProps.themeColor
     },
     headerRight: <HeaderButton title='发送' textStyle={{color: '#ffffff', marginRight: 8}} handler={ navigation.state.params?  navigation.state.params.rightButtonHandler : null } />,
@@ -42,7 +41,6 @@ class ReplyPage extends Component {
   }
 
   componentDidMount() {
-    console.log('new topic');
     this.props.navigation.setParams({
       rightButtonHandler: () => this.rightClick(),
     })
@@ -56,13 +54,8 @@ class ReplyPage extends Component {
   }
 
   rightClick() {
-    console.log(this.state.replyText);
-    this.props.actions.replyToTopic({ isSending: true, timeout: 10000, topic_id: this.props.navigation.state.params.topic_id, params: { accesstoken: this.props.accesstoken, content: this.props.navigation.state.params.replyname? this.state.replyToUser : this.state.replyText }});
+    this.props.actions.replyToTopic({ isSending: true, timeout: 10000, topic_id: this.props.navigation.state.params.topic_id, params: { accesstoken: this.props.accesstoken, content: this.props.navigation.state.params.replyname? this.state.replyToUser : this.state.replyText, reply_id: this.props.navigation.state.params.replyname? this.props.navigation.state.params.reply_id : null }});
   }
-
-  // replyTopic() {
-  //   this.setState({ replyTe})
-  // }
 
   render() {
     const { isSending, isReplySuccess, topic_id, screenProps, navigation } = this.props;
@@ -85,7 +78,6 @@ class ReplyPage extends Component {
           <TextInput
             autoCapitalize='none'
             style={{ height: 200, borderColor: 'gray', borderWidth: pixel, paddingLeft: 10, fontSize: 20}}
-            // defaultVaule={'@' + navigation.state.params.replyname + ' ' }
             multiline={true}
             onChangeText={(text) => this.setState({ replyToUser:  text })}
             value={ this.state.replyToUser}
@@ -100,14 +92,6 @@ class ReplyPage extends Component {
             value={ this.state.replyText}
           />
         }
-        {/* <TextInput
-          autoCapitalize='none'
-          style={{ height: 200, borderColor: 'gray', borderWidth: pixel, paddingLeft: 10, fontSize: 20}}
-          { navigation.state.params.replyname? defaultVaule='@' + navigation.state.params.replyname : placeholder='请输入评论内容' }
-          multiline={true}
-          onChangeText={(text) => this.setState({ replyText: navigation.state.params.replyname? '@' + navigation.state.params.replyname + '  ' + text : text })}
-          value={ this.state.replyText}
-        /> */}
       </KeyboardAvoidingView>
     )
   }
@@ -119,7 +103,6 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingLeft: 8,
     paddingRight: 8,
-    // backgroundColor: 'red'
   }
 });
 

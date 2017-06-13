@@ -16,7 +16,6 @@ import {
 } from "../constants/actionTypes";
 import { checkUserAccesstokenUrl } from "../constants/api";
 import { postFetch } from "../utils/fetchUtils";
-import GlobalConfigStorage from "../localStorage/GlobalConfigStorage";
 
 function* userLoginToCNode(action) {
   try {
@@ -26,7 +25,6 @@ function* userLoginToCNode(action) {
       checkUserAccesstokenUrl,
       action.payload.params
     );
-    console.log(res);
     if (res.success == true) {
       yield put({
         type: LOGIN_TO_CNODE_SUCCESS,
@@ -46,13 +44,6 @@ function* userLoginToCNode(action) {
         avatar_url: res.avatar_url
       });
     }
-    //
-    // new GlobalConfigStorage().saveUserInfo({
-    //   isLogged: true,
-    //   accesstoken: action.payload.params.accesstoken,
-    //   loginname: res.loginname,
-    //   avatar_url: res.avatar_url
-    // });
   } catch (error) {
     yield put({
       type: LOGIN_TO_CNODE_FAILURE,
@@ -66,7 +57,6 @@ function* userLoginToCNode(action) {
 export function* watchUserLoginToCNode() {
   while (true) {
     const action = yield take(LOGIN_TO_CNODE);
-    console.log(action);
     yield call(userLoginToCNode, action);
   }
 }

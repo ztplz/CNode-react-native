@@ -17,7 +17,6 @@ import UserRecentState from './UserRecentState';
 import MeState from './MeState';
 import NewTopicState from './NewTopicState';
 import ReplyPageState from './ReplyPageState';
-// import MessageState from './MessageState';
 
 export default combineReducers({
   HomePageState,
@@ -32,5 +31,4 @@ export default combineReducers({
   MeState,
   NewTopicState,
   ReplyPageState
-  // MessageState
 });

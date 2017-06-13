@@ -4,16 +4,10 @@
  * email: mysticzt@gmail.com
  */
 
-// import React, { PropTypes } from 'react';
 import React from 'react';
-import {
-  View,
-  StatusBar,
-} from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { StackNavigator, TabNavigator, addNavigationHelpers } from 'react-navigation';
-import GlobalConfigStorage from './localStorage/GlobalConfigStorage';
+import { StackNavigator, TabNavigator } from 'react-navigation';
 import HomePage from './container/HomePage';
 import NewTopic from './container/NewTopic';
 import Message from './container/Message';
@@ -23,7 +17,6 @@ import HavereadMessage from './container/HavereadMessage';
 import TopicDetail from './container/TopicDetail';
 import Setting from './container/Setting';
 import ThemeColor from './container/ThemeColor';
-import DraftBox from './container/DraftBox';
 import Login from './container/Login';
 import UserDetail from './container/UserDetail';
 import Collection from './container/Collection';
@@ -33,19 +26,7 @@ import RecentReply from './container/RecentReply';
 import ReplyPage from './container/ReplyPage';
 import About from './container/About';
 import CustomTabBar from './components/CustomTabBar';
-// import AppTabNavigator from './AppTabNavigator';
 
-// let appThemeColor = new GlobalConfigStorage().getThemeColor();
-// console.log(appThemeColor);
-
-//
-// let appThemeColor;
-// export const changeThemeColor = (themecolor) => {
-//   console.log('themecolor');
-//   appThemeColor = themecolor;
-// };
-// console.log(appThemeColor);
-// const themecolor = new GlobalConfigStorage().getThemeColor();
 const MainPage = TabNavigator({
   HomePage: {
     screen: HomePage,
@@ -60,15 +41,6 @@ const MainPage = TabNavigator({
     screen: Me,
   },
 }, {
-  // initialRouteName: 'HomePage',
-  // swipeEnabled: true,
-  // lazy: true,
-  // tabBarOptions: {
-  //   style: {
-  //     paddingBottom: 2,
-  //   },
-  //   // activeBackgroundColor: '#3bb84f'
-  // },
   tabBarComponent: CustomTabBar
 });
 
@@ -90,9 +62,6 @@ const AppNavigator = StackNavigator({
   },
   ThemeColor: {
     screen: ThemeColor
-  },
-  DraftBox: {
-    screen: DraftBox
   },
   Login: {
     screen: Login
@@ -121,52 +90,19 @@ const AppNavigator = StackNavigator({
 }, {
   headerMode: 'screen',
   initialRouteName: 'MainPage',
-  // initialRouteParams: {
-  //   // themecolor: new GlobalConfigStorage().getThemeColor(),
-  //   title: '123'
-  // },
   navigationOptions: {
-    // title: navigation.state.params.authorname + ' 的收藏',
-    // title: '123',
     headerTintColor: '#ffffff',
-    // headerStyle: {
-    //   backgroundColor:  '#39d23c',
-    //   // backgroundColor: new GlobalConfigStorage().getThemeColor() || '#a96dd1',
-    //   // backgroundColor: '#372a34',
-    // },
   }
 });
 
 const mapStateToProps = state => {
-  console.log(state.GlobalState.get('screenProps').toJS());
   return {
     screenProps: state.GlobalState.get('screenProps').toJS(),
   }
 }
 
 const mapDispatchToProps = dispatch => {
-  return {
-
-  }
+  return {}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppNavigator);
-
-// const AppNavigator = ({ dispatch, nav }) => (
-//     <Navigator
-//       navigation={addNavigationHelpers({
-//         dispatch,
-//         state: nav,
-//       })}
-//     />
-// );
-
-// AppNavigator.propTypes = {
-//   dispatch: PropTypes.func.isRequired,
-//   nav: PropTypes.object.isRequired,
-// };
-
-//
-// export default connect(
-//   state => ({ nav: state.NavState }),
-// )(AppNavigator);

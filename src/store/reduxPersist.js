@@ -5,19 +5,18 @@
  */
 
 import immutablePersistenceTransform from './immutablePersistenceTransform';
-// import { persistentStoreBlacklist, persistentStoreWhitelist } from '../reducers/'
 import { AsyncStorage } from 'react-native';
-// import GlobalState from '../reducers/GlobalState';
 import HomePageState from '../reducers/HomePageState';
+import MeState from '../reducers/MeState';
 
 const REDUX_PERSIST = {
   active: true,
   reducerVersion: '1',
   storeConfig: {
     storage: AsyncStorage,
-    // blacklist: persistentStoreBlacklist,
     whitelist: [
       'GlobalState',
+      'MeState'
       // HomePageState
     ],
     transforms: [immutablePersistenceTransform]

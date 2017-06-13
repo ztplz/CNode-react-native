@@ -8,17 +8,13 @@ import { fork } from 'redux-saga/effects';
 import { watchFetchHomePageData, watchRefreshHomePageData, watchFetchMoreHomePageData } from './homepageSaga';
 import { watchFetchUnreadMessage, watchRefreshUnreadMessage, watchUnreadMessageReply } from './unreadMessageSaga';
 import { watchFetchHavereadMessage, watchRefreshHavereadMessage, watchHavereadMessageReply } from './havereadMessageSaga';
-import { watchFetchTopicDetailData, watchRefreshTopicDetailData, watchTopicCollect, watchNotTopicCollect } from './topicdetailSaga';
+import { watchFetchTopicDetailData, watchRefreshTopicDetailData, watchTopicCollect, watchNotTopicCollect, watchUserUpedItem } from './topicdetailSaga';
 import { watchFetchUserDetailData, watchRefreshUserDetailData } from './userdetailSaga';
 import { watchFetchCollectionData, watchRefreshCollectionData } from './collectionSaga';
 import { watchUserLoginToCNode } from './qrcodescanSaga';
-// import { watchRefreshRecent } from './recentSaga';
-import { watchAppStartUp } from './startupSaga';
 import { watchFetchMeData, watchRefreshMe } from './meSaga';
 import { watchPostToCNode } from './newtopicSaga';
 import { watchReplyToTopic } from './replypageSaga';
-// import { watchFetchMessage } from './messageSaga';
-console.log(watchFetchMeData);
 
 export default function* rootSaga() {
   yield [
@@ -35,17 +31,15 @@ export default function* rootSaga() {
     fork(watchRefreshTopicDetailData),
     fork(watchTopicCollect),
     fork(watchNotTopicCollect),
+    fork(watchUserUpedItem),
     fork(watchFetchUserDetailData),
     fork(watchRefreshUserDetailData),
     fork(watchFetchCollectionData),
     fork(watchRefreshCollectionData),
     fork(watchUserLoginToCNode),
-    // fork(watchRefreshRecent),
-    fork(watchAppStartUp),
     fork(watchFetchMeData),
     fork(watchRefreshMe),
     fork(watchPostToCNode),
     fork(watchReplyToTopic)
-    // fork(watchFetchMessage),
   ];
 }

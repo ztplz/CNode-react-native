@@ -15,7 +15,6 @@ import {
 const initialState = fromJS({
   isSending: false,
   isReplySuccess: false,
-  // topic_id: ''
 });
 
 export default function ReplyPageState(state=initialState, action) {

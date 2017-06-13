@@ -4,7 +4,7 @@
  * email: mysticzt@gmail.com
  */
 
-import {put, take, call, fork, race, takeEvery, takeLatest } from 'redux-saga/effects';
+import { put, take, call, takeEvery } from 'redux-saga/effects';
 import {
   FETCH_TOPICDETAIL_DATA,
   FETCH_TOPICDETAIL_DATA_SUCCESS,
@@ -81,9 +81,7 @@ function* refreshTopicDetailData(action) {
 function* toCollectTopic(action) {
   try {
     const res = yield call(postFetch, action.payload.timeout, collectTopicUrl, action.payload.params);
-    console.log(res);
     if(res.success === true) {
-      console.log('COLLECT_TOPIC_SUCCESS');
       yield put({
         type: COLLECT_TOPIC_SUCCESS,
         payload: {
@@ -92,7 +90,6 @@ function* toCollectTopic(action) {
       })
     }
   } catch(error) {
-    //  (ÒωÓױ)呃！！！！
     Toast.show('收藏失败，请重试...', {position: 80});
     yield put({
       type: COLLECT_TOPIC_FAILURE,
@@ -107,7 +104,6 @@ function* toNotCollectTopic(action) {
   try {
     console.log('111111111111');
     const res = yield call(postFetch, action.payload.timeout, notCollectTopicUrl, action.payload.params);
-    console.log(res);
     if(res.success === true) {
       yield put({
         type: NOT_COLLECT_TOPIC_SUCCESS,
@@ -117,7 +113,6 @@ function* toNotCollectTopic(action) {
       })
     }
   } catch(error) {
-    //  (ÒωÓױ)呃！！！！]
     Toast.show('取消收藏失败，请重试...', {position: 80});
     yield put({
       type: NOT_COLLECT_TOPIC_FAILURE,
@@ -130,34 +125,16 @@ function* toNotCollectTopic(action) {
 
 export function* userUpedItem(action) {
   try {
-    const url = replyUpsUrl + action.payload.replyId + '/ups';
+    const url = replyUpsUrl + action.payload.reply_id + '/ups';
     const res = yield call(postFetch, action.payload.timeout, url, action.payload.params);
-    // console.log(res);
-    // if(res.success === true) {
-    //   console.log('UPED_ITEM_SUCCESS');
-    //   yield put({
-    //     type: UPED_ITEM_SUCCESS,
-    //     payload: {
-    //       isUped: true
-    //     }
-    //   })
-    // }
   } catch(error) {
-    //  (ÒωÓױ)呃！！！！
-    // Toast.show('收藏失败，请重试...', {position: 80});
-    // yield put({
-    //   type: COLLECT_TOPIC_FAILURE,
-    //   payload: {
-    //     error: error
-    //   }
-    // })
+    //
   }
 }
 
 export function* watchFetchTopicDetailData() {
   while(true) {
     const action = yield take(FETCH_TOPICDETAIL_DATA);
-    console.log(action);
     yield call(fetchTopicDetailData, action);
   }
 }
@@ -165,7 +142,6 @@ export function* watchFetchTopicDetailData() {
 export function* watchRefreshTopicDetailData() {
   while(true) {
     const action = yield take(REFRESH_TOPICDETAIL_DATA);
-    console.log(action);
     yield call(refreshTopicDetailData, action);
   }
 }
@@ -184,10 +160,6 @@ export function* watchNotTopicCollect() {
   }
 }
 
-export function* watchUerUpedItem() {
-  // while(true) {
+export function* watchUserUpedItem() {
   yield takeEvery(UPED_ITEM, userUpedItem);
-    // console.log(action);
-    // yield call(userUpedItem, action);
-  // }
 }

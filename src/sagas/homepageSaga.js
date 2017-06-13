@@ -4,8 +4,7 @@
  * email: mysticzt@gmail.com
  */
 
-import {put, take, call, fork, race, takeEvery, takeLatest } from 'redux-saga/effects';
-import { delay,  } from 'redux-saga';
+import { put, take, call, takeEvery } from 'redux-saga/effects';
 import {
   TIME_OUT,
   FETCH_HOMEPAGE_DATA,
@@ -22,25 +21,11 @@ import {
 import { getTopicsUrl } from '../constants/api';
 import { getFetch } from '../utils/fetchUtils';
 import Toast from 'react-native-root-toast';
-// import HomePageStorage from '../localStorage/HomePageStorage';
 
 function* fetchHomePageData(action) {
   try {
-    // const timeDiff = Date.now() - action.payload.date;
-    // console.log(timeDiff);
-
-    // let data;
-    //
-    // if(timeDiff < 1000) {
-    //   data = yield call(new HomePageStorage().get, action.payload.tabName);
-    // } else {
-      const url = getTopicsUrl + '?tab=' + action.payload.tabName + '&page=' + action.payload.pageIndex;
-      const data = yield call(getFetch, action.payload.timeout, url);
-      console.log(url);
-      console.log(data);
-    // }
-
-    // console.log(data);
+    const url = getTopicsUrl + '?tab=' + action.payload.tabName + '&page=' + action.payload.pageIndex;
+    const data = yield call(getFetch, action.payload.timeout, url);
 
     yield put({
       type: FETCH_HOMEPAGE_DATA_SUCCESS,
@@ -49,11 +34,9 @@ function* fetchHomePageData(action) {
         isLoaded: true,
         tabName: action.payload.tabName,
         pageIndex: action.payload.pageIndex,
-        // date: Date.now(),
         data,
       }
     });
-    // yield call(new HomePageStorage().save, data, action.payload.tabName);
   } catch (error) {
     yield put({
       type: FETCH_HOMEPAGE_DATA_FAILURE,
@@ -76,11 +59,9 @@ function* refreshHomePageData(action) {
         isRefreshing: false,
         tabName: action.payload.tabName,
         pageIndex: action.payload.pageIndex,
-        // date: Date.now(),
         data,
       }
     });
-    // yield call(new HomePageStorage().save, data, action.payload.tabName);
   } catch(error) {
     yield put({
       type: REFRESH_HOMEPAGE_DATA_FAILURE,

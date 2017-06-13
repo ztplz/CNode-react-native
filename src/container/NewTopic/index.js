@@ -21,7 +21,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from '../../actions/newtopicActions';
 import Icon from 'react-native-vector-icons/Ionicons';
-import KeyboardSpacer from 'react-native-keyboard-spacer';
+// import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { defaultHeader } from 'react-navigation';
 import HeaderButton from '../../components/HeaderButton';
 import { DeviceHeight, pixel } from '../../utils/deviceSize';
@@ -53,7 +53,7 @@ class NewTopic extends Component {
     labelStyle: {
       color: screenProps.themeColor
     },
-    headerLeft: <HeaderButton title='保存' textStyle={{color: '#ffffff', marginLeft: 8}}  handler={() => console.log('leftButtonPress')} /> ,
+    // headerLeft: <HeaderButton title='保存' textStyle={{color: '#ffffff', marginLeft: 8}}  handler={() => console.log('leftButtonPress')} /> ,
     headerRight: <HeaderButton title='发帖' textStyle={{color: '#ffffff', marginRight: 8}} handler={ navigation.state.params?  navigation.state.params.rightButtonHandler : null } />,
     tabBarIcon: ({  focused }) => (<Icon name={focused? 'ios-create' : 'ios-create-outline'} size={30} color={focused? screenProps.isNightMode? '#1f1f9f' : screenProps.themeColor : '#c4c5c8'} />)
   });

@@ -4,7 +4,6 @@
  * email: mysticzt@gmail.com
  */
 
-// import React, { PropTypes } from 'react';
 import React from 'react';
 import {
   View,
@@ -12,20 +11,25 @@ import {
   ActivityIndicator,
   StyleSheet,
 } from 'react-native';
+import {
+  NIGHT_BACKGROUND_COLOR,
+  NIGHT_LOADINGPAGE_TEXT
+} from '../constants/themecolor';
 
 const LoadingPage = props => (
-  <View style={styles.container}>
+  <View style={[styles.container, { backgroundColor: props.screenProps.isNightMode? NIGHT_BACKGROUND_COLOR : null}]}>
     <ActivityIndicator
       style={styles.activityIndicator}
       size='large'
     />
-    <Text style={styles.text}>{props.title}</Text>
+    <Text style={[styles.text, { color: props.screenProps.isNightMode? NIGHT_LOADINGPAGE_TEXT : null }]}>{props.title}</Text>
   </View>
 );
 
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
+    flex: 1
   },
   activityIndicator: {
     marginTop: 50,

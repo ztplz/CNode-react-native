@@ -4,7 +4,6 @@
  * email: mysticzt@gmail.com
  */
 
-// import React, { Component, PropTypes } from 'react';
 import React, { Component } from 'react';
 import {
   View,
@@ -20,14 +19,14 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions/meActions';
 import Icon from 'react-native-vector-icons/Ionicons';
 import CustomRow from '../../components/CustomRow';
-import { Pixel } from '../../utils/deviceSize';
+import { pixel } from '../../utils/deviceSize';
 import LoadingPage from '../../components/LoadingPage';
 import timeDiff from '../../utils/timeDiffUtil';
 import {
   NIGHT_HEADER_COLOR,
   NIGHT_BACKGROUND_COLOR,
   NIGHT_CUSTOMROW_TEXT_COLOR,
-  NIGHT_ME_SETTING_BACKGROUND_COLOR
+  NIGHT_CUSTOMROW_BACKGROUND_COLOR
 } from '../../constants/themecolor';
 
 class Me extends Component {
@@ -75,8 +74,8 @@ class Me extends Component {
                 leftIcon={<Icon name='ios-settings' size={30} color='#5b656c' />}
                 rightIcon={<Icon name='ios-arrow-forward' size={20} color='#9d9eab' />}
                 title='设置'
-                  titleStyle={{ color: screenProps.isNightMode? NIGHT_CUSTOMROW_TEXT_COLOR : null }}
-                rowStyle={[styles.settingRow, { backgroundColor: screenProps.isNightMode? NIGHT_ME_SETTING_BACKGROUND_COLOR : '#ffffff'}]}
+                titleStyle={{ color: screenProps.isNightMode? NIGHT_CUSTOMROW_TEXT_COLOR : null }}
+                rowStyle={[styles.settingRow, { backgroundColor: screenProps.isNightMode? NIGHT_CUSTOMROW_BACKGROUND_COLOR : '#ffffff'}]}
               />
             </TouchableOpacity>
           </View>
@@ -87,11 +86,11 @@ class Me extends Component {
     if(isLogged) {
       return (
         <ScrollView style={[styles.container, { backgroundColor: screenProps.isNightMode? NIGHT_BACKGROUND_COLOR : null}]}>
-          <View style={styles.userInfoContainer}>
+          <View style={[styles.userInfoContainer, { backgroundColor: screenProps.isNightMode? NIGHT_CUSTOMROW_BACKGROUND_COLOR : '#ffffff'}]}>
             <Image source={{uri: avatar_url}} style={styles.avatar}/>
             <View style={styles.userInfo}>
-              <Text style={styles.username}>{ loginname }</Text>
-              <Text style={styles.createTime}>注册时间： {timeDiff(user_create_at)}</Text>
+              <Text style={[styles.username, { color: screenProps.isNightMode? NIGHT_CUSTOMROW_TEXT_COLOR : null }]}>{ loginname }</Text>
+              <Text style={[styles.createTime, { color: screenProps.isNightMode? NIGHT_CUSTOMROW_TEXT_COLOR : null }]}>注册时间： {timeDiff(user_create_at)}</Text>
             </View>
           </View>
           <View style={styles.replyAndPostContainer}>
@@ -103,7 +102,8 @@ class Me extends Component {
                 leftIcon={<Icon name='ios-chatboxes' size={30} color='#635bed' />}
                 rightIcon={<Icon name='ios-arrow-forward' size={20} color='#9d9eab' />}
                 title='最近回复'
-                rowStyle={[styles.replyRow, { borderBottomWidth: Pixel }]}
+                titleStyle={{ color: screenProps.isNightMode? NIGHT_CUSTOMROW_TEXT_COLOR : null }}
+                rowStyle={[styles.replyRow, { backgroundColor: screenProps.isNightMode? NIGHT_CUSTOMROW_BACKGROUND_COLOR : '#ffffff'}]}
               />
             </TouchableOpacity>
             <TouchableOpacity
@@ -114,7 +114,8 @@ class Me extends Component {
                 leftIcon={<Icon name='ios-brush' size={30} color='#e71fc7' />}
                 rightIcon={<Icon name='ios-arrow-forward' size={20} color='#9d9eab' />}
                 title='最近发帖'
-                rowStyle={styles.postRow}
+                titleStyle={{ color: screenProps.isNightMode? NIGHT_CUSTOMROW_TEXT_COLOR : null }}
+                rowStyle={[styles.postRow, { backgroundColor: screenProps.isNightMode? NIGHT_CUSTOMROW_BACKGROUND_COLOR : '#ffffff'}]}
               />
             </TouchableOpacity>
           </View>
@@ -128,21 +129,10 @@ class Me extends Component {
                   leftIcon={<Icon name='ios-star' size={30} color='#e2525b' />}
                   rightIcon={<Icon name='ios-arrow-forward' size={20} color='#9d9eab' />}
                   title='我的收藏'
-                  rowStyle={styles.collectionRow}
+                  titleStyle={{ color: screenProps.isNightMode? NIGHT_CUSTOMROW_TEXT_COLOR : null }}
+                  rowStyle={[styles.collectionRow, { backgroundColor: screenProps.isNightMode? NIGHT_CUSTOMROW_BACKGROUND_COLOR : '#ffffff'}]}
                 />
               </View>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.draftboxContainer}>
-            <TouchableOpacity
-              activeOpacity={0.6}
-            >
-              <CustomRow
-                leftIcon={<Icon name='ios-basket' size={30} color='#e2525b' />}
-                rightIcon={<Icon name='ios-arrow-forward' size={20} color='#9d9eab' />}
-                title='草稿箱'
-                rowStyle={styles.collectionRow}
-              />
             </TouchableOpacity>
           </View>
           <View style={styles.settingContainer}>
@@ -154,7 +144,8 @@ class Me extends Component {
                 leftIcon={<Icon name='ios-settings' size={30} color='#5b656c' />}
                 rightIcon={<Icon name='ios-arrow-forward' size={20} color='#9d9eab' />}
                 title='设置'
-                rowStyle={styles.settingRow}
+                titleStyle={{ color: screenProps.isNightMode? NIGHT_CUSTOMROW_TEXT_COLOR : null }}
+                rowStyle={[styles.settingRow, { backgroundColor: screenProps.isNightMode? NIGHT_CUSTOMROW_BACKGROUND_COLOR : '#ffffff'}]}
               />
             </TouchableOpacity>
           </View>
@@ -217,16 +208,16 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   replyRow: {
-    borderBottomWidth: Pixel,
-    borderTopWidth: Pixel,
+    borderBottomWidth: pixel,
+    borderTopWidth: pixel,
     paddingTop: 5,
     paddingBottom: 5,
     borderColor: '#b2b0b6',
     backgroundColor: '#ffffff'
   },
   postRow: {
-    borderBottomWidth: Pixel,
-    borderTopWidth: Pixel,
+    borderBottomWidth: pixel,
+    // borderTopWidth: pixel,
     paddingTop: 5,
     paddingBottom: 5,
     borderColor: '#b2b0b6',
@@ -236,8 +227,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   collectionRow: {
-    borderBottomWidth: Pixel,
-    borderTopWidth: Pixel,
+    borderBottomWidth: pixel,
+    borderTopWidth: pixel,
     paddingTop: 5,
     paddingBottom: 5,
     borderColor: '#b2b0b6',
@@ -247,8 +238,8 @@ const styles = StyleSheet.create({
     marginTop: 20
   },
   draftboxRow: {
-    borderBottomWidth: Pixel,
-    borderTopWidth: Pixel,
+    borderBottomWidth: pixel,
+    borderTopWidth: pixel,
     paddingTop: 5,
     paddingBottom: 5,
     borderColor: '#b2b0b6',
@@ -258,8 +249,8 @@ const styles = StyleSheet.create({
     marginTop: 40
   },
   settingRow: {
-    borderBottomWidth: Pixel,
-    borderTopWidth: Pixel,
+    borderBottomWidth: pixel,
+    borderTopWidth: pixel,
     paddingTop: 5,
     paddingBottom: 5,
     borderColor: '#b2b0b6',
@@ -269,8 +260,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   cleanRow: {
-    borderBottomWidth: Pixel,
-    borderTopWidth: Pixel,
+    borderBottomWidth: pixel,
+    borderTopWidth: pixel,
     paddingTop: 5,
     paddingBottom: 5,
     borderColor: '#b2b0b6',
@@ -280,8 +271,8 @@ const styles = StyleSheet.create({
     marginTop: 45,
   },
   aboutRow: {
-    borderBottomWidth: Pixel,
-    borderTopWidth: Pixel,
+    borderBottomWidth: pixel,
+    borderTopWidth: pixel,
     paddingTop: 5,
     paddingBottom: 5,
     borderColor: '#b2b0b6',
@@ -289,7 +280,6 @@ const styles = StyleSheet.create({
   },
   loginBtn: {
     height: 50,
-    // marginTop: 50,
     backgroundColor: '#e32872',
     justifyContent: 'center',
     alignItems: 'center'
@@ -303,7 +293,6 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   const GlobalState = state.GlobalState.toJS();
   return {
-    // isLoading: state.MeState.get('isLoading'),
     isLogged: GlobalState.isLogged,
     accesstoken: GlobalState.accesstoken,
     loginname: GlobalState.loginname,

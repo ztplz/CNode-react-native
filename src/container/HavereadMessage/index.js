@@ -13,6 +13,7 @@ import {
   Keyboard,
   Platform,
   TextInput,
+  RefreshControl,
   TouchableHighlight,
   TouchableOpacity,
   StyleSheet
@@ -26,7 +27,9 @@ import LoadingPage from '../../components/LoadingPage';
 import { DeviceHeight, DeviceWidth, pixel } from '../../utils/deviceSize';
 import NetErrorPage from '../../components/NetErrorPage';
 import {
-  NIGHT_HEADER_COLOR
+  NIGHT_HEADER_COLOR,
+  NIGHT_BACKGROUND_COLOR,
+  NIGHT_REFRESH_COLOR
 } from '../../constants/themecolor';
 
 class HavereadMessage extends Component {
@@ -34,7 +37,6 @@ class HavereadMessage extends Component {
     title: '已读消息',
     headerTintColor: '#ffffff',
     headerStyle: {
-      // backgroundColor: '#878fe0',
       backgroundColor: screenProps.isNightMode? NIGHT_HEADER_COLOR : screenProps.themeColor
     },
   });
@@ -97,12 +99,25 @@ class HavereadMessage extends Component {
     Keyboard.dismiss();
   }
 
+  renderHeader() {
+    if(this.props.data.length === 0) {
+      return (
+        <View style={styles.flatlistHeader}>
+          <Text style={styles.flatlistHeaderText}>列表为空</Text>
+        </View>
+      )
+    }
+
+    return null;
+  }
+
   render() {
-    const { isLoading, isLoaded, isRefreshing, isReply, replyName, replyId, replyTopicId, replyText, accesstoken, error, data, actions, navigation } = this.props;
+    const { screenProps, isLoading, isLoaded, isRefreshing, isReply, replyName, replyId, replyTopicId, replyText, accesstoken, error, data, actions, navigation } = this.props;
 
     if(isLoading) {
       return (
         <LoadingPage
+          screenProps={screenProps}
           title='正在加载已读消息...'
         />
       )
@@ -110,13 +125,21 @@ class HavereadMessage extends Component {
 
     if(!isLoading && isLoaded) {
       return (
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: screenProps.isNightMode? NIGHT_BACKGROUND_COLOR : null }]}>
           <FlatList
             data={data}
             renderItem={({item}) => <MessageRow replyTextInputShow={actions.replyTextInputShow} item={item} navigation={navigation} currentReplyName={replyName} currentText={replyText} />}
+            ListHeaderComponent={() => this.renderHeader() }
             ItemSeparatorComponent={() => <View style={{paddingLeft: 8, paddingRight: 8, height: pixel, backgroundColor: '#85757a'}}></View>}
-            onRefresh={() => this.refreshHavereadMessage() }
-            refreshing={isRefreshing}
+            // onRefresh={() => this.refreshHavereadMessage() }
+            // refreshing={isRefreshing}
+            refreshControl={
+              <RefreshControl
+                refreshing={isRefreshing}
+                onRefresh={() => this.refreshHavereadMessage()}
+                tintColor={screenProps.isNightMode? NIGHT_REFRESH_COLOR : null }
+              />
+            }
             keyExtractor={(item, index) => 'has_read_messages' + item.id + index }
           />
           {
@@ -159,11 +182,18 @@ const styles = StyleSheet.create({
   },
   textinputStyle: {
     // height: 40
+  },
+  flatlistHeader: {
+    height: 45,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  flatlistHeaderText: {
+    fontSize: 20
   }
 });
 
 const mapStateToProps = state => {
-  // const stateOfMessage = state.MessageState.toJS();
   const stateOfHavereadMessage  = state.HavereadMessageState.toJS();
   return {
     isLoading: stateOfHavereadMessage.isLoading,

@@ -17,17 +17,25 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import HTMLView from 'react-native-htmlview';
 import timeDiff from '../utils/timeDiffUtil';
+// import UpItem from './UpItem';
 
-const likeIt = (navigation, getTopicDetailData, upedItem, index, isLogged, isUped, reply_id, accesstoken) => {
+const likeIt = (index, authorname, loginname, isLogged, is_uped, accesstoken, id, navigation, upedItem, getTopicDetailData) => {
   if(isLogged) {
-    // if(isUped) {
-    //   notUpedItem({params: { accesstoken, topic_id,},  timeout: 10000});
-    // } else {
-    //   upedItem({params: { accesstoken, topic_id },  timeout: 10000})
-    // }
-    //
-    // return ;
-    upedItem({accesstoken, reply_id, isUped: !isUped, index})
+    console.log(is_uped);
+    if(authorname === loginname) {
+      Alert.alert(
+        '不能给自己点赞哦',
+        null,
+        [
+          {text: '确认'}
+        ]
+      );
+
+      return ;
+    }
+
+    upedItem({params: { accesstoken }, reply_id: id, isUped: !is_uped, index});
+    return ;
   }
 
   Alert.alert(
@@ -35,7 +43,7 @@ const likeIt = (navigation, getTopicDetailData, upedItem, index, isLogged, isUpe
     null,
     [
       {text: '登录', onPress: () => navigation.navigate('Login', { onGoBack: () => getTopicDetailData({topicId: navigation.state.params.topicId, accesstoken, isLoading: true, isLoaded: false, error: '', timeout: 10000})})},
-      {text: '取消', null },
+      {text: '取消',  },
     ],
   )
 }
@@ -52,7 +60,7 @@ const replyToOther = (navigation, getTopicDetailData, isLogged, replyname, topic
     null,
     [
       {text: '登录', onPress: () => navigation.navigate('Login', { onGoBack: () => getTopicDetailData({topicId: navigation.state.params.topicId, accesstoken, isLoading: true, isLoaded: false, error: '', timeout: 10000})})},
-      {text: '取消', null },
+      {text: '取消',  },
     ],
   )
 }
@@ -74,13 +82,14 @@ const TopicDetailRow = props => {
           </View>
           <View style={styles.iconContainer}>
             <TouchableWithoutFeedback
-              onPress={() => likeIt(props.floor, props.isLogged, props.data.is_uped, props.accesstoken, props.data.id, props.navigation, props.actions.upedItem, props.actions.getTopicDetailData)}
+              onPress={() => likeIt(props.floor, props.data.author.loginname, props.loginname, props.isLogged, props.data.is_uped, props.accesstoken, props.data.id, props.navigation, props.actions.upedItem, props.actions.getTopicDetailData)}
             >
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <Icon name='ios-thumbs-up' size={20} color={props.data.is_uped? '#605e57' : '#b7bfb7'} />
                 <Text style={styles.thumbsUpNumber}>{props.data.ups.length}</Text>
               </View>
             </TouchableWithoutFeedback>
+            {/* <UpItem /> */}
             <TouchableWithoutFeedback
               onPress={() => replyToOther(props.navigation, props.actions.getTopicDetailData, props.isLogged, props.data.author.loginname, props.topic_id, props.data.id, props.accesstoken)}
             >

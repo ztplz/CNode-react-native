@@ -4,7 +4,7 @@
  * email: mysticzt@gmail.com
  */
 
-import {put, take, call, fork, race, takeEvery, takeLatest } from 'redux-saga/effects';
+import { put, take, call } from 'redux-saga/effects';
 import {
   REPLY_TO_TOPIC,
   REPLY_TO_TOPIC_SUCCESS,
@@ -18,7 +18,6 @@ function* userReplyToTopic(action) {
   try {
     const url = replyToUserUrl + action.payload.topic_id + '/replies';
     const res = yield call(postFetch, action.payload.timeout, url, action.payload.params);
-    console.log(res);
     if(res.success == true) {
       Toast.show('评论成功', {position: 80});
       yield put({
@@ -26,7 +25,6 @@ function* userReplyToTopic(action) {
         payload: {
           isSending: false,
           isReplySuccess: true,
-          // topic_id: action.payload.topic_id,
         }
       });
     }
@@ -44,7 +42,6 @@ function* userReplyToTopic(action) {
 export function* watchReplyToTopic() {
   while(true) {
     const action = yield take(REPLY_TO_TOPIC);
-    console.log(action);
     yield call(userReplyToTopic, action);
   }
 }

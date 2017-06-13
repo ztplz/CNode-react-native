@@ -45,57 +45,46 @@ function timeoutPromise(ms, promise) {
 }
 
 export function getFetch(ms, url) {
-  console.log(url);
-  console.log(ms);
   return new Promise((resolve, reject) => {
     timeoutPromise(ms, fetch(url, getMethod()))
       .then(response => {
-        console.log('fetchHomePageData qqqqqq');
-        console.log(response);
-        console.log(response.status);
         if(response.ok) {
-          console.log('fetch success fetutil');
-          console.log(response);
           return response.json();
         } else {
-          Toast.show('数据返回错误，请重试', {position: 80});
-          return Promise.reject(new Error('FETCH_ERROR'));
+          // Toast.show('数据返回错误，请重试', {position: 80});
+          // return Promise.reject(new Error('FETCH_ERROR'));
+          Toast.show(`数据返回错误, http状态码 ${response.status} ,`);
+          return Promise.reject(new Error())
         }
       })
       .then(json => resolve(json.data))
       .catch(error => {
-        console.log(error);
         reject(error);
       });
   });
 }
 
 export function postFetch(ms, url, params) {
-  console.log(params);
   return new Promise((resolve, reject) => {
     timeoutPromise(ms, fetch(url, postMethod(params)))
       .then(response => {
-        console.log(response);
         if(response.ok) {
           return response.json();
         } else {
           // console.log('124544411125');
-          // Toast.show('数据返回错误，请重试', {position: 80});
-          // reject(new Error('FETCH_ERROR'));
-          return Promise.reject(new Error('FETCH_ERROR'));
+          Toast.show('数据返回错误，请重试', {position: 80});
+          reject(new Error('FETCH_ERROR'));
+          // return Promise.reject(new Error('FETCH_ERROR'));
         }
       })
       .then(json => {
-        console.log('json');
         if(json.success == true) {
-          console.log(json);
           resolve(json);
         } else {
           return Promise.reject(new Error('POST_RETURN_FALSE'));
         }
       })
       .catch(error=> {
-        console.log(error);
         reject(error);
       });
   });

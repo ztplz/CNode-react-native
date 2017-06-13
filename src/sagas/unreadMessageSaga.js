@@ -4,7 +4,7 @@
  * email: mysticzt@gmail.com
  */
 
-import {put, take, call, fork, race, takeEvery, takeLatest } from 'redux-saga/effects';
+import { put, take, call } from 'redux-saga/effects';
 import {
   FETCH_UNREADMESSAGE_DATA,
   FETCH_UNREADMESSAGE_DATA_SUCCESS,
@@ -22,7 +22,6 @@ function* fetchUnreadMessage(action) {
   try {
     const url = getMessageUrl +'?accesstoken=' + action.payload.accesstoken;
     const data = yield call(getFetch, action.payload.timeout, url);
-    console.log(data);
     yield put({
       type: FETCH_UNREADMESSAGE_DATA_SUCCESS,
       payload: {
@@ -46,7 +45,6 @@ function* refreshUnreadMessage(action) {
   try {
     const url = getMessageUrl +'?accesstoken=' + action.payload.accesstoken;
     const data = yield call(getFetch, action.payload.timeout, url);
-    console.log(data);
     yield put({
       type: REFRESH_UNREADMESSAGE_DATA_SUCCESS,
       payload: {
@@ -75,13 +73,6 @@ function* unreadMessageReply(action) {
     }
   } catch(error) {
     Toast.show('回复失败', {position: 80});
-    // yield put({
-    //   type: REFRESH_UNREADMESSAGE_DATA_FAILURE,
-    //   payload: {
-    //     isRefreshing: false,
-    //     error
-    //   }
-    // });
   }
 }
 

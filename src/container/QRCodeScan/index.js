@@ -28,7 +28,6 @@ class QRCodeScan extends Component {
     title: '扫描二维码',
     headerTintColor: '#ffffff',
     headerStyle: {
-      // backgroundColor: '#878fe0',
       backgroundColor: screenProps.isNightMode? NIGHT_HEADER_COLOR : screenProps.themeColor
     },
   });
@@ -40,15 +39,9 @@ class QRCodeScan extends Component {
     }
   }
 
-  // goBack() {
-  //   () => navigation.goBack(this.props.navigation.state.params.currentPageKey);
-  //   this.props.navigation.state.params.onGoBack();
-  // }
-
   componentDidMount() {
     this.scannerLineMove();
   }
-
 
   componentWillReceiveProps(nextProps) {
     if(!nextProps.isLogging && nextProps.isLoginSuccess) {
@@ -69,11 +62,11 @@ class QRCodeScan extends Component {
     }
 
   render() {
-    const { isReadingScan, isLogging, isLoginSuccess,  actions, navigation, accesstoken } = this.props;
-
+    const { isReadingScan, screenProps, isLogging, isLoginSuccess,  actions, navigation, accesstoken } = this.props;
+    console.log(this.props);
     if(isReadingScan) {
       return (
-        <View style={{flex: 1}}>
+         <View style={{flex: 1}}>
           <Camera
             onBarCodeRead={(event) => actions.loginToCNode({isReadingScan: false, isLogging: true, timeout: 10000, params: {accesstoken: event.data}})}
             style={{flex: 1}}
@@ -106,26 +99,15 @@ class QRCodeScan extends Component {
 
     if(isLogging) {
       return (
-        <LoadingPage title='正在验证，请稍候...'/>
+        <LoadingPage
+          screenProps={screenProps}
+          title='正在验证，请稍候...'
+        />
       )
     }
 
     if(!isLogging && isLoginSuccess) {
       return null;
-      // navigation.goBack(this.props.navigation.state.params.currentPageKey);
-      // this.props.navigation.state.params.onGoBack();
-      // return (
-      //   <View>
-      //     <Text>accesstoken 验证成功</Text>
-      //     <TouchableWithoutFeedback
-      //       onPress={() =>  { navigation.goBack(this.props.navigation.state.params.currentPageKey); this.props.navigation.state.params.onGoBack()}}
-      //     >
-      //       <View>
-      //         <Text>返回</Text>
-      //       </View>
-      //     </TouchableWithoutFeedback>
-      //   </View>
-      // )
     }
 
     if(!isLogging && !isLoginSuccess) {
@@ -143,42 +125,6 @@ class QRCodeScan extends Component {
         </View>
       )
     }
-
-
-    // if(!isLoginFailed) {
-    //   return (
-    //     <View style={styles.container}>
-    //       {/* <Camera
-    //         onBarCodeRead
-    //         style={styles.preview}
-    //       >
-    //         <Text style={styles.capture} onPress={this.takePicture.bind(this)}>[CAPTURE]</Text>
-    //       </Camera> */}
-    //       <TouchableWithoutFeedback
-    //         onPress={() => actions.loginToCNode({timeout: 10000, params: {accesstoken: '01605c45-3648-470a-8c2c-04551b61672b'}})}
-    //       >
-    //         <View style={{backgroundColor: '#4970c9', padding: 5}}>
-    //           <Text style={{fontSize: 20, color: '#ffffff'}}>登 录</Text>
-    //         </View>
-    //       </TouchableWithoutFeedback>
-    //       {/* <Text>asdgasdg</Text> */}
-    //     </View>
-    //   )
-    // } else {
-    //   return (
-    //     <View style={{justifyContent: 'center', alignItems: 'center'}}>
-    //       <TouchableWithoutFeedback
-    //         onPress={() => actions.retryToLogin({isLoginFailed: false})}
-    //       >
-    //         <View style={{padding: 5, backgroundColor: '#8572dd'}}>
-    //           <Text style={{fontSize: 20}}>重 试</Text>
-    //         </View>
-    //       </TouchableWithoutFeedback>
-    //       <Text>登录失败</Text>
-    //     </View>
-    //   )
-    // }
-
   }
 }
 
@@ -196,7 +142,6 @@ const mapStateToProps = state => {
     isLogging: state.QRCodeScanState.get('isLogging'),
     isLoginSuccess: state.QRCodeScanState.get('isLoginSuccess'),
     accesstoken: state.GlobalState.get('accesstoken'),
-
   }
 }
 

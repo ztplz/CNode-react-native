@@ -45,8 +45,9 @@ const whichTab = (tabName) => {
 const HomePageListRow = (props) => {
   return (
     <TouchableHighlight
-      activeOpacity={0.9}
-      underlayColor='#dedede'
+      // activeOpacity={0.9}
+      // underlayColor={props.isNightMode? '#484a45' : '#c0c2c3' }
+      underlayColor='#c0c2c3'
       onPress={props.handler}
     >
       <View style={styles.container}>

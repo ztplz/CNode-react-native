@@ -13,6 +13,7 @@ import {
   Keyboard,
   Platform,
   TextInput,
+  RefreshControl,
   TouchableHighlight,
   TouchableOpacity,
   StyleSheet
@@ -26,7 +27,10 @@ import LoadingPage from '../../components/LoadingPage';
 import { DeviceHeight, DeviceWidth, pixel } from '../../utils/deviceSize';
 import NetErrorPage from '../../components/NetErrorPage';
 import {
-  NIGHT_HEADER_COLOR
+  NIGHT_HEADER_COLOR,
+  NIGHT_BACKGROUND_COLOR,
+  NIGHT_REFRESH_COLOR,
+  NIGHT_MESSAGE_FLATLIST_HEADER
 } from '../../constants/themecolor';
 
 class UnreadMessage extends Component {
@@ -34,7 +38,6 @@ class UnreadMessage extends Component {
     title: '未读消息',
     headerTintColor: '#ffffff',
     headerStyle: {
-      // backgroundColor: '#878fe0',
       backgroundColor: screenProps.isNightMode? NIGHT_HEADER_COLOR : screenProps.themeColor
     },
   });
@@ -97,16 +100,24 @@ class UnreadMessage extends Component {
     Keyboard.dismiss();
   }
 
-  render() {
-    const { isLoading, isLoaded, isRefreshing, isReply, replyName, replyId, replyTopicId, replyText, accesstoken, error, data, actions, navigation } = this.props;
-    console.log(isReply);
-    console.log(actions);
-    console.log(this.props);
-    // console.log(this.state.text);
+  renderHeader() {
+    if(this.props.data.length === 0) {
+      return (
+        <View style={styles.flatlistHeader}>
+          <Text style={[styles.flatlistHeaderText, { color: this.props.screenProps.isNightMode? NIGHT_MESSAGE_FLATLIST_HEADER : null}]}>列表为空</Text>
+        </View>
+      )
+    }
 
+    return null;
+  }
+
+  render() {
+    const { screenProps, isLoading, isLoaded, isRefreshing, isReply, replyName, replyId, replyTopicId, replyText, accesstoken, error, data, actions, navigation } = this.props;
     if(isLoading) {
       return (
         <LoadingPage
+          screenProps={screenProps}
           title='正在加载未读消息...'
         />
       )
@@ -114,13 +125,19 @@ class UnreadMessage extends Component {
 
     if(!isLoading && isLoaded) {
       return (
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: screenProps.isNightMode? NIGHT_BACKGROUND_COLOR : null }]}>
           <FlatList
             data={data}
             renderItem={({item}) => <MessageRow replyTextInputShow={actions.replyTextInputShow} item={item} navigation={navigation} currentReplyName={replyName} currentText={replyText} />}
+            ListHeaderComponent={() => this.renderHeader() }
             ItemSeparatorComponent={() => <View style={{paddingLeft: 8, paddingRight: 8, height: pixel, backgroundColor: '#85757a'}}></View>}
-            onRefresh={() => this.refreshUnreadMessage() }
-            refreshing={isRefreshing}
+            refreshControl={
+              <RefreshControl
+                refreshing={isRefreshing}
+                onRefresh={() => this.refreshUnreadMessage() }
+                tintColor={screenProps.isNightMode? NIGHT_REFRESH_COLOR : null }
+              />
+            }
             keyExtractor={(item, index) => 'hasnot_read_messages' + item.id + index }
           />
           {
@@ -163,6 +180,14 @@ const styles = StyleSheet.create({
   },
   textinputStyle: {
     // height: 40
+  },
+  flatlistHeader: {
+    height: 45,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  flatlistHeaderText: {
+    fontSize: 20
   }
 });
 

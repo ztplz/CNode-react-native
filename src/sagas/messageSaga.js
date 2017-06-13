@@ -4,7 +4,7 @@
  * email: mysticzt@gmail.com
  */
 
-import { put, take, call, fork, race, takeEvery, takeLatest } from 'redux-saga/effects';
+import { put, take, call } from 'redux-saga/effects';
 import {
   FETCH_MESSAGE,
   FETCH_MESSAGE_SUCCESS,

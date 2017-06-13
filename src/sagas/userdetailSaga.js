@@ -4,7 +4,7 @@
  * email: mysticzt@gmail.com
  */
 
-import { put, take, call, fork, race, takeEvery, takeLatest } from 'redux-saga/effects';
+import { put, take, call } from 'redux-saga/effects';
 import {
   FETCH_USERDETAIL_DATA,
   FETCH_USERDETAIL_DATA_SUCCESS,
@@ -17,10 +17,10 @@ import {
   getUserDetailUrl
 } from '../constants/api';
 import { getFetch } from '../utils/fetchUtils';
+import Toast from 'react-native-root-toast';
 
 function* fetchUserDetailData(action) {
   try {
-    console.log(action);
     const url = getUserDetailUrl + action.payload.username;
     const data = yield call(getFetch, action.payload.timeout, url);
     yield put({

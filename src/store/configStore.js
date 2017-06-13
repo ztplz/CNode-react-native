@@ -24,15 +24,6 @@ if(process.env.NODE_ENV === 'development') {
   middlewares.push(logger);
 }
 
-// enhancers.push(applyMiddleware(...middlewares));
-//
-// export default function configStore() {
-//   const store = createStore(rootReducer,  compose(...enhancers));
-//   sagaMiddleware.run(rootSaga);
-//
-//   return store;
-// }
-
 export default function configStore() {
   enhancers.push(applyMiddleware(...middlewares));
 
@@ -43,7 +34,6 @@ export default function configStore() {
   const store = createStore(rootReducer, compose(...enhancers));
 
   if (ReduxPersist.active) {
-    console.log('sagdsagd');
     RehydrationServices.updateReducers(store);
   }
 

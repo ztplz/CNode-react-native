@@ -17,7 +17,6 @@ import {
   StyleSheet
 } from 'react-native';
 import HTMLView from 'react-native-htmlview';
-import HtmlRender from 'react-native-html-render';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -31,14 +30,12 @@ import NetErrorPage from '../../components/NetErrorPage';
 import {
   NIGHT_HEADER_COLOR
 } from '../../constants/themecolor';
-// import MessageReplyTextInput from '../../components/MessageReplyTextInput'
 
 class TopicDetail extends Component {
   static navigationOptions = ({ navigation, screenProps }) => ({
     title: '帖子详情',
     headerTintColor: '#ffffff',
     headerStyle: {
-      // backgroundColor: '#878fe0',
       backgroundColor: screenProps.isNightMode? NIGHT_HEADER_COLOR : screenProps.themeColor
     },
     headerRight: <HeaderButton icon={<Icon name='ios-more' size={30} color='#ffffff' style={{marginRight: 12}} />}  handler={() => console.log('rightButtonPress')} />,
@@ -47,43 +44,6 @@ class TopicDetail extends Component {
   componentDidMount() {
     this.props.actions.getTopicDetailData({topicId: this.props.navigation.state.params.topicId, accesstoken: this.props.accesstoken, isLoading: true, isLoaded: false, isReplySuccess: false, error: '', timeout: 10000});
   }
-
-  // function renderNode(node, index, siblings, parent, defaultRenderer) {
-  //   if (node.name == 'img') {
-  //     const a = node.attribs;
-  //     const url = a.src.
-  //     const iframeHtml = `<iframe src="${a.src}"></iframe>`;
-  //     return (
-  //       // <View key={index} style={{width: Number(a.width), height: Number(a.height)}}>
-  //       //   <WebView source={{html: iframeHtml}} />
-  //       // </View>
-  //       <Image source={{uri: https + a.src}} style{{width.}}/>
-  //     );
-  //   }
-  // }
-
-  // showActionSheet() {
-  //   ActionSheetIOS.showActionSheetWithOptions({
-  //     options: [
-  //       '刷  新',
-  //       '评  论',
-  //       isCollected? '取消收藏' : '收藏',
-  //       '退  出'
-  //     ],
-  //     cancelButtonIndex: 3,
-  //     tintColor: 'green',
-  //   },
-  //   (buttonIndex) => {
-  //     switch (buttonIndex) {
-  //       case 0:
-  //         this.props.actions.refreshTopicDetailData({isRefreshing: true, timeout: })
-  //       case 1:
-  //         this.props.actions.
-  //       case 2:
-  //         this.props.actions.
-  //     }
-  //   });
-  // }
 
   isWhichTab(tab) {
     switch (tab) {
@@ -118,10 +78,8 @@ class TopicDetail extends Component {
       null,
       [
         {text: '登录', onPress: () => this.props.navigation.navigate('Login', { onGoBack: () => this.props.actions.getTopicDetailData({topicId: this.props.navigation.state.params.topicId, accesstoken: this.props.accesstoken, isLoading: true, isLoaded: false, isReplySuccess: false, error: '', timeout: 10000})})},
-        // {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-        {text: '取消', null },
+        {text: '取消', },
       ],
-      // { cancelable: false }
     )
   }
 
@@ -136,31 +94,16 @@ class TopicDetail extends Component {
       null,
       [
         {text: '登录', onPress: () => this.props.navigation.navigate('Login', { onGoBack: () => this.props.actions.getTopicDetailData({topicId: this.props.navigation.state.params.topicId, accesstoken: this.props.accesstoken, isLoading: true, isLoaded: false, error: '', timeout: 10000})} )},
-        // {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-        {text: '取消', null },
+        {text: '取消', },
       ],
-      // { cancelable: false }
     )
   }
 
-  // function renderNode(node, index, siblings, parent, defaultRenderer) {
-  //   if (node.name == 'img') {
-  //     const src = node.attribs.src;
-  //     return (
-  //       <View key={index} style={{width: Number(a.width), height: Number(a.height)}}>
-  //         <WebView source={{html: iframeHtml}} />
-  //       </View>
-  //     );
-  //   }
-  // }
-
-
   render() {
-    const { isLoading, isLoaded, isRefreshing, isLogged, isCollected, accesstoken, isReplyTextInputShow, error, data, actions, navigation } = this.props;
-    console.log(data.replies);
+    const { screenProps, isLoading, isLoaded, isRefreshing, isLogged, isCollected, accesstoken, loginname, isReplyTextInputShow, error, data, actions, navigation } = this.props;
     if(isLoading) {
       return (
-        <LoadingPage title='正在加载，请稍候...' />
+        <LoadingPage screenProps={screenProps} title='正在加载，请稍候...' />
       );
     }
 
@@ -201,12 +144,8 @@ class TopicDetail extends Component {
               <HTMLView
                 value={this.props.data.content}
               />
-              {/* <HtmlRender
-                value={{data.content}}
-              /> */}
             </View>
           </View>
-
           <View style={styles.btnRow}>
             <TouchableHighlight
               underlayColor='#d8dbd8'
@@ -235,12 +174,11 @@ class TopicDetail extends Component {
           <View style={{marginTop: 30, paddingLeft: 8, paddingRight: 8}}>
             <FlatList
               data={data.replies}
-              renderItem={({item, index}) => <TopicDetailRow data={item} floor={index} accesstoken={accesstoken} navigation={navigation} isLogged={isLogged}  actions={actions} topic_id={data.id} />}
+              renderItem={({item, index}) => <TopicDetailRow data={item} floor={index} accesstoken={accesstoken} navigation={navigation} isLogged={isLogged}  actions={actions} topic_id={data.id} loginname={loginname} screenProps={screenProps} />}
               ItemSeparatorComponent={() => <View style={styles.commentSeparator} />}
               keyExtractor={(item, index) => 'TopicDetail' + item.id + index }
             />
           </View>
-          {isReplyTextInputShow? <MessageReplyTextInput /> : null}
         </ScrollView>
       );
     }
@@ -261,12 +199,9 @@ class TopicDetail extends Component {
 const styles = StyleSheet.create({
   container: {
     paddingTop: 10,
-    // paddingLeft: 8,
-    // paddingRight: 8,
   },
   titleText: {
     fontSize: 17,
-    // backgroundColor: 'red'
   },
   goodTextContainer: {
     height: 20,
@@ -284,12 +219,10 @@ const styles = StyleSheet.create({
     height: 20,
     width: 35,
     borderRadius: 5,
-    // marginLeft: 5,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#53dd58',
     marginTop: 3,
-    // paddingRight: 5
   },
   topText: {
     color: '#ffffff'
@@ -318,31 +251,19 @@ const styles = StyleSheet.create({
     height: 22,
     color: 'white',
   },
-  // titleHtml: {
-  //   width: DeviceWidth - 20
-  // }
   btnRow: {
-    // flex: 1,
     width: DeviceWidth,
     height: 50,
     flexDirection: 'row',
     borderTopWidth: pixel,
     borderBottomWidth: pixel,
-    // backgroundColor: 'red'
   },
   collectBtn: {
     flex: 1,
     borderRightWidth: pixel
-    // flexDirection: 'row',
-    // justifyContent: 'center',
-    // alignItems: 'center'
   },
   replyBtn: {
     flex: 1,
-    // flexDirection: 'row',
-    // justifyContent: 'center',
-    // alignItems: 'center',
-    // backgroundColor: 'red'
   },
   collectBtnStyle: {
     flex: 1,
@@ -371,7 +292,7 @@ const mapStateToProps = state => {
     data: stateOfTopicDetail.data,
     isLogged: stateOfGlobalState.isLogged,
     accesstoken: stateOfGlobalState.accesstoken,
-    // accesstoken:  state.GlobalState.get('accesstoken')
+    loginname: stateOfGlobalState.loginname
   }
 };
 

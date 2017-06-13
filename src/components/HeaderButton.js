@@ -18,7 +18,6 @@ const HeaderButton = props => (
     <View style={props.btnStyle}>
       {props.title? <Text style={props.textStyle}>{props.title}</Text> : null}
       {props.icon? props.icon : null}
-      {/* <Text style={props.textStyle}>{props.title}</Text> */}
     </View>
   </TouchableWithoutFeedback>
 );

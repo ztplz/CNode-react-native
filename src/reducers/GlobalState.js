@@ -19,8 +19,6 @@ import {
 } from '../constants/actionTypes';
 
 const initialState = fromJS({
-  // isNightMode: false,
-  // themeColor: null,
   screenProps: {
     isNightMode: false,
     themeColor: '#878fe0'
@@ -34,7 +32,6 @@ const initialState = fromJS({
 });
 
 export default function GlobalState(state=initialState, action) {
-  // console.log(action);
   switch (action.type) {
     case HOMEPAGE_STARTUP:
       return state.set('screenProps', action.payload.screenProps)
@@ -67,8 +64,6 @@ export default function GlobalState(state=initialState, action) {
                   .set('avatar_url', action.payload.data.avatar_url);
     case FETCH_ME_DATA_SUCCESS:
       return state.set('user_create_at', action.payload.user_create_at);
-    // case LOGIN_TO_CNODE_SUCCESS:
-    //   return state.set('accesstoken', action.payload.accesstoken);
     case USER_LOGOUT:
       return state.set('isLogged', action.payload.isLogged)
                   .set('accesstoken', action.payload.accesstoken)

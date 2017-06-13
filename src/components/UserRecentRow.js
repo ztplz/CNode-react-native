@@ -12,14 +12,19 @@ import {
   StyleSheet
 } from 'react-native';
 import timeDiff from '../utils/timeDiffUtil';
+import {
+  NIGHT_USER_RECENTROW_TEXT,
+  NIGHT_USER_RECENTROW_BORDERBOTTOMCOLOR,
+} from '../constants/themecolor';
+import { pixel } from '../utils/deviceSize';
 
 const UserRecentRow = props => (
   <TouchableHighlight
     underlayColor='#d2d2d2'
     onPress={ props.handler }
   >
-    <View style={styles.container}>
-      <Text style={styles.title}>{props.item.title}</Text>
+    <View style={[styles.container, { borderBottomColor: props.screenProps.isNightMode? NIGHT_USER_RECENTROW_BORDERBOTTOMCOLOR : '#4e494c' }]}>
+      <Text style={[styles.title, { color: props.screenProps.isNightMode? NIGHT_USER_RECENTROW_TEXT : null }]}>{props.item.title}</Text>
       <View style={styles.bottomContainer}>
         <Text style={styles.author}>作者 • {props.item.author.loginname}</Text>
         <Text style={styles.time}>最近一次回复 • {timeDiff(props.item.last_reply_at)}</Text>
@@ -34,6 +39,8 @@ const styles = StyleSheet.create({
     paddingRight: 8,
     paddingTop: 10,
     paddingBottom: 10,
+    borderBottomWidth: pixel,
+    borderBottomColor: '#85757a'
     // backgroundColor: 'green'
   },
   bottomContainer: {

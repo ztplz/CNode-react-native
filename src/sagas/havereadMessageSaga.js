@@ -4,7 +4,7 @@
  * email: mysticzt@gmail.com
  */
 
-import {put, take, call, fork, race, takeEvery, takeLatest } from 'redux-saga/effects';
+import {put, take, call } from 'redux-saga/effects';
 import {
   HAVEREADMESSAGE_REPLY,
   FETCH_HAVEREADMESSAGE_DATA,
@@ -19,11 +19,9 @@ import { getMessageUrl, replyToUserUrl } from '../constants/api';
 import Toast from 'react-native-root-toast';
 
 function* fetchHavereadMessage(action) {
-  console.log(action.payload);
   try {
     const url = getMessageUrl +'?accesstoken=' + action.payload.accesstoken;
     const data = yield call(getFetch, action.payload.timeout, url);
-    console.log(data);
     yield put({
       type: FETCH_HAVEREADMESSAGE_DATA_SUCCESS,
       payload: {
@@ -47,7 +45,6 @@ function* refreshHavereadMessage(action) {
   try {
     const url = getMessageUrl +'?accesstoken=' + action.payload.accesstoken;
     const data = yield call(getFetch, action.payload.timeout, url);
-    console.log(data);
     yield put({
       type: REFRESH_HAVEREADMESSAGE_DATA_SUCCESS,
       payload: {
@@ -76,13 +73,6 @@ function* havereadMessageReply(action) {
     }
   } catch(error) {
     Toast.show('回复失败', {position: 80});
-    // yield put({
-    //   type: REFRESH_UNREADMESSAGE_DATA_FAILURE,
-    //   payload: {
-    //     isRefreshing: false,
-    //     error
-    //   }
-    // });
   }
 }
 
